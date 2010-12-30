@@ -47,12 +47,7 @@ describe "Users" do
   	end
   	
   	it "should log in and out" do
-  		@user = Factory(:user)
-  		visit root_path
-  		click_link "Sign in"
-  		fill_in :email,			:with => @user.email
-  		fill_in :password,	:with => @user.password
-  		click_button
+  		integration_sign_in Factory(:user)
   		controller.should be_signed_in
   		click_link "Sign out"
   		controller.should_not be_signed_in
