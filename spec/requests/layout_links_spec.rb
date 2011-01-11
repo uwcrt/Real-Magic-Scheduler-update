@@ -22,11 +22,6 @@ describe "LayoutLinks" do
     response.should have_selector('title', :content => "Help")
   end
   
-  it "should have a sign up page at '/signup'" do
-  	get '/signup'
-  	response.should have_selector('title', :content => 'Sign up')
-  end
-  
    it "should have the right links on the layout" do
     visit root_path
     click_link "About"
@@ -37,8 +32,6 @@ describe "LayoutLinks" do
     response.should have_selector('title', :content => "Contact")
     click_link "Home"
     response.should have_selector('title', :content => "Home")
-    click_link "Sign up now!"
-    response.should have_selector('title', :content => "Sign up")
   end
 
 	describe "when not signed it" do
@@ -69,6 +62,17 @@ describe "LayoutLinks" do
 		it "should have a settings link" do
 			visit root_path
 			response.should have_selector('a', :href => edit_user_path(@user), :content => "Settings")
+		end
+		
+		describe "as an administrator" do
+		  before(:each) do
+		    @user.toggle!(:admin)
+		  end
+		  
+		  it "should have a shift types link" do
+		    visit root_path
+		    response.should have_selector('a', :content => "Shift Types")
+		  end
 		end
 	end
 end

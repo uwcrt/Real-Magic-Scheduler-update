@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe User do
   before(:each) do
-    @attr = { :name => "Example User", 
+    @attr = { :first_name => "Justin",
+              :last_name => "Vanderheide", 
     					:email => "user@example.com",
     					:password => "foobar",
     					:password_confirmation => "foobar"}
@@ -11,21 +12,20 @@ describe User do
   it "should create a new instance given valid attributes" do
     User.create!(@attr)
   end
-
-  it "should require a name" do
-    no_name_user = User.new(@attr.merge(:name => ""))
+  
+  it "should require a first name" do
+    no_name_user = User.new(@attr.merge(:first_name => ""))
+    no_name_user.should_not be_valid
+  end
+  
+  it "should require a last name" do
+    no_name_user = User.new(@attr.merge(:last_name => ""))
     no_name_user.should_not be_valid
   end
 
 	it "should require an email address" do
     no_email_user = User.new(@attr.merge(:email => ""))
     no_email_user.should_not be_valid
-  end
-  
-  it "should reject names that are too long" do
-  	long_name = "x" * 51
-  	long_name_user = User.new(@attr.merge(:name => long_name))
-  	long_name_user.should_not be_valid
   end
   
   describe "Email validations" do
@@ -129,6 +129,45 @@ describe User do
         matching_user.should == @user
       end
     end
-
 	end
+	
+	describe "admin attribute" do
+
+    before(:each) do
+      @user = User.create!(@attr)
+    end
+
+    it "should respond to admin" do
+      @user.should respond_to(:admin)
+    end
+
+    it "should not be an admin by default" do
+      @user.should_not be_admin
+    end
+
+    it "should be convertible to an admin" do
+      @user.toggle!(:admin)
+      @user.should be_admin
+    end
+  end
+  
+  describe "primary attribute" do
+  
+    before(:each) do
+      @user = User.create!(@attr)
+    end
+    
+    it "should respond to primary" do
+      @user.should respond_to(:primary)
+    end
+    
+    it "should not be a primary by default" do
+      @user.should_not be_primary
+    end
+    
+    it "should be convertible to a primary" do
+      @user.toggle!(:primary)
+      @user.should be_primary
+    end
+  end
 end

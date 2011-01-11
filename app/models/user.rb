@@ -1,29 +1,31 @@
 # == Schema Information
-# Schema version: 20101228042857
+# Schema version: 20110109195732
 #
 # Table name: users
 #
 #  id                 :integer         not null, primary key
-#  name               :string(255)
+#  first_name         :string(255)
 #  email              :string(255)
 #  created_at         :datetime
 #  updated_at         :datetime
 #  encrypted_password :string(255)
 #  salt               :string(255)
+#  last_name          :string(255)
+#  admin              :boolean
+#  primary            :boolean
 #
 
 require 'digest'
 class User < ActiveRecord::Base
 	attr_accessor :password
-	attr_accessible :name, :email, :password, :password_confirmation
+	attr_accessible :first_name, :last_name, :email, :password, :password_confirmation
 	
 	before_save :encrypt_password
 	
 	email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
-	validates :name, :presence => true,
-									 :length => { :maximum => 50 }
-									 
+	validates :first_name, :presence => true
+	validates :last_name, :presence => true
 	validates :email, :presence => true,
 										:format => { :with => email_regex },
 										:uniqueness => { :case_sensitive => false }
@@ -46,9 +48,25 @@ class User < ActiveRecord::Base
 	def has_password?(submitted_password)
 		encrypt(submitted_password) == encrypted_password
 	end					 
+	
+	def full_name
+	  "#{first_name} #{last_name}"
+	end
+	
+	def name
+	  "#{first_name} #{last_name[0,1]}."
+	end
+						
+	def admin?
+	  admin
+	end
+	
+	def primary?
+	  primary
+	end
 						
 	private
-	
+	  
 	  def encrypt_password
       self.salt = make_salt if new_record?
       self.encrypted_password = encrypt(password)

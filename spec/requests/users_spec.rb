@@ -2,36 +2,36 @@ require 'spec_helper'
 
 describe "Users" do
 
-  describe "signup" do
+#  describe "signup" do
 
-    it "should not make a new user" do
-    	lambda  do
-	      visit root_path
-	      click_link "Sign up"
-	      fill_in "Name",         :with => ""
-	      fill_in "Email",        :with => "fakeemail"
-	      fill_in "Password",     :with => "foobar"
-	      fill_in "Confirmation", :with => "foobar"
-	      click_button
-	      response.should render_template('users/new')
-	      response.should have_selector("div#error_explanation")
-      end.should_not change(User, :count)
-    end
-    
-    it "should make a new user" do
-    	lambda  do
-	      visit root_path
-	      click_link "Sign up"
-	      fill_in "Name",         :with => "Example User"
-	      fill_in "Email",        :with => "user@example.com"
-	      fill_in "Password",     :with => "foobar"
-	      fill_in "Confirmation", :with => "foobar"
-	      click_button
-	      response.should render_template('users/show')
-	      response.should have_selector("div.flash.success", :content => "Welcome")
-      end.should change(User, :count).by(1)
-    end
-  end
+#    it "should not make a new user" do
+#    	lambda  do
+#	      visit root_path
+#	      click_link "Sign up"
+#	      fill_in "Name",         :with => ""
+#	      fill_in "Email",        :with => "fakeemail"
+#	      fill_in "Password",     :with => "foobar"
+#	      fill_in "Confirmation", :with => "foobar"
+#	      click_button
+#	      response.should render_template('users/new')
+#	      response.should have_selector("div#error_explanation")
+#      end.should_not change(User, :count)
+#    end
+#    
+#    it "should make a new user" do
+#    	lambda  do
+#	      visit root_path
+#	      click_link "Sign up"
+#	      fill_in "Name",         :with => "Example User"
+#	      fill_in "Email",        :with => "user@example.com"
+#	      fill_in "Password",     :with => "foobar"
+#	      fill_in "Confirmation", :with => "foobar"
+#	      click_button
+#	      response.should render_template('users/show')
+#	      response.should have_selector("div.flash.success", :content => "Welcome")
+#      end.should change(User, :count).by(1)
+#    end
+#  end
   
   describe "sign in/out" do
   

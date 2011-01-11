@@ -10,15 +10,39 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101228042857) do
+ActiveRecord::Schema.define(:version => 20110110014059) do
+
+  create_table "shift_types", :force => true do |t|
+    t.string   "name"
+    t.integer  "primary_requirement"
+    t.integer  "secondary_requirement"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "shifts", :force => true do |t|
+    t.string   "name"
+    t.datetime "start"
+    t.datetime "end"
+    t.string   "location"
+    t.integer  "primary_id"
+    t.integer  "secondary_id"
+    t.integer  "shift_type_id"
+    t.string   "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
-    t.string   "name"
+    t.string   "first_name"
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "encrypted_password"
     t.string   "salt"
+    t.string   "last_name"
+    t.boolean  "admin"
+    t.boolean  "primary"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

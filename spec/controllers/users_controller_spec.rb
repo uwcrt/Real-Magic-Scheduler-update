@@ -28,11 +28,6 @@ describe UsersController do
     	get :show, :id => @user
     	response.should have_selector("h1", :content => @user.name)
     end
-    
-    it "should have a profile picture" do
-    	get :show, :id => @user
-    	response.should have_selector("h1>img", :class => "gravatar")
-    end
   end
 	
   describe "GET 'new'" do
@@ -47,9 +42,14 @@ describe UsersController do
     	response.should have_selector("title", :content => "Sign up")
     end
     
-    it "should have a name field" do
+    it "should have a first_name field" do
       get :new
-      response.should have_selector("input[name='user[name]'][type='text']")
+      response.should have_selector("input[name='user[first_name]'][type='text']")
+    end
+    
+    it "should have a last_name field" do
+      get :new
+      response.should have_selector("input[name='user[last_name]'][type='text']")
     end
 
     it "should have an email field" do
@@ -97,7 +97,8 @@ describe UsersController do
     describe "success" do
     	
     	before(:each) do
-    		@attr = { :name => "New user",
+    		@attr = { :first_name => "Justin",
+    		          :last_name => "Vanderheide",
     							:email => "user@example.com",
     							:password => "foobar",
     							:password_confirmation => "foobar" }
@@ -142,13 +143,6 @@ describe UsersController do
   		get :edit, :id => @user
   		response.should have_selector("title", :content => "Edit user")
   	end
-  	
-  	it "should have a link to change the gravatar" do
-  		get :edit, :id => @user
-  		gravatar_url = "http://gravatar.com/emails"
-      response.should have_selector("a", :href => gravatar_url,
-                                         :content => "change")
-  	end
   end
   
   describe "PUT 'update'" do
@@ -178,14 +172,15 @@ describe UsersController do
   	describe "success" do
 
       before(:each) do
-        @attr = { :name => "New Name", :email => "user@example.org",
+        @attr = { :first_name => "New", :last_name => "Name", :email => "user@example.org",
                   :password => "barbaz", :password_confirmation => "barbaz" }
       end
 
       it "should change the user's attributes" do
         put :update, :id => @user, :user => @attr
         @user.reload
-        @user.name.should  == @attr[:name]
+        @user.first_name.should  == @attr[:first_name]
+        @user.last_name.should == @attr[:last_name]
         @user.email.should == @attr[:email]
       end
 
