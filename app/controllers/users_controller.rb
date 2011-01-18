@@ -39,8 +39,9 @@ class UsersController < ApplicationController
 	def show
 		@user = User.find(params[:id])
 		@title = @user.name
-		@past_shifts = @user.shifts.select {|shift| shift.start <= DateTime.now }
-    @current_shifts = @user.shifts.select {|shift| shift.start > DateTime.now }
+		@past_shifts = @user.past_shifts
+    @current_shifts = @user.current_shifts
+    @shift_types = ShiftType.all
 	end
 
 	private

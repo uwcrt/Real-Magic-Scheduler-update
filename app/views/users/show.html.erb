@@ -1,10 +1,16 @@
 <h1><%= current_user.full_name %></h1>
-<p>Regular: 
-  <progress value="5" max="12"></progress> 5/12 Hours completed.
+
+<% @shift_types.each do |type| %>
+<%
+current = @user.hours(type)
+upcoming = @user.upcoming_hours(type)
+max = @user.hours_quota(type)
+%>
+<p><%= type.name %>:
+<meter min="0" value="<%= current %>" max="<%= max %>"></meter>
+<%= "#{current}/#{max} (#{upcoming} hours upcoming)" %>
 </p>
-<p>FnP: 
-  <progress value="1" max="1"></progress> Complete!
-</p>
+<% end %>
 
 <h3>Upcoming Shifts</h3>
 <%= render 'shifts/table', :shifts => @current_shifts %>

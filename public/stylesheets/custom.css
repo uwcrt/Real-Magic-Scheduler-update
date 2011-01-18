@@ -182,3 +182,7 @@ div.field, div.actions {
   list-style: square;
 }
 
+meter
+{
+  width:250px
+}
