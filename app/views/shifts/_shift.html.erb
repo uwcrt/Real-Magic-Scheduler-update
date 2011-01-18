@@ -1,0 +1,23 @@
+<tr>
+<td><%= shift.start.strftime("%a %b %d") %></td>
+<td><%= shift.name %></td>
+<td><%= shift.location %></td>
+<td><%= shift.start.strftime("%H:%M") %></td>
+<td><%= shift.end.strftime("%H:%M") %></td>
+<td><%= if can_primary?(shift)
+          link_to "Take Shift", primary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to take this shift?"
+        elsif shift.primary != nil
+          shift.primary.name
+        end
+     %>
+</td>
+<td><%= if can_secondary?(shift)
+          link_to "Take Shift", secondary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to take this shift?"
+        elsif shift.secondary != nil
+          shift.secondary.name
+        end
+     %>
+</td>
+<td><%= shift.shift_type.name %></td>
+<td><%= shift.note %></td>
+</tr>

@@ -1,0 +1,18 @@
+<%= form_for(@type) do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :primary_requirement %><br />
+    <%= f.text_field :primary_requirement %>
+  </div>
+  <div class="field">
+    <%= f.label :secondary_requirement %><br />
+    <%= f.text_field :secondary_requirement %>
+  </div>
+  <div class="actions">
+    <%= f.submit button_text %>
+  </div>
+<% end %>

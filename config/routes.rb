@@ -4,7 +4,12 @@ Tutorial::Application.routes.draw do
   resources :users
   resources :sessions, :only => [:new, :create, :destroy]
   resources :shift_types, :except => :show
-  resources :shifts, :except => :show
+  resources :shifts, :except => :show do
+    member do
+      put 'primary'
+      put 'secondary'
+    end
+  end
 
   match '/contact', :to => 'pages#contact'
   match '/about',   :to => 'pages#about'

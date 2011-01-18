@@ -6,7 +6,16 @@ Factory.define :user do |user|
   user.password_confirmation "foobar"
 end
 
-Factory.define :shifttype do |shift|
+Factory.define :shift do |shift|
+  shift.name      "Example Shift"
+  shift.start     DateTime.now
+  shift.end       DateTime.now + 5.hours
+  shift.location  "Student Life Center"
+  shift.note      "Alcohol Served"
+  shift.shift_type_id 1
+end
+
+Factory.define :shift_type do |shift|
   shift.name                  "regular"
   shift.primary_requirement   10
   shift.secondary_requirement 12

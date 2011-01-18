@@ -6,7 +6,7 @@ describe UsersController do
 	describe "GET 'show'" do
 
     before(:each) do
-      @user = Factory(:user)
+      @user = test_sign_in(Factory(:user))
     end
 
     it "should be successful" do
@@ -26,7 +26,7 @@ describe UsersController do
     
     it "should include the users name" do
     	get :show, :id => @user
-    	response.should have_selector("h1", :content => @user.name)
+    	response.should have_selector("h1", :content => @user.full_name)
     end
   end
 	

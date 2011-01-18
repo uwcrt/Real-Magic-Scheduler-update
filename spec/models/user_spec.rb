@@ -131,6 +131,34 @@ describe User do
     end
 	end
 	
+	describe "shift attributes" do
+	  
+	  before(:each) do
+	    @user = User.create!(@attr)
+	    @user.toggle!(:primary)
+	    @shifttype = Factory(:shift_type)
+	    @shift_secondary = Factory(:shift, :secondary => @user, :start => DateTime.now - 5.days)
+	    @shift_primary = Factory(:shift, :primary => @user, :start => DateTime.now - 4.days)
+	    @shift_neither = Factory(:shift, :start => DateTime.now - 3.days)
+	  end
+	  
+	  it "should have a shifts attribute" do
+	    @user.should respond_to(:shifts)
+	  end
+	  
+	  it "should contain taken secondary shifts" do
+	    @user.shifts.should include(@shift_secondary)
+	  end
+	  
+	  it "should contain taken primary shifts" do
+	    @user.shifts.should include(@shift_primary)
+	  end
+	  
+	  it "should not include shifts that don't belong to the user" do
+	    @user.shifts.should_not include(@shift_neither)
+	  end
+	end
+	
 	describe "admin attribute" do
 
     before(:each) do

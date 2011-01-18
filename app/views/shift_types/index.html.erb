@@ -1,0 +1,13 @@
+<h1>Shift Types</h1>
+<%= link_to "Create a new shift type", new_shift_type_path %>
+<br />
+<% unless @types.empty? %>
+<table>
+<th>Name</th>
+<th>Primary requirement</th>
+<th>Secondary requirement</th>
+<th>Edit</th>
+<th>Delete</th>
+<%= render @types %>
+</table>
+<% end %>
