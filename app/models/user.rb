@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
 											 :length => { :within => 6..40 }
 											 
   has_many :shifts, :finder_sql => 'SELECT * FROM shifts WHERE shifts.primary_id = #{id} OR shifts.secondary_id = #{id} ORDER BY shifts.start'
-											
+  
 	def self.authenticate(email, submitted_password)
     user = find_by_email(email)
     return nil  if user.nil?

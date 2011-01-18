@@ -1,12 +1,12 @@
 # == Schema Information
-# Schema version: 20110110014059
+# Schema version: 20110118193426
 #
 # Table name: shifts
 #
 #  id            :integer         not null, primary key
 #  name          :string(255)
 #  start         :datetime
-#  end           :datetime
+#  finish        :datetime
 #  location      :string(255)
 #  primary_id    :integer
 #  secondary_id  :integer
@@ -19,11 +19,11 @@
 class Shift < ActiveRecord::Base
   include SessionsHelper
   
-  attr_accessible :name, :start, :end, :location, :shift_type_id, :note
+  attr_accessible :name, :start, :finish, :location, :shift_type_id, :note
   
   default_scope :order => 'shifts.start ASC'
   
-  validates_presence_of :name, :start, :end, :location, :shift_type_id
+  validates_presence_of :name, :start, :finish, :location, :shift_type_id
   validates_numericality_of :shift_type_id
   validate :primary_cannot_equal_secondary, :secondary_cannot_take_primary
   
@@ -33,6 +33,10 @@ class Shift < ActiveRecord::Base
   
   def self.current
     Shift.where("start >= ?", DateTime.now - 1.day)
+  end
+  
+  def length
+  
   end
   
   private

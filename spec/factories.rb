@@ -9,7 +9,7 @@ end
 Factory.define :shift do |shift|
   shift.name      "Example Shift"
   shift.start     DateTime.now
-  shift.end       DateTime.now + 5.hours
+  shift.finish    DateTime.now + 5.hours
   shift.location  "Student Life Center"
   shift.note      "Alcohol Served"
   shift.shift_type_id 1

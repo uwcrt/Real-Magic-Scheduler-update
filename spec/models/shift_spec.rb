@@ -5,7 +5,7 @@ describe Shift do
   before(:each) do
     @attr = { :name => "Example Shift",
               :start => Time.now,
-              :end => Time.now + 5.hours,
+              :finish => Time.now + 5.hours,
               :location => "SLC",
               :shift_type_id => 1,
               :note => "No Booze"}
@@ -33,12 +33,12 @@ describe Shift do
     end
     
     it "should require an end time" do
-      @shift = Shift.new(@attr.merge(:end => nil))
+      @shift = Shift.new(@attr.merge(:finish => nil))
       @shift.should_not be_valid
     end
     
     it "should reject invalid end times" do
-      @shift = Shift.new(@attr.merge(:end => "fake time"))
+      @shift = Shift.new(@attr.merge(:finish => "fake time"))
       @shift.should_not be_valid
     end
     
