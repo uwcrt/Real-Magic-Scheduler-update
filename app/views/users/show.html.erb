@@ -7,7 +7,6 @@
 </p>
 
 <h3>Upcoming Shifts</h3>
-<table>
-
-</table>
+<%= render 'shifts/table', :shifts => @current_shifts %>
 <h3>Past Shifts</h3>
+<%= render 'shifts/table', :shifts => @past_shifts %>

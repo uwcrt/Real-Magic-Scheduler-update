@@ -1,0 +1,18 @@
+<% if shifts.empty? %>
+<p>There are no shifts to display at this time.</p>
+<% else %>
+<table>
+<tr>
+<th>Date</th>
+<th>Name</th>
+<th>Location</th>
+<th>Start Time</th>
+<th>End Time</th>
+<th>Primary</th>
+<th>Secondary</th>
+<th>Type</th>
+<th>Note</th>
+</tr>
+<%= render shifts %>
+</table>
+<% end %>

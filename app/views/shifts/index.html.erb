@@ -1,16 +1,5 @@
 <h1>Shifts</h1>
 <%= link_to "Create a new shift", new_shift_path if admin?%>
 <% unless @shifts.empty? %>
-<table>
-<th>Date</th>
-<th>Name</th>
-<th>Location</th>
-<th>Start Time</th>
-<th>End Time</th>
-<th>Primary</th>
-<th>Secondary</th>
-<th>Type</th>
-<th>Note</th>
-<%= render @shifts %>
-</table>
+<%= render 'shifts/table', :shifts => @shifts %>
 <% end %>
