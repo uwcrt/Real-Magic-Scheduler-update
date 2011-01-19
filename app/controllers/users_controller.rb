@@ -43,6 +43,11 @@ class UsersController < ApplicationController
     @current_shifts = @user.current_shifts
     @shift_types = ShiftType.all
 	end
+	
+	def index
+	  @users = User.all
+	  @title = "Users"
+	end
 
 	private
 		

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110118193426) do
+ActiveRecord::Schema.define(:version => 20110118225540) do
 
   create_table "shift_types", :force => true do |t|
     t.string   "name"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(:version => 20110118193426) do
     t.string   "last_name"
     t.boolean  "admin"
     t.boolean  "primary"
+    t.boolean  "disabled",           :default => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
