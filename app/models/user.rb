@@ -34,9 +34,7 @@ class User < ActiveRecord::Base
 											 :confirmation => true,
 											 :length => { :within => 6..40 }
 											 
-  has_many :past_shifts, :class_name => "Shift", :finder_sql => 'SELECT * FROM shifts WHERE shifts.start <= "#{DateTime.now.to_s(:db)}" AND (shifts.primary_id = #{id} OR shifts.secondary_id = #{id}) ORDER BY shifts.start'
-  
-  has_many :current_shifts, :class_name => "Shift", :finder_sql => 'SELECT * FROM shifts WHERE shifts.start > "#{DateTime.now.to_s(:db)}" AND (shifts.primary_id = #{id} OR shifts.secondary_id = #{id}) ORDER BY shifts.start'
+  has_many :shifts, :class_name => "Shift", :finder_sql => 'SELECT * FROM shifts WHERE shifts.primary_id = #{id} OR shifts.secondary_id = #{id} ORDER BY shifts.start'
   
 	def self.authenticate(email, submitted_password)
     user = find_by_email(email)
@@ -67,6 +65,14 @@ class User < ActiveRecord::Base
 	
 	def primary?
 	  primary
+	end
+	
+	def past_shifts
+	  shifts.select { |shift| shift.start <= DateTime.now }
+	end
+	
+	def current_shifts
+	  shifts.select { |shift| shift.start > DateTime.now }
 	end
 	
 	def hours(type)
