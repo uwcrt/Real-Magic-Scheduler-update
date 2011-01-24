@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20110109195732
+# Schema version: 20110124052357
 #
 # Table name: users
 #
@@ -13,6 +13,7 @@
 #  last_name          :string(255)
 #  admin              :boolean
 #  primary            :boolean
+#  disabled           :boolean
 #
 
 require 'digest'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110118225540) do
+ActiveRecord::Schema.define(:version => 20110124052357) do
 
   create_table "shift_types", :force => true do |t|
     t.string   "name"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(:version => 20110118225540) do
     t.integer  "secondary_requirement"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "ignore_primary",        :default => false
   end
 
   create_table "shifts", :force => true do |t|
