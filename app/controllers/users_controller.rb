@@ -42,6 +42,14 @@ class UsersController < ApplicationController
 		@past_shifts = @user.past_shifts
     @current_shifts = @user.current_shifts
     @shift_types = ShiftType.all
+    
+    if @user.disabled
+      @responder_type = "Suspended"
+    elsif @user.primary
+      @responder_type = "Primary"
+    else
+      @responder_type = "Secondary"
+    end
 	end
 	
 	def index
