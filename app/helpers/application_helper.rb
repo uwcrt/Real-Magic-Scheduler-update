@@ -5,7 +5,7 @@ module ApplicationHelper
 	end
 	
 	def title
-		base_title = "Ruby on Rails Tutorial Sample App"
+		base_title = "Real Magic Scheduler"
 		if @title.nil?
 			base_title
 		else

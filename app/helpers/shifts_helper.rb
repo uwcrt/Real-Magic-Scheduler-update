@@ -9,8 +9,8 @@ module ShiftsHelper
 	end
 
 	def can_secondary?(shift)
-	  return false if current_user.disabled
 	  return false if over_hours(shift) && !critical(shift)
+	  return false if current_user.disabled
 	  return false if shift.secondary != nil
     return false if shift.primary == current_user
     return true
