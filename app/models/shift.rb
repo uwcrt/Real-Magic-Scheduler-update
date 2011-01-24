@@ -32,7 +32,7 @@ class Shift < ActiveRecord::Base
   belongs_to :shift_type
 
   def self.current
-    Shift.where("start >= ?", DateTime.now - 1.day)
+    Shift.where("start >= ?", DateTime.now - 2.day)
   end
 
   def length
@@ -48,6 +48,6 @@ class Shift < ActiveRecord::Base
 
     def secondary_cannot_take_primary
       errors.add(:primary_id, "Secondary responders cannot take primary shifts!") if
-        primary_id != nil && !primary.primary?
+        primary_id != nil && !primary.primary? && !shift_type.ignore_primary
     end
 end
