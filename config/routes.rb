@@ -14,6 +14,8 @@ Tutorial::Application.routes.draw do
     member do
       put 'primary'
       put 'secondary'
+      put 'drop_primary'
+      put 'drop_secondary'
     end
   end
 

@@ -1,7 +1,7 @@
 class ShiftsController < ApplicationController
   include ShiftsHelper
   before_filter :authenticate
-  before_filter :admin, :only => [:new, :create]
+  before_filter :admin, :only => [:new, :create, :drop_primary, :drop_secondary]
   
   def index
     @title = "Shifts"
@@ -45,6 +45,20 @@ class ShiftsController < ApplicationController
 	  else
 	    flash[:error] = "There was a problem processing your request. If this problem continues please contact the scheduler."
 	  end
+	  redirect_to shifts_path
+	end
+	
+	def drop_primary
+	  shift = Shift.find(params[:id])
+	  shift.primary = nil
+	  shift.save
+	  redirect_to shifts_path
+	end
+	
+	def drop_secondary
+	  shift = Shift.find(params[:id])
+	  shift.secondary = nil
+	  shift.save
 	  redirect_to shifts_path
 	end
 end
