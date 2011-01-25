@@ -1,7 +1,13 @@
 Tutorial::Application.routes.draw do
   get "sessions/new"
 
-  resources :users
+  resources :users do
+    member do
+      put 'primary'
+      put 'suspended'
+      put 'admin'
+    end
+  end
   resources :sessions, :only => [:new, :create, :destroy]
   resources :shift_types, :except => :show
   resources :shifts, :except => :show do

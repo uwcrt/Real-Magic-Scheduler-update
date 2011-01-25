@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
 	before_filter :authenticate, :only => [:edit, :update]
 	before_filter :correct_user, :only => [:edit, :update]
+	before_filter :admin, :only => [:create, :new, :show, :primary, :suspended]
 
 	def create
 		@user = User.new(params[:user])
@@ -54,9 +55,22 @@ class UsersController < ApplicationController
 	
 	def index
 	  @users = User.all
+	  @shift_types = ShiftType.all
 	  @title = "Users"
 	end
-
+	
+	def primary
+	  @user = User.find(params[:id])
+	  @user.toggle!(:primary)
+	  redirect_to users_path
+	end
+  
+  def suspended
+	  @user = User.find(params[:id])
+	  @user.toggle!(:disabled)
+	  redirect_to users_path
+	end
+	
 	private
 		
 		def correct_user

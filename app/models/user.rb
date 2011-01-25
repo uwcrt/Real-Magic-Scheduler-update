@@ -37,6 +37,8 @@ class User < ActiveRecord::Base
 											 
   has_many :shifts, :class_name => "Shift", :finder_sql => 'SELECT * FROM shifts WHERE shifts.primary_id = #{id} OR shifts.secondary_id = #{id} ORDER BY shifts.start'
   
+  default_scope :order => 'users.last_name ASC'
+  
 	def self.authenticate(email, submitted_password)
     user = find_by_email(email)
     return nil  if user.nil?

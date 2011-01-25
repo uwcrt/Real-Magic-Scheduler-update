@@ -1,0 +1,12 @@
+<table>
+<tr>
+<th>Name</th>
+<% shift_types.each do |n| %>
+  <th><%= n.name %></th>
+<% end %>
+<th>Primary/Secondary</th>
+<th>Suspended</th>
+<th>Admin</th>
+</tr>
+<%= render users, :shift_types => shift_types %>
+</table>
