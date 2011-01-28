@@ -59,6 +59,22 @@ class UsersController < ApplicationController
 	  @title = "Users"
 	end
 	
+	def reset
+	  user = User.find_by_email params[:email]
+	  if user == nil 
+	    flash[:error] = "The email address you provided is not associated with an account."
+			redirect_to forgot_password_path
+		else
+	    password = ("a".."z").to_a.shuffle[0..5].to_s
+	    user.password = password
+	    user.password_confirmation = password
+	    user.save
+	    UserMailer.password_reset_email(user, password).deliver
+	    flash[:success] = "Your password has been reset, and your new password has been emailed to you."
+	    redirect_to signin_path
+	  end
+	end
+	
 	def primary
 	  @user = User.find(params[:id])
 	  @user.toggle!(:primary)

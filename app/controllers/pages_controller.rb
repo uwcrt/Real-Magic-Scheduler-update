@@ -14,4 +14,8 @@ class PagesController < ApplicationController
 	def help
 		@title = "Help"
 	end
+	
+	def forgot_password
+	  @title = "Password Reset"
+	end
 end

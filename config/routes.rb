@@ -2,11 +2,14 @@ Tutorial::Application.routes.draw do
   get "sessions/new"
 
   resources :users do
+    collection do
+      put 'reset'
+    end
     member do
       put 'primary'
       put 'suspended'
       put 'admin'
-    end
+    end  
   end
   resources :sessions, :only => [:new, :create, :destroy, :update, :edit]
   resources :shift_types, :except => :show
@@ -19,11 +22,12 @@ Tutorial::Application.routes.draw do
     end
   end
 
-  match '/contact', :to => 'pages#contact'
-  match '/about',   :to => 'pages#about'
-  match '/help',    :to => 'pages#help'
-  match '/signin',	:to => 'sessions#new'
-  match '/signout', :to => 'sessions#destroy'
+  match '/contact',         :to => 'pages#contact'
+  match '/about',           :to => 'pages#about'
+  match '/help',            :to => 'pages#help'
+  match '/signin',	        :to => 'sessions#new'
+  match '/signout',         :to => 'sessions#destroy'
+  match '/forgot_password', :to => 'pages#forgot_password'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
