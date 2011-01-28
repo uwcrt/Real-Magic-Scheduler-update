@@ -1,6 +1,6 @@
 <tr>
 <td><%= shift.start.strftime("%a %b %d") %></td>
-<td><%= shift.name %></td>
+<td><%= link_to shift.name, edit_shift_path(shift)%></td>
 <td><%= shift.location %></td>
 <td><%= shift.start.strftime("%H:%M") %></td>
 <td><%= shift.finish.strftime("%H:%M") %></td>

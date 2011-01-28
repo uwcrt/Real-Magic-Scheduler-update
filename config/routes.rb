@@ -8,7 +8,7 @@ Tutorial::Application.routes.draw do
       put 'admin'
     end
   end
-  resources :sessions, :only => [:new, :create, :destroy]
+  resources :sessions, :only => [:new, :create, :destroy, :update, :edit]
   resources :shift_types, :except => :show
   resources :shifts, :except => :show do
     member do

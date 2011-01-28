@@ -1,7 +1,7 @@
 class ShiftsController < ApplicationController
   include ShiftsHelper
   before_filter :authenticate
-  before_filter :admin, :only => [:new, :create, :drop_primary, :drop_secondary]
+  before_filter :admin, :only => [:new, :create, :drop_primary, :drop_secondary, :edit, :update]
   
   def index
     @title = "Shifts"
@@ -21,6 +21,22 @@ class ShiftsController < ApplicationController
 		else
 			@title = "New Shift"
 			render 'new'
+		end
+	end
+	
+	def edit
+	  @title = "Edit shift"
+	  @shift = Shift.find params[:id]
+	end
+	
+	def update
+	  @shift = Shift.find params[:id]
+		if @shift.update_attributes(params[:shift])
+			flash[:success] = "Shift updated."
+			redirect_to shifts_path
+		else
+			@title = "Edit shift"
+			render 'edit'
 		end
 	end
 	
