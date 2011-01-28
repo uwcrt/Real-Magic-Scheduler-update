@@ -9,6 +9,7 @@ Tutorial::Application.routes.draw do
       put 'primary'
       put 'suspended'
       put 'admin'
+      get 'edit_password'
     end  
   end
   resources :sessions, :only => [:new, :create, :destroy, :update, :edit]

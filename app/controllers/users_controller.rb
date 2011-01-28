@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-	before_filter :authenticate, :only => [:edit, :update]
-	before_filter :correct_user, :only => [:edit, :update]
+	before_filter :authenticate, :only => [:edit, :update, :change_password, :update_password]
+	before_filter :correct_user, :only => [:edit, :update, :change_password, :update_password]
 	before_filter :admin, :only => [:create, :new, :primary, :suspended]
 
 	def create
@@ -73,6 +73,11 @@ class UsersController < ApplicationController
 	    flash[:success] = "Your password has been reset, and your new password has been emailed to you."
 	    redirect_to signin_path
 	  end
+	end
+	
+	def edit_password
+	  @title = "Change Password"
+	  @user = User.find params[:id]
 	end
 	
 	def primary
