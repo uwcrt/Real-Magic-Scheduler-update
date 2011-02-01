@@ -40,6 +40,13 @@ class ShiftsController < ApplicationController
 		end
 	end
 	
+	def destroy 
+	  shift = Shift.find params[:id]
+	  shift.delete
+	  flash[:success] = "#{shift.name} deleted."
+	  redirect_to shifts_path
+	end
+	
 	def secondary
 	  shift = Shift.find(params[:id])
 	  if can_secondary?(shift)

@@ -1,3 +1,3 @@
 <h1>Edit shift</h1>
-
+<p><%= link_to "Delete shift", shift_path(@shift.id), :method => :delete, :confirm => "Are you sure you want to delete this shift?", :title => "Delete" %></p>
 <%= render "/shifts/form", :button_text => "Update" %>

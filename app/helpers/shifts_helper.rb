@@ -5,6 +5,7 @@ module ShiftsHelper
 	  return false if shift.primary != nil
     return false if !current_user.primary unless shift.shift_type.ignore_primary
     return false if shift.secondary == current_user
+    return false if conflict(shift)
     return true
 	end
 
@@ -13,7 +14,17 @@ module ShiftsHelper
 	  return false if current_user.disabled
 	  return false if shift.secondary != nil
     return false if shift.primary == current_user
+    return false if conflict(shift)
     return true
+	end
+	
+	def conflict(shift)
+	  current_user.shifts.each do |compare|
+	    if shift.start < compare.finish && shift.finish > compare.start
+	      return true
+	    end
+	  end
+	  return false
 	end
 
 	def critical(shift)

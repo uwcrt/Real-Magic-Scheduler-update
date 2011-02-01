@@ -4,7 +4,7 @@
 <%
 current = @user.hours(type)
 upcoming = @user.upcoming_hours(type)
-max = @user.hours_quota(type)
+max = @user.hours_quota(type).to_f
 %>
 <p><%= type.name %>:
 <meter min="0" value="<%= current %>" max="<%= max %>"></meter>
