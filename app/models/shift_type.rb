@@ -1,14 +1,14 @@
 # == Schema Information
-# Schema version: 20110124052357
+# Schema version: 20110222181535
 #
 # Table name: shift_types
 #
-#  id                    :integer         not null, primary key
+#  id                    :integer         primary key
 #  name                  :string(255)
 #  primary_requirement   :integer
 #  secondary_requirement :integer
-#  created_at            :datetime
-#  updated_at            :datetime
+#  created_at            :timestamp
+#  updated_at            :timestamp
 #  ignore_primary        :boolean
 #
 

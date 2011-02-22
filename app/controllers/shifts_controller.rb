@@ -8,6 +8,11 @@ class ShiftsController < ApplicationController
     @shifts = admin? ? Shift.all : Shift.current
   end
   
+  def show
+    @shift = Shift.find params[:id]
+    @title = @shift.name
+  end
+  
   def new
     @title = "New Shift"
     @shift = Shift.new

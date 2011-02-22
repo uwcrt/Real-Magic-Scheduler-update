@@ -78,14 +78,13 @@ nav ul li a:hover {
 
 /* Sign up button */
 
-a.signup_button {
-  margin-left: auto;
+a.forget_button {
   margin-right: auto;
   display: block;
   text-align: center;
   width: 190px;
   color: #fff;
-  background: #006400;
+  background: #800000;
   font-size: 150%;
   font-weight: bold;
   padding: 20px;
@@ -185,4 +184,9 @@ div.field, div.actions {
 meter
 {
   width:250px
+}
+
+.right
+{
+  float:right;
 }

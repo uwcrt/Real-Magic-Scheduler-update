@@ -14,7 +14,7 @@ Tutorial::Application.routes.draw do
   end
   resources :sessions, :only => [:new, :create, :destroy, :update, :edit]
   resources :shift_types, :except => :show
-  resources :shifts, :except => :show do
+  resources :shifts do
     member do
       put 'primary'
       put 'secondary'

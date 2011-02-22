@@ -1,0 +1,11 @@
+<div class="right">
+<%= render "/shifts/qr" %>
+</div>
+<h1><%= @shift.name %></h1>
+<p>Location: <%= @shift.location %></p>
+<p>Start: <%= @shift.start.strftime("%A %B %d, %H:%M") %></p>
+<p>End: <%= @shift.finish.strftime("%A %B %d, %H:%M") %></p>
+<p>Shift Type: <%= @shift.shift_type.name %></p>
+<p>Note: <%= @shift.note %></p>
+<p>Description: <br /><%= @shift.description %></p>
+

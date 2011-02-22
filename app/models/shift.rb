@@ -1,25 +1,26 @@
 # == Schema Information
-# Schema version: 20110118193426
+# Schema version: 20110222181535
 #
 # Table name: shifts
 #
-#  id            :integer         not null, primary key
+#  id            :integer         primary key
 #  name          :string(255)
-#  start         :datetime
-#  finish        :datetime
+#  start         :timestamp
+#  finish        :timestamp
 #  location      :string(255)
 #  primary_id    :integer
 #  secondary_id  :integer
 #  shift_type_id :integer
 #  note          :string(255)
-#  created_at    :datetime
-#  updated_at    :datetime
+#  created_at    :timestamp
+#  updated_at    :timestamp
+#  description   :string(255)
 #
 
 class Shift < ActiveRecord::Base
   include SessionsHelper
 
-  attr_accessible :name, :start, :finish, :location, :shift_type_id, :note
+  attr_accessible :name, :start, :finish, :location, :shift_type_id, :note, :description
 
   default_scope :order => 'shifts.start ASC'
 
