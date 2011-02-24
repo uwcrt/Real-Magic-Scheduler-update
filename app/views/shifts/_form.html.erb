@@ -21,6 +21,14 @@
     <%= f.collection_select(:shift_type_id, ShiftType.all, :id, :name) %>
   </div>
   <div class="field">
+    <%= f.label :primary_id %><br />
+    <%= f.collection_select(:primary_id, User.where(:primary => true, :disabled => false), :id, :full_name, {:include_blank => true}) %>
+  </div>
+  <div class="field">
+    <%= f.label :secondary_id %><br />
+    <%= f.collection_select(:secondary_id, User.where(:disabled => false), :id, :full_name, {:include_blank => true}) %>
+  </div>
+  <div class="field">
     <%= f.label :note %><br />
     <%= f.text_field :note %>
   </div>
