@@ -2,6 +2,11 @@
   width: 1010px;
 }
 
+.nofloat
+{
+  clear: both;
+}
+
 body {
   background: #cff;
 }
@@ -11,7 +16,11 @@ header {
 }
 
 header img {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
   padding: 1em;
+  margin-bottom: 1em;
   background: #fff;
 }
 
@@ -43,13 +52,11 @@ a:visited {
 }
 
 nav {
-  float: right;
-}
-
-nav {
   background-color: white;
   padding: 0 0.7em;
   white-space: nowrap;
+  display: inline-block;
+  margin-left: 55px;
 }
 
 nav ul {
