@@ -7,5 +7,5 @@
 <p>End: <%= @shift.finish.strftime("%A %B %d, %H:%M") %></p>
 <p>Shift Type: <%= @shift.shift_type.name %></p>
 <p>Note: <%= @shift.note %></p>
-<p>Description: <br /><%= @shift.description %></p>
+<p>Description: <br /><%= simple_format(@shift.description) %></p>
 
