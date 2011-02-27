@@ -1,6 +1,4 @@
-# Ruby on Rails Tutorial: first application
+Real Magic Scheduler
+--------------------
 
-This is the first application for
-[*Ruby on Rails Tutorial: Learn Rails by Example*](http://railstutorial.org/) 
-by [Michael Hartl](http://michaelhartl.com/).
-
+RMS is a web based application written in rails. It was first uesd by the University of Waterloo's Campus Response team to schedule first aid responders for shifts. It allows administrators to create, edit and delete shifts, and it allows users to take shifts given that they meet certain criteria. The numbers of hours each user has completed is automatically tracked.
