@@ -52,7 +52,7 @@ Tutorial::Application.configure do
     :address              => "smtp.gmail.com",
     :port                 => 587,
     :user_name            => 'crtscheduler',
-    :password             => 'schedulers09',
+    :password             => 'Fzj%nRbgWWg%',
     :authentication       => 'plain',
     :enable_starttls_auto => true  }
 end
