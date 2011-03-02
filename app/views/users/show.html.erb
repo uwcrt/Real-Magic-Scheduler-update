@@ -2,12 +2,12 @@
 <p><%= link_to "Change password", edit_password_user_path(@user) %></p>
 <% @shift_types.each do |type| %>
 <%
-current = @user.hours(type)
-upcoming = @user.upcoming_hours(type)
-max = @user.hours_quota(type).to_f
+current = format("%7.1f", @user.hours(type))
+upcoming = format("%7.1f", @user.upcoming_hours(type))
+max = format("%7.1f", @user.hours_quota(type))
 %>
 <p><%= type.name %>:
-<meter min="0" value="<%= current %>" max="<%= max %>"></meter>
+<meter min="0" value="<%= @user.hours(type).round %>" max="<%= @user.hours_quota(type).round %>"></meter>
 <%= "#{current}/#{max} (#{upcoming} hours upcoming)" %>
 </p>
 <% end %>
