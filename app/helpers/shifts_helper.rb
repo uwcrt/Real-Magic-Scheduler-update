@@ -11,6 +11,7 @@ module ShiftsHelper
 
 	def can_secondary?(shift)
 	  return false if over_hours(shift) && !critical(shift)
+	  return false if curent_user.primary unless critical(shift)
 	  return false if current_user.disabled
 	  return false if shift.secondary != nil
     return false if shift.primary == current_user
@@ -28,7 +29,7 @@ module ShiftsHelper
 	end
 
 	def critical(shift)
-	  shift.start - DateTime.now < 2.days
+	  shift.start - DateTime.now < 7.days
 	end
 
 	def over_hours(shift)
