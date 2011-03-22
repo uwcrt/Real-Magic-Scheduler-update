@@ -35,6 +35,14 @@ class Shift < ActiveRecord::Base
   def self.current
     Shift.where("start >= ?", DateTime.now - 2.day)
   end
+  
+  def self.past
+    Shift.where("start < ?", DateTime.now - 2.day)
+  end
+  
+  def self.available
+    (Shift.find_all_by_primary_id(nil) + Shift.find_all_by_secondary_id(nil) - past).uniq
+  end
 
   def length
     (finish - start)/(1.hour)

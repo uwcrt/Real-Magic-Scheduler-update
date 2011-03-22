@@ -8,6 +8,13 @@ class ShiftsController < ApplicationController
     @shifts = admin? ? Shift.all : Shift.current
   end
   
+  def available
+    @title = "Available Shifts"
+    @available = true;
+    @shifts = Shift.available
+    render 'index'
+  end
+  
   def show
     @shift = Shift.find params[:id]
     @title = @shift.name

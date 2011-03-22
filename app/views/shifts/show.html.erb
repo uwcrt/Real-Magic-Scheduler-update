@@ -1,13 +1,3 @@
-<div class="right">
-<%= render "/shifts/qr" %>
-<p>
-Click below for free QR code readers.
-<br />
-<%= link_to "Android", "http://google.com" %><br />
-<%= link_to "Blackberry", "http://google.com" %><br />
-<%= link_to "iPhone", "http://google.com" %>
-</p>
-</div>
 <h1><%= @shift.name %></h1>
 <p>Location: <%= @shift.location %></p>
 <p>Start: <%= @shift.start.strftime("%A %B %d, %H:%M") %></p>
