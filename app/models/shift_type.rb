@@ -16,6 +16,6 @@ class ShiftType < ActiveRecord::Base
   attr_accessible :name, :primary_requirement, :secondary_requirement, :ignore_primary
   
   validates :name, :presence => true
-  validates_numericality_of :primary_requirement, :presence => true, :only_integer => true
-  validates_numericality_of :secondary_requirement, :presence => true, :only_integer => true
+  validates_numericality_of :primary_requirement, :presence => true
+  validates_numericality_of :secondary_requirement, :presence => true
 end

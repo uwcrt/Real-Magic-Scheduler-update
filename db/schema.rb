@@ -10,15 +10,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110223051650) do
+ActiveRecord::Schema.define(:version => 20110322193324) do
 
   create_table "shift_types", :force => true do |t|
-    t.string    "name"
-    t.integer   "primary_requirement"
-    t.integer   "secondary_requirement"
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
-    t.boolean   "ignore_primary",        :default => false
+    t.string   "name"
+    t.float    "primary_requirement"
+    t.float    "secondary_requirement"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "ignore_primary",        :default => false
   end
 
   create_table "shifts", :force => true do |t|
