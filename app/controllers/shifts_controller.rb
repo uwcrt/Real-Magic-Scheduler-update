@@ -26,13 +26,29 @@ class ShiftsController < ApplicationController
   end
   
   def create
-		@shift = Shift.new(params[:shift])
-		if @shift.save
-			flash[:success] = "Shift created successfully!"
-			redirect_to shifts_path
-		else
-			@title = "New Shift"
-			render 'new'
+    if (params[:split])
+      base = Shift.new(params[:shift])
+      split_length = params[:split_length].to_i * 1.minute
+      num_shifts = (base.length * 60.minute) / split_length
+      shift = nil
+      (0...num_shifts).each do |n|
+        shift = Shift.new(params[:shift])
+        shift.start = base.start + split_length * n
+        shift.finish = shift.start + split_length 
+        shift.save
+      end
+      shift.finish = base.finish
+      shift.save
+      redirect_to shifts_path
+    elsif
+		  @shift = Shift.new(params[:shift])
+		  if @shift.save
+			  flash[:success] = "Shift created successfully!"
+			  redirect_to shifts_path
+		  else
+			  @title = "New Shift"
+			  render 'new'
+		  end
 		end
 	end
 	

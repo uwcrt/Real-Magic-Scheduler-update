@@ -17,6 +17,14 @@
     <%= f.datetime_select :finish %>
   </div>
   <div class="field">
+    <%= label_tag :split %><br />
+    <%= check_box_tag :split %>
+  </div>
+  <div class="field">
+    <%= label_tag :split_length, "Split Length (minutes)" %><br />
+    <%= text_field_tag :split_length %>
+  </div>
+  <div class="field">
     <%= f.label :shift_type_id %><br />
     <%= f.collection_select(:shift_type_id, ShiftType.all, :id, :name) %>
   </div>

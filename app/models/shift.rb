@@ -41,7 +41,7 @@ class Shift < ActiveRecord::Base
   end
   
   def self.available
-    (Shift.find_all_by_primary_id(nil) + Shift.find_all_by_secondary_id(nil) - past).uniq
+    (Shift.find_all_by_primary_id(nil) + Shift.find_all_by_secondary_id(nil) - past).uniq.sort {|x,y| x.start <=> y.start }
   end
 
   def length
