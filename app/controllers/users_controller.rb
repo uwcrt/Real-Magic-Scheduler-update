@@ -86,13 +86,19 @@ class UsersController < ApplicationController
 	def primary
 	  @user = User.find(params[:id])
 	  @user.toggle!(:primary)
-	  redirect_to users_path
+	  respond_to do |format|
+      format.html { redirect_to users_path }
+      format.js
+    end
 	end
   
   def suspended
 	  @user = User.find(params[:id])
 	  @user.toggle!(:disabled)
-	  redirect_to users_path
+	  respond_to do |format|
+      format.html { redirect_to users_path }
+      format.js
+    end
 	end
 	
 	private

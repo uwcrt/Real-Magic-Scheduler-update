@@ -1,10 +1,13 @@
 <tr>
   <td><%= "#{user.first_name} #{user.last_name}" %></td>
-  
 <% shift_types.each do |n| %>
   <td><%= format("%7.2f", user.total_hours(n)) %></td>
 <% end %>
-<td><%= link_to (user.primary ? "Primary" : "Secondary", primary_user_path(user), :method => :put, :confirm => "Are you sure you want to change this user's primary status?") %></td>
-<td><%= link_to user.disabled.to_s, suspended_user_path(user), :method => :put, :confirm => "Are you sure you want to change this user's suspension status?" %></td>
+<td id="p<%= user.id %>">
+<%= render 'users/primary', :user => user %>
+</td>
+<td id="d<%= user.id %>">
+<%= render 'users/suspended', :user => user %>
+</td>
 <td><%= user.admin %></td>
 </tr>
