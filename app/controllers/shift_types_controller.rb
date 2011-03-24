@@ -17,6 +17,14 @@ class ShiftTypesController < ApplicationController
     @type = ShiftType.find_by_id(params[:id])
   end
   
+  def naughty
+    @type = ShiftType.find_by_id(params[:id])
+    @title = type.name + " Naughty List"
+    @users = User.find_all_by_disabled(false);
+    @users.reject! {|n| n.total_hours(@type) >= n.hours_quota(@type)}
+    @type = [@type]
+  end
+  
   def update
 		@type = ShiftType.find_by_id(params[:id])
 		if @type.update_attributes(params[:shift_type])

@@ -13,7 +13,11 @@ Tutorial::Application.routes.draw do
     end  
   end
   resources :sessions, :only => [:new, :create, :destroy, :update, :edit]
-  resources :shift_types, :except => :show
+  resources :shift_types, :except => :show do
+    member do
+      get 'naughty'
+    end
+  end
   resources :shifts do
     collection do
       get 'available'

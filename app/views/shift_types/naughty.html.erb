@@ -1,0 +1,2 @@
+<h1><%= @type[0].name + " Naughty List" %></h1>
+<%= render :partial => "users/table", :locals => {:users => @users, :shift_types => @type} %>
