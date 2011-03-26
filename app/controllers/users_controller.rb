@@ -1,14 +1,14 @@
 class UsersController < ApplicationController
 	before_filter :authenticate, :only => [:edit, :update, :change_password, :update_password]
 	before_filter :correct_user, :only => [:edit, :update, :change_password, :update_password]
-	before_filter :admin, :only => [:create, :new, :primary, :suspended]
+	before_filter :admin, :only => [:create, :new, :primary, :suspended, :eot, :admin]
 
 	def create
 		@user = User.new(params[:user])
 		password = ("a".."z").to_a.shuffle[0..5].to_s
 	  @user.password = password
 	  @user.password_confirmation = password
-	  
+
 		if @user.save
 		  UserMailer.new_user_email(@user, password).deliver
 			flash[:success] = "User created successfully!"
@@ -46,7 +46,7 @@ class UsersController < ApplicationController
 		@past_shifts = @user.past_shifts
     @current_shifts = @user.current_shifts
     @shift_types = ShiftType.all
-    
+
     if @user.disabled
       @responder_type = "Suspended"
     elsif @user.primary
@@ -55,16 +55,16 @@ class UsersController < ApplicationController
       @responder_type = "Secondary"
     end
 	end
-	
+
 	def index
 	  @users = User.all
 	  @shift_types = ShiftType.all
 	  @title = "Users"
 	end
-	
+
 	def reset
 	  user = User.find_by_email params[:email]
-	  if user == nil 
+	  if user == nil
 	    flash[:error] = "The email address you provided is not associated with an account."
 			redirect_to forgot_password_path
 		else
@@ -77,12 +77,12 @@ class UsersController < ApplicationController
 	    redirect_to signin_path
 	  end
 	end
-	
+
 	def edit_password
 	  @title = "Change Password"
 	  @user = User.find params[:id]
 	end
-	
+
 	def primary
 	  @user = User.find(params[:id])
 	  @user.toggle!(:primary)
@@ -91,7 +91,7 @@ class UsersController < ApplicationController
       format.js
     end
 	end
-  
+
   def suspended
 	  @user = User.find(params[:id])
 	  @user.toggle!(:disabled)
@@ -101,8 +101,51 @@ class UsersController < ApplicationController
     end
 	end
 	
+	def make_admin
+	  if User.where(:admin => true).count < 3 then
+	    @user = User.find(params[:id])
+	    @user.toggle!(:admin)
+	    flash[:success] = "#{@user.full_name} is now an administrator!"
+	  end
+	  redirect_to users_path
+	end
+
+	def eot
+	  @title = "RMS Reset"
+	  @inactive = [];
+	  @deleted = [];
+	  user = User. where(:first_name => params[:first_name], :last_name => params[:last_name])
+
+	  if user[0].admin == false or user[0].admin == nil then
+	    user[0].delete
+	  end
+
+	  @current_user.password = params[:new_password]
+	  @current_user.password_confirmation = params[:new_password]
+	  @current_user.first_name = params[:first_name]
+	  @current_user.last_name = params[:last_name]
+	  @current_user.save
+
+	  users = User.all
+	  users.each do |n|
+	    if n.total_hours(ShiftType.first) == 0 then
+	      if n.inactive then
+	        n.delete
+	        @deleted += [n.full_name]
+	      else
+	        n.toggle!(:inactive)
+	        @inactive += [n.full_name]
+	      end
+	      n.toggle!(:disabled) unless n.disabled
+	    end
+	    n.toggle!(:admin) if (n.admin && @current_user != n)
+	  end
+
+	Shift.all.each {|n| n.delete}
+	end
+
 	private
-		
+
 		def correct_user
 			@user = User.find(params[:id])
 			redirect_to(root_path) unless @user == current_user

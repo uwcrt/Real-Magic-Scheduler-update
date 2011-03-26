@@ -4,11 +4,12 @@ Tutorial::Application.routes.draw do
   resources :users do
     collection do
       put 'reset'
+      put 'eot'
     end
     member do
       put 'primary'
       put 'suspended'
-      put 'admin'
+      put 'make_admin'
       get 'edit_password'
     end  
   end
@@ -35,6 +36,7 @@ Tutorial::Application.routes.draw do
   match '/help',            :to => 'pages#help'
   match '/signin',	        :to => 'sessions#new'
   match '/signout',         :to => 'sessions#destroy'
+  match '/eot',             :to => 'pages#eot'
   match '/forgot_password', :to => 'pages#forgot_password'
 
   # The priority is based upon order of creation:

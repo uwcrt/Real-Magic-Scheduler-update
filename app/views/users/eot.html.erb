@@ -1,0 +1,14 @@
+<h1>RMS Reset Results</h1>
+<p>The following responders were deleted due to 2 terms of inactivity</p>
+<ul>
+<% @deleted.each do |n| %>
+  <li><%= n %></li>
+<% end %>
+</ul>
+
+<p>The following responders were marked inactive, and will be deleted at the end of next term if they do not complete any shift hours</p>
+<ul>
+<% @inactive.each do |n| %>
+  <li><%= n %></li>
+<% end %>
+</ul>

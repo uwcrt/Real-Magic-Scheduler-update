@@ -9,5 +9,7 @@
 <td id="d<%= user.id %>">
 <%= render 'users/suspended', :user => user %>
 </td>
-<td><%= user.admin %></td>
+<td>
+<%= render 'users/admin', :user => user %>
+</td>
 </tr>

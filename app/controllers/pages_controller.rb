@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  before_filter :admin, :only => [:eot]
+  
   def home
   	@title = "Home"
   end
@@ -9,6 +11,10 @@ class PagesController < ApplicationController
 
 	def about
 		@title = "About"
+	end
+	
+	def eot
+	  @title = "End of Term"
 	end
 	
 	def help

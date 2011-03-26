@@ -1,0 +1,9 @@
+<%= 
+if user.admin
+  "true"
+elsif User.where(:admin => true).count < 3 then
+  link_to "Promote",
+          make_admin_user_path(user),
+          :method => :put
+end
+%>
