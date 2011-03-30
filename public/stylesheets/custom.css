@@ -188,6 +188,11 @@ div.field, div.actions {
   list-style: square;
 }
 
+.award {
+  color: #EEAD0E;
+  font-weight: bold;
+}
+
 meter
 {
   width:250px

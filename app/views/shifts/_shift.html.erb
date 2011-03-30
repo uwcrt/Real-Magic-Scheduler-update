@@ -7,14 +7,18 @@
 <td><%= if can_primary?(shift)
           link_to "Take Shift", primary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to take this shift?"
         elsif shift.primary != nil
-          admin? ? (link_to shift.primary.name, drop_primary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to withdraw this responder?") : shift.primary.name
+          if admin? then
+            link_to shift.primary.name, drop_primary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to withdraw this responder?"
+          else
+            render "/shifts/name", :responder => shift.primary
+          end
         end
      %>
 </td>
 <td><%= if can_secondary?(shift)
           link_to "Take Shift", secondary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to take this shift?"
         elsif shift.secondary != nil
-          admin? ? (link_to shift.secondary.name, drop_secondary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to withdraw this responder?") : shift.secondary.name
+          admin? ? (link_to shift.secondary.name, drop_secondary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to withdraw this responder?") : (render "/shifts/name", :responder => shift.secondary)
         end
      %>
 </td>

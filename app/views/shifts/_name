@@ -1,0 +1,7 @@
+<% if responder.award then %>
+<span class='award'>
+<%= responder.name %>
+</span>
+<% else %>
+<%= responder.name %>
+<% end %>

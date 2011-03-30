@@ -1,4 +1,13 @@
-<h1><%= current_user.full_name %> (<%= @responder_type %>)</h1>
+<h1>
+<% if current_user.award then %>
+<span class='award'>
+<%= current_user.full_name %>
+</span>
+<% else %>
+<%= current_user.full_name %>
+<% end %>
+(<%= @responder_type %>)
+</h1>
 <p><%= link_to "Change password", edit_password_user_path(@user) %></p>
 <% @shift_types.each do |type| %>
 <%
