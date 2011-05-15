@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 	before_filter :authenticate, :only => [:edit, :update, :change_password, :update_password]
 	before_filter :correct_user, :only => [:edit, :update, :change_password, :update_password]
-	before_filter :admin, :only => [:create, :new, :primary, :suspended, :eot, :admin]
+	before_filter :admin, :only => [:create, :new, :primary, :suspended, :eot, :admin, :destroy]
 
 	def create
 		@user = User.new(params[:user])
@@ -26,6 +26,13 @@ class UsersController < ApplicationController
 
 	def edit
 		@title = "Edit user"
+	end
+
+	def destroy
+	  user = User.find params[:id]
+	  user.delete
+	  flash[:success] = "#{user.name} deleted."
+	  redirect_to users_path
 	end
 
 	def update

@@ -12,4 +12,7 @@
 <td>
 <%= render 'users/admin', :user => user %>
 </td>
+<td>
+<%= link_to "Delete", user_path(user), :method => :delete ,:confirm => "Are you SURE you want to delete #{user.name}?" %>
+</td>
 </tr>
