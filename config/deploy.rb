@@ -21,7 +21,7 @@ end
 task :prod do
   server "www-app.fs.uwaterloo.ca", :web, :app
   role :db, "www-app.fs.uwaterloo.ca", :primary => true
-  set :deploy_to, "/srv/rails/request.feds.ca"
+  set :deploy_to, "/srv/rails/scheduler.crt.feds.ca"
 end
 
 # If you are using Passenger mod_rails uncomment this:
