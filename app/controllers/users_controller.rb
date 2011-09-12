@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 	before_filter :authenticate, :only => [:edit, :update, :change_password, :update_password]
 	before_filter :correct_user, :only => [:edit, :update, :change_password, :update_password]
-	before_filter :admin, :only => [:create, :new, :primary, :suspended, :eot, :admin, :destroy]
+	before_filter :admin, :only => [:create, :new, :primary, :suspended, :eot, :admin, :destroy, :index]
 
 	def create
 		@user = User.new(params[:user])
@@ -109,12 +109,14 @@ class UsersController < ApplicationController
 	end
 	
 	def make_admin
-	  if User.where(:admin => true).count < 3 then
-	    @user = User.find(params[:id])
-	    @user.toggle!(:admin)
-	    flash[:success] = "#{@user.full_name} is now an administrator!"
-	  end
-	  redirect_to users_path
+	  @user = User.find(params[:id])
+	  @user.toggle!(:admin)
+          if @user.admin?
+   	    flash[:success] = "#{@user.full_name} is now an administrator!"
+	  else
+            flash[:success] = "#{@user.full_name} is no longer an administrator!" 
+          end
+          redirect_to users_path
 	end
 
 	def eot
