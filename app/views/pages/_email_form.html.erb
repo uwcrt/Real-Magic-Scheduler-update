@@ -1,9 +1,6 @@
-<%= form_tag(reset_users_path, :method => "put") do %>
-  <div class="field">
-    <%= label_tag :email %><br />
+<%= form_tag(reset_users_path, :method => "put", :class => :well) do %>
+    <%= label_tag :email %>
     <%= text_field_tag :email %>
-  </div>
-  <div class="actions">
+    <br />
     <%= submit_tag "Submit" %>
-  </div>
 <% end %>

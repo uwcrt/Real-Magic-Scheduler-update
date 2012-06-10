@@ -1,26 +1,32 @@
-<h1>
-<% if current_user.award then %>
-<span class='award'>
-<%= current_user.full_name %>
-</span>
-<% else %>
-<%= current_user.full_name %>
-<% end %>
-(<%= @responder_type %>)
-</h1>
-<p><%= link_to "Change password", edit_password_user_path(@user) %></p>
+<div class='page-header'>
+  <h1>
+  <% if current_user.award then %>
+  <span class='award'>
+  <%= current_user.full_name %>
+  </span>
+  <% else %>
+  <%= current_user.full_name %>
+  <% end %>
+  (<%= @responder_type %>)
+  </h1>
+</div>
+<a class="btn btn-info" href="<%=edit_password_user_path(@user)%>"><i class='icon-cog icon-white'></i>Change password</a>
+<br />
+<br />
 <% @shift_types.each do |type| %>
 <%
 current = format("%7.1f", @user.hours(type))
 upcoming = format("%7.1f", @user.upcoming_hours(type))
 max = format("%7.1f", @user.hours_quota(type))
+style = "progress-success"
+style = "progress-danger" if current + upcoming >= max
 %>
-<p><%= type.name %>:
-<meter min="0" value="<%= @user.hours(type).round %>" max="<%= @user.hours_quota(type).round %>"></meter>
-<%= "#{current}/#{max} (#{upcoming} hours upcoming)" %>
-</p>
+  <%= type.name %>:
+  <%= "#{current} / #{max} (#{upcoming} hours upcoming)" %>
+  <div class='progress <%= style %>' style='width:33%'>
+    <div class='bar' style='width: <%= (@user.hours(type) / @user.hours_quota(type) * 100) %>%'></div>
+  </div>
 <% end %>
-
 <h3>Upcoming Shifts</h3>
 <%= render 'shifts/table', :shifts => @current_shifts %>
 <h3>Past Shifts</h3>

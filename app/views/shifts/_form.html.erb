@@ -1,50 +1,26 @@
-<%= form_for(@shift) do |f| %>
+<%= form_for(@shift, :html => {:class => 'well'}) do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
-  <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label :name %>
     <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :location %><br />
+    <%= f.label :location %>
     <%= f.text_field :location %>
-  </div>
-  <div class="field">
-    <%= f.label :start %><br />
+    <%= f.label :start %>
     <%= f.datetime_select :start %>
-  </div>
-  <div class="field">
-    <%= f.label :finish %><br />
+    <%= f.label :finish %>
     <%= f.datetime_select :finish %>
-  </div>
-  <div class="field">
-    <%= label_tag :split %><br />
+    <%= label_tag :split %>
     <%= check_box_tag :split %>
-  </div>
-  <div class="field">
-    <%= label_tag :split_length, "Split Length (minutes)" %><br />
+    <%= label_tag :split_length, "Split Length (minutes)" %>
     <%= text_field_tag :split_length %>
-  </div>
-  <div class="field">
-    <%= f.label :shift_type_id %><br />
+    <%= f.label :shift_type_id %>
     <%= f.collection_select(:shift_type_id, ShiftType.all, :id, :name) %>
-  </div>
-  <div class="field">
-    <%= f.label :primary_id %><br />
+    <%= f.label :primary_id %>
     <%= f.collection_select(:primary_id, User.where(:primary => true, :disabled => false), :id, :full_name, {:include_blank => true}) %>
-  </div>
-  <div class="field">
-    <%= f.label :secondary_id %><br />
+    <%= f.label :secondary_id %>
     <%= f.collection_select(:secondary_id, User.where(:disabled => false), :id, :full_name, {:include_blank => true}) %>
-  </div>
-  <div class="field">
-    <%= f.label :note %><br />
+    <%= f.label :note %>
     <%= f.text_field :note %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
-  </div
-  <div class="actions">
+    <%= f.label :description %>
+    <%= f.text_area :description %><br />
     <%= f.submit button_text %>
-  </div>
 <% end %>

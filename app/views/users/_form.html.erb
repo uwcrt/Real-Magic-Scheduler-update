@@ -1,18 +1,11 @@
-<%= form_for(@user) do |f| %>
+<%= form_for(@user, :html => {:class => 'well'}) do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
-  <div class="field">
-    <%= f.label :first_name %><br />
+    <%= f.label :first_name %>
     <%= f.text_field :first_name %>
-  </div>
-  <div class="field">
-    <%= f.label :last_name %><br />
+    <%= f.label :last_name %>
     <%= f.text_field :last_name %>
-  </div>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </div>
-  <div class="actions">
+    <%= f.label :email %>
+    <%= f.text_field :email %><br />
     <%= f.submit button_text %>
   </div>
 <% end %>

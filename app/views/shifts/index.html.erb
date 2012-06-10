@@ -1,17 +1,28 @@
-<h1>Shifts</h1>
-<p>You will only be able to take shifts which you meet the criteria for. A shift becomes "critical" 7 days before it begins. The restrictions are...</p>
-<ul>
-  <li>If you are suspended you cannot take any shifts</li>
-  <li>You cannot take a shift that conflicts with another shift you already have</li>
-  <li>If you are a secondary you cannot take a primary shift (except FnP)</li>
-  <li>If you are a primary you cannot take a secondary shift until it is critical (except FnP)</li>
-  <li>If your total hours (past + future) meet the quota you cannot take a shift until it is critical</li>
-</ul>
-<p>You can see a report of your hours and shifts by clicking "profile" in the navigation bar.</p>
-<p>If a shift changes or is cancelled, those affected will be notified by telephone or e-mail and details will be posted here within 24 hours of the shift. If you notice any errors, please contact the director of scheduling ASAP.</p>
-<%= link_to "Create a new shift", new_shift_path if admin?%><br />
-<%= link_to "Only show available shifts", available_shifts_path if !@available %>
-<%= link_to "Show all shifts", shifts_path if @available %>
+<div class='well'>
+  <div class='page-header'>
+    <h1>Shifts</h1>
+  </div>
+  <p>You will only be able to take shifts which you meet the criteria for. A shift becomes "critical" 7 days before it begins. The restrictions are...</p>
+  <ul>
+    <li>If you are suspended you cannot take any shifts</li>
+    <li>You cannot take a shift that conflicts with another shift you already have</li>
+    <li>If you are a secondary you cannot take a primary shift (except FnP)</li>
+    <li>If you are a primary you cannot take a secondary shift until it is critical (except FnP)</li>
+    <li>If your total hours (past + future) meet the quota you cannot take a shift until it is critical</li>
+  </ul>
+  <p>You can see a report of your hours and shifts by clicking "profile" in the navigation bar.</p>
+  <p>If a shift changes or is cancelled, those affected will be notified by telephone or e-mail and details will be posted here within 24 hours of the shift. If you notice any errors, please contact the director of scheduling ASAP.</p>
+</div>
+<% if admin? %>
+  <a class="btn btn-success" href="<%= new_shift_path %>"><i class="icon-asterisk icon-white"></i> New Shift</a>
+<% end %>
+<% if @available %>
+  <a class="btn" href="<%=shifts_path%>"><i class='icon-filter'></i>All Shifts</a>
+<% else %>
+  <a class="btn" href="<%=available_shifts_path%>"><i class='icon-filter'></i>Available Shifts</a>
+<% end %>
+<br />
+<br />
 <% unless @shifts.empty? %>
 <%= render 'shifts/table', :shifts => @shifts %>
 <% end %>

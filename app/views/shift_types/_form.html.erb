@@ -1,26 +1,15 @@
-<%= form_for(@type) do |f| %>
+<%= form_for(@type, :html => {:class => 'well'}) do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
-  <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label :name %>
     <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :primary_requirement %><br />
+    <%= f.label :primary_requirement %>
     <%= f.text_field :primary_requirement %>
-  </div>
-  <div class="field">
-    <%= f.label :secondary_requirement %><br />
+    <%= f.label :secondary_requirement %>
     <%= f.text_field :secondary_requirement %>
-  </div>
-  <div class="field">
     <%= f.label :ignore_primary %>
     <%= f.check_box :ignore_primary %>
-  </div>
-	<div class="field">
     <%= f.label :ignore_suspended %>
-    <%= f.check_box :ignore_suspended %>
-  </div>
-  <div class="actions">
+    <%= f.check_box :ignore_suspended %><br />
     <%= f.submit button_text %>
   </div>
 <% end %>
