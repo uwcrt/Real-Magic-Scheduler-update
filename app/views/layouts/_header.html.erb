@@ -3,7 +3,6 @@
         <div class="container">
           <%= link_to "RMS", root_path, :class => "brand" %>
           <ul class="nav">
-            <li><%= link_to "Home", root_path %></li>
             <% if signed_in? %>
               <li><%= link_to "Shifts", shifts_path %></li>
               <li><%= link_to "Profile", user_path(current_user) %></li>
