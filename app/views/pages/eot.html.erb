@@ -4,12 +4,11 @@
   <p>The following will take place...
   <ul>
   <li>All shifts will be cleared from the database</li>
-  <li>All responders will have their status set to "suspended"</li>
-  <li>All responders who have had 0 hours for two terms in a row will be removed from RMS</li>
+  <li>A celebratory kitten will be prepared</li>
   </ul>
   </p>
 
-  <p>If you are sure that you wish to proceed please complete the following form.</p>
+  <p>If you are sure that you wish to proceed please click the button</p>
 
-  <%= render "eot_form" %>
+  <%= link_to '<i class="icon-warning-sign icon-white"></i> Reset RMS'.html_safe, eot_users_path, :method => :put, :confirm => "Are you sure you want to reset RMS?", :title => "Nuking RMS", :class => 'btn btn-large btn-danger' %>
 </div>

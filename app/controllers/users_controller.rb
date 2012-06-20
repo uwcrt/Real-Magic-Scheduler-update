@@ -121,36 +121,7 @@ class UsersController < ApplicationController
 
 	def eot
 	  @title = "RMS Reset"
-	  @inactive = [];
-	  @deleted = [];
-	  user = User. where(:first_name => params[:first_name], :last_name => params[:last_name])
-
-	  if user[0].admin == false or user[0].admin == nil then
-	    user[0].delete
-	  end
-
-	  @current_user.password = params[:new_password]
-	  @current_user.password_confirmation = params[:new_password]
-	  @current_user.first_name = params[:first_name]
-	  @current_user.last_name = params[:last_name]
-	  @current_user.save
-
-	  users = User.all
-	  users.each do |n|
-	    if n.total_hours(ShiftType.first) == 0 then
-	      if n.inactive then
-	        n.delete
-	        @deleted += [n.full_name]
-	      else
-	        n.toggle!(:inactive)
-	        @inactive += [n.full_name]
-	      end
-	      n.toggle!(:disabled) unless n.disabled
-	    end
-	    n.toggle!(:admin) if (n.admin && @current_user != n)
-	  end
-
-	Shift.all.each {|n| n.delete}
+	  Shift.delete_all
 	end
 
 	private

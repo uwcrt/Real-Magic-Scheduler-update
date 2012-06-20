@@ -1,9 +1,3 @@
 <%= form_tag(eot_users_path, :method => "put", :html => {:class => 'well'}) do %>
-    <%= label_tag :first_name, "New Scheduler First Name" %>
-    <%= text_field_tag :first_name %>
-    <%= label_tag :last_name, "New Scheduler Last Name" %>
-    <%= text_field_tag :last_name %>
-    <%= label_tag :new_password, "New Scheduler RMS Password" %>
-    <%= text_field_tag :new_password %><br />
     <%= submit_tag "Reset RMS" %>
 <% end %>
