@@ -23,5 +23,12 @@
      %>
 </td>
 <td><%= shift.shift_type.name %></td>
+<td>
+  <% if shift.aed %>
+    <i class="icon-ok center"></i>
+  <% else %>
+    <i class="icon-remove center"></i>
+  <% end %>
+</td>
 <td><%= shift.note %></td>
 </tr>

@@ -8,6 +8,8 @@
     <%= f.datetime_select :start %>
     <%= f.label :finish %>
     <%= f.datetime_select :finish %>
+    <%= label_tag :aed %>
+    <%= f.check_box :aed %>
     <%= label_tag :split %>
     <%= check_box_tag :split %>
     <%= label_tag :split_length, "Split Length (minutes)" %>
@@ -21,6 +23,7 @@
     <%= f.label :note %>
     <%= f.text_field :note %>
     <%= f.label :description %>
-    <%= f.text_area :description %><br />
+    <%= f.text_area :description, :rows => 6, :cols => "100" %><br />
     <%= f.submit button_text %>
 <% end %>
+

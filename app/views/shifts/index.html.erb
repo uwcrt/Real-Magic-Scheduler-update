@@ -16,10 +16,17 @@
 <% if admin? %>
   <a class="btn btn-success" href="<%= new_shift_path %>"><i class="icon-asterisk icon-white"></i> New Shift</a>
 <% end %>
-<% if @available %>
-  <a class="btn" href="<%=shifts_path%>"><i class='icon-filter'></i>All Shifts</a>
-<% else %>
-  <a class="btn" href="<%=available_shifts_path%>"><i class='icon-filter'></i>Available Shifts</a>
+
+<% if admin? && @mode != :history %>
+  <a class="btn" href="<%=shifts_path(:history => true)%>"><i class='icon-filter'></i> All Shifts</a>
+<% end %>
+
+<% if @mode != :current %>
+  <a class="btn" href="<%=shifts_path%>"><i class='icon-filter'></i> Current Shifts</a>
+<% end %>
+
+<% if @mode != :available %>
+  <a class="btn" href="<%=available_shifts_path%>"><i class='icon-filter'></i> Available Shifts</a>
 <% end %>
 <br />
 <br />

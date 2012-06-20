@@ -4,6 +4,17 @@
 <p>Start: <%= @shift.start.strftime("%A %B %d, %H:%M") %></p>
 <p>End: <%= @shift.finish.strftime("%A %B %d, %H:%M") %></p>
 <p>Shift Type: <%= @shift.shift_type.name %></p>
-<p>Note: <%= @shift.note %></p>
-<p>Description: <br /><%= simple_format(@shift.description) %></p>
+<p>AED:
+  <% if @shift.aed %>
+  Bring the AED
+  <% else %>
+  Do not bring the AED
+  <% end %>
+</p>
+<% if @shift.note.present? %>
+  <p>Note: <%= @shift.note %></p>
+<% end %>
+<% if @shift.description.present? %>
+  <p><b>Description</b> <br /><%= simple_format(@shift.description) %></p>
+<% end %>
 </div>

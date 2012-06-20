@@ -5,12 +5,13 @@ class ShiftsController < ApplicationController
   
   def index
     @title = "Shifts"
-    @shifts = admin? ? Shift.all : Shift.current
+    @mode = params[:history] ? :history : :current
+    @shifts = params[:history] ? Shift.all : Shift.current
   end
   
   def available
     @title = "Available Shifts"
-    @available = true;
+    @mode = :available
     @shifts = Shift.available
     render 'index'
   end

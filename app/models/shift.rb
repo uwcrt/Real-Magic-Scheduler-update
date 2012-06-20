@@ -26,7 +26,7 @@ class Shift < ActiveRecord::Base
 
   validates_presence_of :name, :start, :finish, :location, :shift_type_id
   validates_numericality_of :shift_type_id
-  validate :primary_cannot_equal_secondary, :secondary_cannot_take_primary
+  validate :primary_cannot_equal_secondary, :secondary_cannot_take_primary, :finish_after_start
 
   belongs_to :primary, :class_name => "User", :foreign_key => "primary_id"
   belongs_to :secondary, :class_name => "User", :foreign_key => "secondary_id"
@@ -58,5 +58,10 @@ class Shift < ActiveRecord::Base
     def secondary_cannot_take_primary
       errors.add(:primary_id, "Secondary responders cannot take primary shifts!") if
         primary_id != nil && !primary.primary? && !shift_type.ignore_primary
+    end
+
+    def finish_after_start
+      errors.add(:finish, "The shift cannot finish before it starts!") if
+        finish < start
     end
 end
