@@ -61,7 +61,8 @@ class Shift < ActiveRecord::Base
     end
 
     def finish_after_start
-      errors.add(:finish, "The shift cannot finish before it starts!") if
-        finish < start
+      if (finish.present? && start.present? && finish < start)
+        errors.add(:finish, "The shift cannot finish before it starts!")
+      end
     end
 end

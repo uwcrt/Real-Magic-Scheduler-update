@@ -27,7 +27,16 @@ class ShiftsController < ApplicationController
   end
   
   def create
-    if (params[:split])
+    @shift = Shift.new(params[:shift])
+    if !@shift.valid?
+      @title = "New Shift"
+      render 'new'
+      return
+    end
+
+    split = params[:split] == '1' && params[:split_length].to_i > 0
+
+    if (split)
       base = Shift.new(params[:shift])
       split_length = params[:split_length].to_i * 1.minute
       num_shifts = (base.length * 60.minute) / split_length
@@ -35,7 +44,7 @@ class ShiftsController < ApplicationController
       (0...num_shifts).each do |n|
         shift = Shift.new(params[:shift])
         shift.start = base.start + split_length * n
-        shift.finish = shift.start + split_length 
+        shift.finish = shift.start + split_length
         shift.save
       end
       shift.finish = base.finish
