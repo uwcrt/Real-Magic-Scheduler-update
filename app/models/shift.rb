@@ -20,7 +20,7 @@
 class Shift < ActiveRecord::Base
   include SessionsHelper
 
-  attr_accessible :name, :start, :finish, :location, :shift_type_id, :note, :description, :primary_id, :secondary_id, :aed
+  attr_accessible :name, :start, :finish, :location, :shift_type_id, :note, :description, :primary_id, :secondary_id, :aed, :vest
 
   default_scope :order => 'shifts.start ASC'
 

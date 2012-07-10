@@ -11,6 +11,13 @@
   Do not bring the AED
   <% end %>
 </p>
+<p>Vest:
+  <% if @shift.vest %>
+  Wear a vest
+  <% else %>
+  Do not wear a vest
+  <% end %>
+</p>
 <% if @shift.note.present? %>
   <p>Note: <%= @shift.note %></p>
 <% end %>
