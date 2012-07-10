@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120710213415) do
+ActiveRecord::Schema.define(:version => 20120710215035) do
 
   create_table "shift_types", :force => true do |t|
     t.string    "name"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(:version => 20120710213415) do
     t.datetime "updated_at"
     t.text     "description"
     t.boolean  "aed",           :default => true
-    t.boolean  "vest",          :default => true
+    t.boolean  "vest",          :default => false
   end
 
   create_table "users", :force => true do |t|
