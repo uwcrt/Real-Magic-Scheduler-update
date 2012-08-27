@@ -3,12 +3,13 @@
   <p>Warning, make sure that you have finished your end of term report before you reset RMS for the end of the term</p>
   <p>The following will take place...
   <ul>
-  <li>All shifts will be cleared from the database</li>
+  <li>All shifts before the selected date will be cleared from the database</li>
   <li>A celebratory kitten will be prepared</li>
   </ul>
   </p>
-
-  <p>If you are sure that you wish to proceed please click the button</p>
-
-  <%= link_to '<i class="icon-warning-sign icon-white"></i> Reset RMS'.html_safe, eot_users_path, :method => :put, :confirm => "Are you sure you want to reset RMS?", :title => "Nuking RMS", :class => 'btn btn-large btn-danger' %>
+  <%= form_tag(eot_users_path, :method => :put) do %>
+    <%= select_date Date.today, :prefix => :eot_date %>
+    <p>If you are sure that you wish to remove all shifts before the selected date please click the button</p>
+    <%= submit_tag("Reset RMS".html_safe, :class => 'btn btn-large btn-danger', :confirm => "Are you sure you want to reset RMS?", :title => "Nuking RMS") %>
+  <% end %>
 </div>
