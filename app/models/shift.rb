@@ -33,11 +33,11 @@ class Shift < ActiveRecord::Base
   belongs_to :shift_type
 
   def self.current
-    Shift.where("start >= ?", DateTime.now - 4.hours)
+    Shift.where("start >= ?", Time.zone.now)
   end
   
   def self.past
-    Shift.where("start < ?", DateTime.now - 4.hours)
+    Shift.where("start < ?", TIme.zone.now)
   end
   
   def self.available
@@ -46,6 +46,10 @@ class Shift < ActiveRecord::Base
 
   def length
     (finish - start)/(1.hour)
+  end
+
+  def critical_days
+    shift_type.critical_days
   end
 
   private

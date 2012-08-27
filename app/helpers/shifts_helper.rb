@@ -27,7 +27,7 @@ module ShiftsHelper
 	end
 
 	def critical(shift)
-	  shift.start - DateTime.now < 7.days
+	  shift.start - Time.zone.now < shift.critical_days
 	end
 
 	def over_hours(shift)

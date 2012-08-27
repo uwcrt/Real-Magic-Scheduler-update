@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120710215035) do
+ActiveRecord::Schema.define(:version => 20120827150719) do
 
   create_table "shift_types", :force => true do |t|
     t.string    "name"
@@ -20,22 +20,23 @@ ActiveRecord::Schema.define(:version => 20120710215035) do
     t.timestamp "updated_at"
     t.boolean   "ignore_primary",        :default => false
     t.boolean   "ignore_suspended",      :default => false
+    t.integer   "critical_time",         :default => 7
   end
 
   create_table "shifts", :force => true do |t|
-    t.string   "name"
-    t.datetime "start"
-    t.datetime "finish"
-    t.string   "location"
-    t.integer  "primary_id"
-    t.integer  "secondary_id"
-    t.integer  "shift_type_id"
-    t.string   "note"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "description"
-    t.boolean  "aed",           :default => true
-    t.boolean  "vest",          :default => false
+    t.string    "name"
+    t.timestamp "start"
+    t.timestamp "finish"
+    t.string    "location"
+    t.integer   "primary_id"
+    t.integer   "secondary_id"
+    t.integer   "shift_type_id"
+    t.string    "note"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+    t.text      "description"
+    t.boolean   "aed",           :default => true
+    t.boolean   "vest",          :default => false
   end
 
   create_table "users", :force => true do |t|

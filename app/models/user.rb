@@ -71,11 +71,11 @@ class User < ActiveRecord::Base
 	end
 	
 	def past_shifts
-	  shifts.select { |shift| shift.start <= DateTime.now }
+	  shifts.select { |shift| shift.start <= Time.zone.now }
 	end
 	
 	def current_shifts
-	  shifts.select { |shift| shift.start > DateTime.now }
+	  shifts.select { |shift| shift.start > Time.zone.now }
 	end
 	
 	def hours(type)

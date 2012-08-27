@@ -111,17 +111,18 @@ class UsersController < ApplicationController
 	def make_admin
 	  @user = User.find(params[:id])
 	  @user.toggle!(:admin)
-          if @user.admin?
-   	    flash[:success] = "#{@user.full_name} is now an administrator!"
+    if @user.admin?
+      flash[:success] = "#{@user.full_name} is now an administrator!"
 	  else
-            flash[:success] = "#{@user.full_name} is no longer an administrator!" 
-          end
-          redirect_to users_path
+      flash[:success] = "#{@user.full_name} is no longer an administrator!"
+    end
+    redirect_to users_path
 	end
 
 	def eot
 	  @title = "RMS Reset"
-	  Shift.delete_all
+    eot_day = Date.civil(params[:eot_date][:year].to_i, params[:eot_date][:month].to_i, params[:eot_date][:day].to_i)
+    Shift.where("start < ?", eot_day).delete_all
 	end
 
 	private
