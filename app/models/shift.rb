@@ -48,6 +48,10 @@ class Shift < ActiveRecord::Base
     (finish - start)/(1.hour)
   end
 
+  def critical_days
+    shift_type.critical_days
+  end
+
   private
 
     def primary_cannot_equal_secondary
