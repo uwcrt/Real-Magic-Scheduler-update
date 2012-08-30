@@ -37,7 +37,7 @@ class Shift < ActiveRecord::Base
   end
   
   def self.past
-    Shift.where("start < ?", TIme.zone.now)
+    Shift.where("start < ?", Time.zone.now)
   end
   
   def self.available
