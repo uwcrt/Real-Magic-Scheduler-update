@@ -13,7 +13,7 @@
       <% if st.critical_time == 0 %>
         <li><%= st.name %> shifts are never critical</li>
       <% else %>
-        <li><%= st.name %> shifts become critical <%= pluralize(st.critical_time, "hour") %> before they start</li>
+        <li><%= st.name %> shifts become critical <%= pluralize(st.critical_time, "day") %> before they start</li>
       <% end %>
     <% end %>
   </ul>
