@@ -2,7 +2,8 @@ class PagesController < ApplicationController
   before_filter :admin, :only => [:eot]
   
   def home
-  	@title = "Home"
+    redirect_to shifts_path if signed_in?
+    @title = "Home"
   end
 
   def contact
