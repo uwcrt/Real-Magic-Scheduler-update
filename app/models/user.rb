@@ -19,7 +19,7 @@
 require 'digest'
 class User < ActiveRecord::Base
 	attr_accessor :password
-	attr_accessible :first_name, :last_name, :email, :password, :password_confirmation
+	attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :username
 	
 	before_save :encrypt_password
 	
@@ -30,10 +30,6 @@ class User < ActiveRecord::Base
 	validates :email, :presence => true,
 										:format => { :with => email_regex },
 										:uniqueness => { :case_sensitive => false }
-										
-	validates :password, :presence => true,
-											 :confirmation => true,
-											 :length => { :within => 6..40 }
 											 
   has_many :shifts, :class_name => "Shift", :finder_sql => 'SELECT * FROM shifts WHERE shifts.primary_id = #{id} OR shifts.secondary_id = #{id} ORDER BY shifts.start'
   
