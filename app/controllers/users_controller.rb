@@ -7,7 +7,6 @@ class UsersController < ApplicationController
 		@user = User.new(params[:user])
 		password = ("a".."z").to_a.shuffle[0..5].to_s
 	  @user.password = password
-	  @user.password_confirmation = password
 
 		if @user.save
 		  UserMailer.new_user_email(@user, password).deliver
