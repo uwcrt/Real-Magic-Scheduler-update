@@ -87,8 +87,8 @@ describe ShiftsController do
     end
 
     it "should have the right title" do
-    	get :new
-    	response.should have_selector("title", :content => "New Shift")
+      get :new
+      response.should have_selector("title", :content => "New Shift")
     end
 
     it "should have a name field" do

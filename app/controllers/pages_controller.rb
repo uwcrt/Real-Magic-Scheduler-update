@@ -6,7 +6,7 @@ class PagesController < ApplicationController
     @title = "Home"
   end
 
-	def eot
-	  @title = "End of Term"
-	end
+  def eot
+    @title = "End of Term"
+  end
 end

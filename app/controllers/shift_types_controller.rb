@@ -26,15 +26,15 @@ class ShiftTypesController < ApplicationController
   end
 
   def update
-		@type = ShiftType.find_by_id(params[:id])
-		if @type.update_attributes(params[:shift_type])
-			flash[:success] = "Shift type updated successfully!"
-			redirect_to shift_types_path
-		else
-			@title = "Edit Shift Type"
-			render 'edit'
-		end
-	end
+    @type = ShiftType.find_by_id(params[:id])
+    if @type.update_attributes(params[:shift_type])
+      flash[:success] = "Shift type updated successfully!"
+      redirect_to shift_types_path
+    else
+      @title = "Edit Shift Type"
+      render 'edit'
+    end
+  end
 
   def destroy
     @type = ShiftType.find_by_id(params[:id])
@@ -44,13 +44,13 @@ class ShiftTypesController < ApplicationController
   end
 
   def create
-		@type = ShiftType.new(params[:shift_type])
-		if @type.save
-			flash[:success] = "Shift typed created successfully!"
-			redirect_to shift_types_path
-		else
-			@title = "New Shift Type"
-			render 'new'
-		end
-	end
+    @type = ShiftType.new(params[:shift_type])
+    if @type.save
+      flash[:success] = "Shift typed created successfully!"
+      redirect_to shift_types_path
+    else
+      @title = "New Shift Type"
+      render 'new'
+    end
+  end
 end
