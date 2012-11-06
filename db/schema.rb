@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121006031023) do
+ActiveRecord::Schema.define(:version => 20121106003808) do
 
   create_table "shift_types", :force => true do |t|
     t.string    "name"
@@ -24,38 +24,32 @@ ActiveRecord::Schema.define(:version => 20121006031023) do
   end
 
   create_table "shifts", :force => true do |t|
-    t.string   "name"
-    t.datetime "start"
-    t.datetime "finish"
-    t.string   "location"
-    t.integer  "primary_id"
-    t.integer  "secondary_id"
-    t.integer  "shift_type_id"
-    t.string   "note"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "description"
-    t.boolean  "aed",           :default => true
-    t.boolean  "vest",          :default => false
+    t.string    "name"
+    t.timestamp "start"
+    t.timestamp "finish"
+    t.string    "location"
+    t.integer   "primary_id"
+    t.integer   "secondary_id"
+    t.integer   "shift_type_id"
+    t.string    "note"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+    t.text      "description"
+    t.boolean   "aed",           :default => true
+    t.boolean   "vest",          :default => false
   end
 
   create_table "users", :force => true do |t|
-    t.string    "first_name"
-    t.string    "email"
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
-    t.string    "encrypted_password"
-    t.string    "salt"
-    t.string    "last_name"
-    t.boolean   "admin"
-    t.boolean   "primary"
-    t.boolean   "disabled",           :default => false
-    t.boolean   "inactive",           :default => false
-    t.boolean   "award",              :default => false
-    t.string    "username",           :default => "",    :null => false
+    t.string   "first_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "last_name"
+    t.boolean  "admin"
+    t.boolean  "primary"
+    t.boolean  "disabled",   :default => false
+    t.boolean  "inactive",   :default => false
+    t.boolean  "award",      :default => false
+    t.string   "username",   :default => "",    :null => false
   end
-
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["username"], :name => "index_users_on_username"
 
 end
