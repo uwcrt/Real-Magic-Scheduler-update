@@ -1,13 +1,13 @@
 <tr>
 <td><%= shift.start.strftime("%a %b %d") %></td>
-<td><%= admin? ? (link_to shift.name, edit_shift_path(shift)) : (link_to shift.name, shift_path(shift)) %></td>
+<td><%= current_user.admin? ? (link_to shift.name, edit_shift_path(shift)) : (link_to shift.name, shift_path(shift)) %></td>
 <td><%= shift.location %></td>
 <td><%= shift.start.strftime("%H:%M") %></td>
 <td><%= shift.finish.strftime("%H:%M") %></td>
 <td><%= if can_primary?(shift)
           link_to "Take Shift", primary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to take this shift?"
         elsif shift.primary != nil
-          if admin? then
+          if current_user.admin? then
             link_to shift.primary.name, drop_primary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to withdraw this responder?"
           else
             render "/shifts/name", :responder => shift.primary
@@ -18,7 +18,7 @@
 <td><%= if can_secondary?(shift)
           link_to "Take Shift", secondary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to take this shift?"
         elsif shift.secondary != nil
-          admin? ? (link_to shift.secondary.name, drop_secondary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to withdraw this responder?") : (render "/shifts/name", :responder => shift.secondary)
+          current_user.admin? ? (link_to shift.secondary.name, drop_secondary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to withdraw this responder?") : (render "/shifts/name", :responder => shift.secondary)
         end
      %>
 </td>

@@ -1,5 +1,5 @@
 Tutorial::Application.routes.draw do
-  get "sessions/new"
+  devise_for :users
 
   resources :users do
     collection do
@@ -11,14 +11,15 @@ Tutorial::Application.routes.draw do
       put 'suspended'
       put 'make_admin'
       get 'edit_password'
-    end  
+    end
   end
-  resources :sessions, :only => [:new, :create, :destroy, :update, :edit]
+
   resources :shift_types, :except => :show do
     member do
       get 'naughty'
     end
   end
+
   resources :shifts do
     collection do
       get 'available'
@@ -31,13 +32,7 @@ Tutorial::Application.routes.draw do
     end
   end
 
-  match '/contact',         :to => 'pages#contact'
-  match '/about',           :to => 'pages#about'
-  match '/help',            :to => 'pages#help'
-  match '/signin',	        :to => 'sessions#new'
-  match '/signout',         :to => 'sessions#destroy'
   match '/eot',             :to => 'pages#eot'
-  match '/forgot_password', :to => 'pages#forgot_password'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-	before_filter :authenticate, :only => [:edit, :update, :change_password, :update_password]
+	before_filter :authenticate_user!, :only => [:edit, :update, :change_password, :update_password]
 	before_filter :correct_user, :only => [:edit, :update, :change_password, :update_password]
-	before_filter :admin, :only => [:create, :new, :primary, :suspended, :eot, :admin, :destroy, :index]
+	before_filter :admin, :only => [:create, :new, :primary, :make_admin, :suspended, :eot, :admin, :destroy, :index]
 
 	def create
 		@user = User.new(params[:user])
@@ -106,7 +106,7 @@ class UsersController < ApplicationController
       format.js
     end
 	end
-	
+
 	def make_admin
 	  @user = User.find(params[:id])
 	  @user.toggle!(:admin)

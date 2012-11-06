@@ -18,8 +18,6 @@
 #
 
 class Shift < ActiveRecord::Base
-  include SessionsHelper
-
   attr_accessible :name, :start, :finish, :location, :shift_type_id, :note, :description, :primary_id, :secondary_id, :aed, :vest
 
   default_scope :order => 'shifts.start ASC'
@@ -35,11 +33,11 @@ class Shift < ActiveRecord::Base
   def self.current
     Shift.where("start >= ?", Time.zone.now)
   end
-  
+
   def self.past
     Shift.where("start < ?", Time.zone.now)
   end
-  
+
   def self.available
     (Shift.find_all_by_primary_id(nil) + Shift.find_all_by_secondary_id(nil) - past).uniq.sort {|x,y| x.start <=> y.start }
   end
