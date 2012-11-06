@@ -19,11 +19,13 @@
 require 'digest'
 class User < ActiveRecord::Base
   devise :cas_authenticatable
+  before_save :downcase_username!
 
-  attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :username
+  attr_accessible :first_name, :last_name, :username
 
   validates :first_name, :presence => true
   validates :last_name, :presence => true
+  validates :username, :presence => true
 
   has_many :shifts, :class_name => "Shift", :finder_sql => 'SELECT * FROM shifts WHERE shifts.primary_id = #{id} OR shifts.secondary_id = #{id} ORDER BY shifts.start'
 
@@ -67,5 +69,9 @@ class User < ActiveRecord::Base
 
   def hours_quota(type)
     primary ? type.primary_requirement : type.secondary_requirement
+  end
+
+  def downcase_username!
+    username.downcase!
   end
 end
