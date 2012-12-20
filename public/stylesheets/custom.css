@@ -7,3 +7,9 @@ body {
   margin-right: auto;
   display: block;
 }
+
+.shift-checkbox {
+  display: inline-block;
+  margin-right: 25px;
+  text-align: center;
+}

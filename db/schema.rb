@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121106003808) do
+ActiveRecord::Schema.define(:version => 20121213215635) do
 
   create_table "shift_types", :force => true do |t|
     t.string    "name"
@@ -35,8 +35,10 @@ ActiveRecord::Schema.define(:version => 20121106003808) do
     t.timestamp "created_at"
     t.timestamp "updated_at"
     t.text      "description"
-    t.boolean   "aed",           :default => true
-    t.boolean   "vest",          :default => false
+    t.boolean   "aed",                :default => true
+    t.boolean   "vest",               :default => false
+    t.boolean   "primary_disabled",   :default => false
+    t.boolean   "secondary_disabled", :default => false
   end
 
   create_table "users", :force => true do |t|

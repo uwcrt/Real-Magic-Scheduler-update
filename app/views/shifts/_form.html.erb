@@ -4,28 +4,41 @@
     <%= f.text_field :name %>
     <%= f.label :location %>
     <%= f.text_field :location %>
+    <%= f.label :shift_type_id %>
+    <%= f.collection_select(:shift_type_id, ShiftType.all, :id, :name) %>
     <%= f.label :start %>
     <%= f.datetime_select :start %>
     <%= f.label :finish %>
     <%= f.datetime_select :finish %>
-    <%= label_tag :aed %>
-    <%= f.check_box :aed %>
-    <%= label_tag :vest %>
-    <%= f.check_box :vest, :value => false %>
-    <%= label_tag :split %>
-    <%= check_box_tag :split %>
-    <%= label_tag :split_length, "Split Length (minutes)" %>
-    <%= text_field_tag :split_length %>
-    <%= f.label :shift_type_id %>
-    <%= f.collection_select(:shift_type_id, ShiftType.all, :id, :name) %>
     <%= f.label :primary_id %>
     <%= f.collection_select(:primary_id, User.where(:primary => true, :disabled => false), :id, :full_name, {:include_blank => true}) %>
+    <%= f.label :primary_disabled, "Make unavailable", :class => "checkbox inline" %>
+    <%= f.check_box :primary_disabled %>
     <%= f.label :secondary_id %>
     <%= f.collection_select(:secondary_id, User.where(:disabled => false), :id, :full_name, {:include_blank => true}) %>
-    <%= f.label :note %>
-    <%= f.text_field :note %>
+    <%= f.label :secondary_disabled, "Make unavailable", :class => "checkbox inline" %>
+    <%= f.check_box :secondary_disabled %>
+    <br />
     <%= f.label :description %>
     <%= f.text_area :description, :rows => 6, :cols => "100" %><br />
+    <%= f.label :note %>
+    <%= f.text_field :note %>
+    <br />
+    <div class='shift-checkbox'>
+        <%= label_tag :aed %>
+        <%= f.check_box :aed %>
+    </div>
+    <div class='shift-checkbox'>
+        <%= label_tag :vest %>
+        <%= f.check_box :vest, :value => false %>
+    </div>
+    <div class='shift-checkbox'>
+        <%= label_tag :split %>
+        <%= check_box_tag :split %>
+    </div>
+    <%= label_tag :split_length, "Split Length (minutes)" %>
+    <%= text_field_tag :split_length %>
+    <br />
     <%= f.submit button_text %>
 <% end %>
 

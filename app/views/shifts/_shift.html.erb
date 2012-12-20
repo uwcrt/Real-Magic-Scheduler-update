@@ -4,21 +4,26 @@
 <td><%= shift.location %></td>
 <td><%= shift.start.strftime("%H:%M") %></td>
 <td><%= shift.finish.strftime("%H:%M") %></td>
-<td><%= if can_primary?(shift)
-          link_to "Take Shift", primary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to take this shift?"
+<td><%=
+        if shift.primary_disabled
+          "Unavailable"
         elsif shift.primary != nil
           if current_user.admin? then
             link_to shift.primary.name, drop_primary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to withdraw this responder?"
           else
             shift.primary.name
           end
+        elsif can_primary?(shift)
+          link_to "Take Shift", primary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to take this shift?"
         end
      %>
 </td>
-<td><%= if can_secondary?(shift)
-          link_to "Take Shift", secondary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to take this shift?"
+<td><%= if shift.secondary_disabled
+          "Unavailable"
         elsif shift.secondary != nil
           current_user.admin? ? (link_to shift.secondary.name, drop_secondary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to withdraw this responder?") : shift.secondary.name
+        elsif can_secondary?(shift)
+          link_to "Take Shift", secondary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to take this shift?"
         end
      %>
 </td>

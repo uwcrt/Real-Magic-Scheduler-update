@@ -18,13 +18,15 @@
 #
 
 class Shift < ActiveRecord::Base
-  attr_accessible :name, :start, :finish, :location, :shift_type_id, :note, :description, :primary_id, :secondary_id, :aed, :vest
+  attr_accessible :name, :start, :finish, :location, :shift_type_id, :note, :description, :primary_id, :secondary_id, :aed, :vest, :primary_disabled, :secondary_disabled
 
   default_scope :order => 'shifts.start ASC'
 
   validates_presence_of :name, :start, :finish, :location, :shift_type_id
   validates_numericality_of :shift_type_id
   validate :primary_cannot_equal_secondary, :secondary_cannot_take_primary, :finish_after_start
+
+  before_save :remove_from_disabled
 
   belongs_to :primary, :class_name => "User", :foreign_key => "primary_id"
   belongs_to :secondary, :class_name => "User", :foreign_key => "secondary_id"
@@ -39,7 +41,10 @@ class Shift < ActiveRecord::Base
   end
 
   def self.available
-    (Shift.find_all_by_primary_id(nil) + Shift.find_all_by_secondary_id(nil) - past).uniq.sort {|x,y| x.start <=> y.start }
+    (Shift.where({:primary_id => nil, :primary_disabled => false}) +
+      Shift.where({:secondary_id => nil, :secondary_disabled => false}) -
+      past
+     ).uniq.sort {|x,y| x.start <=> y.start }
   end
 
   def length
@@ -66,5 +71,10 @@ class Shift < ActiveRecord::Base
       if (finish.present? && start.present? && finish < start)
         errors.add(:finish, "The shift cannot finish before it starts!")
       end
+    end
+
+    def remove_from_disabled
+      self.primary = nil if self.primary_disabled
+      self.secondary = nil if self.secondary_disabled
     end
 end
