@@ -3,6 +3,7 @@
 <td><%= shift_type.primary_requirement %></td>
 <td><%= shift_type.secondary_requirement %></td>
 <td><%= shift_type.critical_time %> Days</td>
+<td><%= shift_type.hours_filled.round(1) %> Hours Taken</td>
 <td><%= link_to "Naughty List", naughty_shift_type_path(shift_type.id) %></td>
 <td><%= link_to "Edit", edit_shift_type_path(shift_type.id) %></td>
 <td><%= link_to "Delete", shift_type_path(shift_type.id), :method => :delete, :confirm => "Are you sure?", :title => "Delete #{User.name}" %></td>
