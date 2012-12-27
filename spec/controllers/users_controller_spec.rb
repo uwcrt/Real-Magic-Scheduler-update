@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe UsersController do
-	render_views
-	
-	describe "GET 'show'" do
+  render_views
+
+  describe "GET 'show'" do
 
     before(:each) do
       @user = test_sign_in(Factory(:user))
@@ -18,40 +18,40 @@ describe UsersController do
       get :show, :id => @user
       assigns(:user).should == @user
     end
-    
+
     it "should have the right title" do
-    	get :show, :id => @user
-    	response.should have_selector("title", :content => @user.name)
+      get :show, :id => @user
+      response.should have_selector("title", :content => @user.name)
     end
-    
+
     it "should include the users name" do
-    	get :show, :id => @user
-    	response.should have_selector("h1", :content => @user.full_name)
+      get :show, :id => @user
+      response.should have_selector("h1", :content => @user.full_name)
     end
   end
-	
+
   describe "GET 'new'" do
-    
+
     before(:each) do
       @user = test_sign_in(Factory(:user))
       @user.toggle(:admin)
     end
-    
+
     it "should be successful" do
       get 'new'
       response.should be_success
     end
-    
+
     it "should have the right title" do
-    	get 'new'
-    	response.should have_selector("title", :content => "Sign up")
+      get 'new'
+      response.should have_selector("title", :content => "Sign up")
     end
-    
+
     it "should have a first_name field" do
       get :new
       response.should have_selector("input[name='user[first_name]'][type='text']")
     end
-    
+
     it "should have a last_name field" do
       get :new
       response.should have_selector("input[name='user[last_name]'][type='text']")
@@ -72,7 +72,7 @@ describe UsersController do
       response.should have_selector("input[name='user[password_confirmation]'][type='password']")
     end
   end
-  
+
   describe "POST 'create'" do
 
     describe "failure" do
@@ -98,68 +98,68 @@ describe UsersController do
         response.should render_template('new')
       end
     end
-    
+
     describe "success" do
-    	
-    	before(:each) do
-    		@attr = { :first_name => "Justin",
-    		          :last_name => "Vanderheide",
-    							:email => "user@example.com",
-    							:password => "foobar",
-    							:password_confirmation => "foobar" }
-    	end
-    	
-    	it "should create a user" do 
-    		lambda do
-    			post :create, :user => @attr
-    		end.should change(User, :count).by(1)
-    	end
+
+      before(:each) do
+        @attr = { :first_name => "Justin",
+                  :last_name => "Vanderheide",
+                  :email => "user@example.com",
+                  :password => "foobar",
+                  :password_confirmation => "foobar" }
+      end
+
+      it "should create a user" do
+        lambda do
+          post :create, :user => @attr
+        end.should change(User, :count).by(1)
+      end
     end
   end
-  
+
   describe "GET 'edit'" do
-  	
-  	before(:each) do
-  		@user = Factory(:user)
-  		test_sign_in(@user)
-  	end
-  
-  	it "should be successful" do
-  		get :edit, :id => @user
-  		response.should be_success
-  	end
-  	
-  	it "should have the right title" do
-  		get :edit, :id => @user
-  		response.should have_selector("title", :content => "Edit user")
-  	end
+
+    before(:each) do
+      @user = Factory(:user)
+      test_sign_in(@user)
+    end
+
+    it "should be successful" do
+      get :edit, :id => @user
+      response.should be_success
+    end
+
+    it "should have the right title" do
+      get :edit, :id => @user
+      response.should have_selector("title", :content => "Edit user")
+    end
   end
-  
+
   describe "PUT 'update'" do
-  	
-  	before(:each) do
-  		@user = Factory(:user)
-  		test_sign_in(@user)
-  	end
-  	
-  	describe "failure" do
-  	
-  		before(:each) do
-  			@attr = { :email => "", :name => "", :password => "", :password_confirmation => "" }
-  		end
-  		
-  		it "should display the edit page" do
-  			put :update, :id => @user, :user => @attr
-  			response.should render_template('edit')
-  		end
-  		
-  		it "should have the right title" do
-  		 put :update, :id => @user, :user => @attr
-  		 response.should have_selector('title', :content => "Edit user")
-  		end
-  	end
-  	
-  	describe "success" do
+
+    before(:each) do
+      @user = Factory(:user)
+      test_sign_in(@user)
+    end
+
+    describe "failure" do
+
+      before(:each) do
+        @attr = { :email => "", :name => "", :password => "", :password_confirmation => "" }
+      end
+
+      it "should display the edit page" do
+        put :update, :id => @user, :user => @attr
+        response.should render_template('edit')
+      end
+
+      it "should have the right title" do
+       put :update, :id => @user, :user => @attr
+       response.should have_selector('title', :content => "Edit user")
+      end
+    end
+
+    describe "success" do
 
       before(:each) do
         @attr = { :first_name => "New", :last_name => "Name", :email => "user@example.org",
@@ -185,7 +185,7 @@ describe UsersController do
       end
     end
   end
-  
+
   describe "authentication of edit/update pages" do
 
     before(:each) do
@@ -204,23 +204,23 @@ describe UsersController do
         response.should redirect_to(signin_path)
       end
     end
-    
+
     describe "for wrong users" do
-    
-    	before(:each) do
-    	 wrong_user = Factory(:user, :email => "user@example.net")
-    	 test_sign_in(wrong_user)
-    	end
-    
-    	it "should deny access to 'edit'" do
-    		get :edit, :id => @user
-    		response.should redirect_to(root_path)
-    	end
-    	
-    	it "should deny access to 'update'" do
-    		put :update, :id => @user, :user => {}
-    		response.should redirect_to(root_path)
-    	end
+
+      before(:each) do
+       wrong_user = Factory(:user, :email => "user@example.net")
+       test_sign_in(wrong_user)
+      end
+
+      it "should deny access to 'edit'" do
+        get :edit, :id => @user
+        response.should redirect_to(root_path)
+      end
+
+      it "should deny access to 'update'" do
+        put :update, :id => @user, :user => {}
+        response.should redirect_to(root_path)
+      end
     end
   end
 end

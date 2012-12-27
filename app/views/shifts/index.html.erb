@@ -20,11 +20,11 @@
   <p>You can see a report of your hours and shifts by clicking "profile" in the navigation bar.</p>
   <p>If a shift changes or is cancelled, those affected will be notified by telephone or e-mail and details will be posted here within 24 hours of the shift. If you notice any errors, please contact the director of scheduling ASAP.</p>
 </div>
-<% if admin? %>
+<% if current_user.admin? %>
   <a class="btn btn-success" href="<%= new_shift_path %>"><i class="icon-asterisk icon-white"></i> New Shift</a>
 <% end %>
 
-<% if admin? && @mode != :history %>
+<% if current_user.admin? && @mode != :history %>
   <a class="btn" href="<%=shifts_path(:history => true)%>"><i class='icon-filter'></i> All Shifts</a>
 <% end %>
 

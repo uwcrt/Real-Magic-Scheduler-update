@@ -23,9 +23,9 @@
     <div class="container-fluid">
      <%= render "/layouts/header" %>
       <section class="round nofloat">
-      	<% flash.each do |key, value| %>
-					<div class="alert alert-<%= key %>"><%= value %></div>
-				<% end %>
+        <% flash.each do |key, value| %>
+          <div class="alert alert-<%= key %>"><%= value %></div>
+        <% end %>
         <%= yield %>
       </section>
       <%= render "/layouts/footer" %>

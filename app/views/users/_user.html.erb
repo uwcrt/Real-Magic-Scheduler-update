@@ -1,5 +1,6 @@
 <tr>
-  <td><%= "#{user.first_name} #{user.last_name}" %></td>
+<td><a href="<%= edit_user_path(user) %>"><%= "#{user.first_name} #{user.last_name}" %></a></td>
+<td><%= user.username.blank? ? "NOT SET" : user.username %></td>
 <% shift_types.each do |n| %>
   <td><%= format("%7.2f", user.total_hours(n)) %></td>
 <% end %>
