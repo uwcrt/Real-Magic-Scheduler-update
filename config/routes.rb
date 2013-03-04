@@ -29,6 +29,7 @@ Tutorial::Application.routes.draw do
       put 'secondary'
       put 'drop_primary'
       put 'drop_secondary'
+      get 'next_week'
     end
   end
 

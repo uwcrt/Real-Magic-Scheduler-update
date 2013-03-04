@@ -26,6 +26,16 @@ class ShiftsController < ApplicationController
     @shift = Shift.new
   end
 
+  def next_week
+    @shift = Shift.find params[:id]
+    @shift = @shift.clone
+    @shift.start += 1.week
+    @shift.finish += 1.week
+    @shift.primary = nil
+    @shift.secondary = nil
+    render 'new'
+  end
+
   def create
     @shift = Shift.new(params[:shift])
     if !@shift.valid?
