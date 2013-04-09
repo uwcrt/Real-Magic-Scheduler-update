@@ -1,8 +1,10 @@
 <div class='page-header'>
   <h1>
-  <%= current_user.full_name %>
+  <%= @user.full_name %>
   (<%= @responder_type %>)
   </h1>
+  <br />
+<%= link_to '<i class="icon-edit icon-white"></i> Edit Responder'.html_safe, edit_user_path(@user.id), :title => "Edit", :class => 'btn btn-primary' %>
 </div>
 <% @shift_types.each do |type| %>
 <%
