@@ -20,6 +20,14 @@ class ShiftType < ActiveRecord::Base
   validates_numericality_of :secondary_requirement, :presence => true
   validates_numericality_of :critical_time, :presence => true, :greater_than_or_equal_to => 0
 
+  def self.suspended_allowed
+    ShiftType.where(:ignore_suspended => true)
+  end
+
+  def self.primary_ignored
+    ShiftType.where(:ignore_primary => true);
+  end
+
   def critical_days
     critical_time * 1.day
   end

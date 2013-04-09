@@ -4,10 +4,25 @@
   </div>
   <p>You will only be able to take shifts which you meet the criteria for. The restrictions are...</p>
   <ul>
-    <li>If you are suspended you cannot take any shifts</li>
+    <li>
+      If you are suspended you cannot take any shifts
+      <% if ShiftType.suspended_allowed.any? %>
+        except for <%= ShiftType.suspended_allowed.map(&:name).to_sentence %>
+      <% end %>
+    </li>
     <li>You cannot take a shift that conflicts with another shift you already have</li>
-    <li>If you are a secondary you cannot take a primary shift (except FnP)</li>
-    <li>If you are a primary you cannot take a secondary shift until it is critical (except FnP)</li>
+    <li>
+      If you are a secondary you cannot take a primary shift
+      <% if ShiftType.primary_ignored.any? %>
+        except for <%= ShiftType.primary_ignored.map(&:name).to_sentence %>
+      <% end %>
+    </li>
+    <li>
+      If you are a primary you cannot take a secondary shift until it is critical
+      <% if ShiftType.primary_ignored.any? %>
+        except for <%= ShiftType.primary_ignored.map(&:name).to_sentence %>
+      <% end %>
+    </li>
     <li>If your total hours (past + future) meet the quota you cannot take a shift until it is critical</li>
     <% ShiftType.all.each do |st| %>
       <% if st.critical_time == 0 %>
