@@ -1,1 +1,1 @@
-$("<%= "p#{@user.id}" %>").update("<%= escape_javascript(render 'users/primary', :user => @user) %>")
+$("#<%= "p#{@user.id}" %>").html("<%= escape_javascript(render 'users/primary', :user => @user) %>")

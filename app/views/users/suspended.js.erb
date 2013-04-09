@@ -1,1 +1,1 @@
-$("<%= "d#{@user.id}" %>").update("<%= escape_javascript(render 'users/suspended', :user => @user) %>")
+$("#<%= "d#{@user.id}" %>").html("<%= escape_javascript(render 'users/suspended', :user => @user) %>")
