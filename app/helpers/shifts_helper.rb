@@ -1,5 +1,6 @@
 module ShiftsHelper
   def can_primary?(shift)
+    return false if shift.start < Time.zone.now
     return false if current_user.disabled && !shift.shift_type.ignore_suspended
     return false if over_hours(shift) && !critical(shift)
     return false if shift.primary != nil
@@ -9,6 +10,7 @@ module ShiftsHelper
   end
 
   def can_secondary?(shift)
+    return false if shift.start < Time.zone.now
     return false if over_hours(shift) && !critical(shift)
     return false if current_user.primary unless (critical(shift) || shift.shift_type.ignore_primary)
     return false if current_user.disabled && !shift.shift_type.ignore_suspended

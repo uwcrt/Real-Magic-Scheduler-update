@@ -33,7 +33,7 @@ class Shift < ActiveRecord::Base
   belongs_to :shift_type
 
   def self.current
-    Shift.where("start >= ?", Time.zone.now)
+    Shift.where("start >= ?", Time.zone.now - 1.day)
   end
 
   def self.past
