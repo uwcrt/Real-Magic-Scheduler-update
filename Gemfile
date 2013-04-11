@@ -9,6 +9,7 @@ gem 'devise_cas_authenticatable'
 
 group :development do
   gem 'rspec-rails', '2.1.0'
+  gem 'figaro'
 end
 
 group :test do
