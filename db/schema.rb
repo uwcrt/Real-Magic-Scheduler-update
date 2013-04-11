@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -13,32 +14,32 @@
 ActiveRecord::Schema.define(:version => 20121213215635) do
 
   create_table "shift_types", :force => true do |t|
-    t.string    "name"
-    t.float     "primary_requirement"
-    t.float     "secondary_requirement"
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
-    t.boolean   "ignore_primary",        :default => false
-    t.boolean   "ignore_suspended",      :default => false
-    t.integer   "critical_time",         :default => 7
+    t.string   "name"
+    t.float    "primary_requirement"
+    t.float    "secondary_requirement"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "ignore_primary",        :default => false
+    t.boolean  "ignore_suspended",      :default => false
+    t.integer  "critical_time",         :default => 7
   end
 
   create_table "shifts", :force => true do |t|
-    t.string    "name"
-    t.timestamp "start"
-    t.timestamp "finish"
-    t.string    "location"
-    t.integer   "primary_id"
-    t.integer   "secondary_id"
-    t.integer   "shift_type_id"
-    t.string    "note"
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
-    t.text      "description"
-    t.boolean   "aed",                :default => true
-    t.boolean   "vest",               :default => false
-    t.boolean   "primary_disabled",   :default => false
-    t.boolean   "secondary_disabled", :default => false
+    t.string   "name"
+    t.datetime "start"
+    t.datetime "finish"
+    t.string   "location"
+    t.integer  "primary_id"
+    t.integer  "secondary_id"
+    t.integer  "shift_type_id"
+    t.string   "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "description",        :limit => 255
+    t.boolean  "aed",                               :default => true
+    t.boolean  "vest",                              :default => false
+    t.boolean  "primary_disabled",                  :default => false
+    t.boolean  "secondary_disabled",                :default => false
   end
 
   create_table "users", :force => true do |t|
@@ -46,12 +47,14 @@ ActiveRecord::Schema.define(:version => 20121213215635) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "last_name"
-    t.boolean  "admin"
-    t.boolean  "primary"
+    t.boolean  "primary",    :default => false
+    t.boolean  "admin",      :default => false
     t.boolean  "disabled",   :default => false
     t.boolean  "inactive",   :default => false
     t.boolean  "award",      :default => false
     t.string   "username",   :default => "",    :null => false
   end
+
+  add_index "users", ["username"], :name => "index_users_on_username"
 
 end
