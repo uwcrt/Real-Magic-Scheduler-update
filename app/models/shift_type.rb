@@ -28,6 +28,20 @@ class ShiftType < ActiveRecord::Base
     ShiftType.where(:ignore_primary => true);
   end
 
+  def as_json(user = nil)
+    json = {
+      :id => self.id,
+      :name => self.name,
+    }
+
+    unless user.nil?
+      json[:quota] = user.hours_quota(self)
+      json[:hours] = user.total_hours(self)
+    end
+
+    return json
+  end
+
   def critical_days
     critical_time * 1.day
   end

@@ -97,7 +97,7 @@ class ShiftsController < ApplicationController
 
   def secondary
     shift = Shift.find(params[:id])
-    if can_secondary?(shift)
+    if current_user.can_secondary?(shift)
       shift.secondary = current_user
       shift.save
       flash[:success] = "You are now the secondary for #{shift.name}"
@@ -109,7 +109,7 @@ class ShiftsController < ApplicationController
 
   def primary
     shift = Shift.find(params[:id])
-    if can_primary?(shift)
+    if current_user.can_primary?(shift)
       shift.primary = current_user
       shift.save
       flash[:success] = "You are now the primary for #{shift.name}"

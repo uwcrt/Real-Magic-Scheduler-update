@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121213215635) do
+ActiveRecord::Schema.define(:version => 20130413010336) do
 
   create_table "shift_types", :force => true do |t|
     t.string   "name"
@@ -47,12 +47,13 @@ ActiveRecord::Schema.define(:version => 20121213215635) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "last_name"
-    t.boolean  "primary",    :default => false
-    t.boolean  "admin",      :default => false
-    t.boolean  "disabled",   :default => false
-    t.boolean  "inactive",   :default => false
-    t.boolean  "award",      :default => false
-    t.string   "username",   :default => "",    :null => false
+    t.boolean  "primary",              :default => false
+    t.boolean  "admin",                :default => false
+    t.boolean  "disabled",             :default => false
+    t.boolean  "inactive",             :default => false
+    t.boolean  "award",                :default => false
+    t.string   "username",             :default => "",    :null => false
+    t.string   "authentication_token"
   end
 
   add_index "users", ["username"], :name => "index_users_on_username"
