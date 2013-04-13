@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!, :only => [:edit, :update]
   before_filter :correct_user, :only => [:show, :edit, :update]
-  before_filter :admin, :only => [:create, :new, :primary, :make_admin, :suspended, :eot, :admin, :destroy, :index]
+  before_filter :admin, :only => [:edit, :update, :create, :new, :primary, :make_admin, :suspended, :eot, :admin, :destroy, :index]
 
   def create
     @user = User.new(params[:user])
