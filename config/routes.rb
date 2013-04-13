@@ -35,6 +35,11 @@ Tutorial::Application.routes.draw do
 
   match '/eot',             :to => 'pages#eot'
 
+  namespace :api do
+    resources :tokens, :only => :show
+    resources :user, :only => :show
+  end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

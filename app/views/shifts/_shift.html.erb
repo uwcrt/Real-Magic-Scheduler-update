@@ -13,7 +13,7 @@
           else
             shift.primary.name
           end
-        elsif can_primary?(shift)
+        elsif current_user.can_primary?(shift)
           link_to "Take Shift", primary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to take this shift?"
         end
      %>
@@ -22,7 +22,7 @@
           "Unavailable"
         elsif shift.secondary != nil
           current_user.admin? ? (link_to shift.secondary.name, drop_secondary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to withdraw this responder?") : shift.secondary.name
-        elsif can_secondary?(shift)
+        elsif current_user.can_secondary?(shift)
           link_to "Take Shift", secondary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to take this shift?"
         end
      %>

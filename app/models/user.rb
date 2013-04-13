@@ -18,8 +18,10 @@
 
 require 'digest'
 class User < ActiveRecord::Base
-  devise :cas_authenticatable
-  before_save :downcase_username!
+  devise :cas_authenticatable,
+         :token_authenticatable
+
+  before_save :downcase_username!, :ensure_authentication_token
 
   attr_accessible :first_name, :last_name, :username
 
@@ -30,6 +32,16 @@ class User < ActiveRecord::Base
   has_many :shifts, :class_name => "Shift", :finder_sql => 'SELECT * FROM shifts WHERE shifts.primary_id = #{id} OR shifts.secondary_id = #{id} ORDER BY shifts.start'
 
   default_scope :order => 'users.last_name ASC'
+  
+  def as_json
+    {
+      :first_name => self.first_name,
+      :last_name => self.last_name,
+      :primary => self.primary,
+      :shifts => self.shifts.as_json(self),
+      :shift_types => ShiftType.all.as_json(self)
+    }
+  end
 
   def full_name
     "#{first_name} #{last_name}"
@@ -69,6 +81,43 @@ class User < ActiveRecord::Base
 
   def hours_quota(type)
     primary ? type.primary_requirement : type.secondary_requirement
+  end
+
+  def can_primary?(shift)
+    return false if shift.start < Time.zone.now
+    return false if self.disabled && !shift.shift_type.ignore_suspended
+    return false if over_hours(shift.shift_type) && !critical(shift)
+    return false if shift.primary != nil
+    return false if !self.primary unless shift.shift_type.ignore_primary
+    return false if conflict(shift)
+    return true
+  end
+
+  def can_secondary?(shift)
+    return false if shift.start < Time.zone.now
+    return false if over_hours(shift.shift_type) && !critical(shift)
+    return false if self.primary unless (critical(shift) || shift.shift_type.ignore_primary)
+    return false if self.disabled && !shift.shift_type.ignore_suspended
+    return false if shift.secondary != nil
+    return false if conflict(shift)
+    return true
+  end
+
+  def conflict(shift)
+    self.shifts.each do |compare|
+      if shift.start < compare.finish && shift.finish > compare.start
+        return true
+      end
+    end
+    return false
+  end
+
+  def critical(shift)
+    shift.start - Time.zone.now < shift.critical_days
+  end
+
+  def over_hours(shift_type)
+    self.total_hours(shift_type) >= self.hours_quota(shift_type)
   end
 
   def downcase_username!

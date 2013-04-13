@@ -47,6 +47,31 @@ class Shift < ActiveRecord::Base
      ).uniq.sort {|x,y| x.start <=> y.start }
   end
 
+  def as_json(user = nil)
+    json = {
+      :id => self.id,
+      :aed => self.aed,
+      :vest => self.vest,
+      :start => self.start,
+      :finish => self.finish,
+      :note => self.note,
+      :description => self.description,
+      :primary_disabled => self.primary_disabled,
+      :secondary_disabled => self.secondary_disabled,
+      :primary => self.primary.try(:full_name),
+      :secondary => self.secondary.try(:full_name),
+      :shift_type => self.shift_type.name,
+      :duration => self.length
+    }
+
+    unless user.nil?
+      json[:can_primary] = user.can_primary?(self)
+      json[:can_secondary] = user.can_secondary?(self)
+    end
+
+    return json
+  end
+
   def length
     (finish - start)/(1.hour)
   end
