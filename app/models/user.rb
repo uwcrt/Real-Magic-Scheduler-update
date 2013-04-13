@@ -38,6 +38,7 @@ class User < ActiveRecord::Base
       :first_name => self.first_name,
       :last_name => self.last_name,
       :primary => self.primary,
+      :suspended => self.disabled,
       :shifts => self.shifts.as_json(self),
       :shift_types => ShiftType.all.as_json(self)
     }
