@@ -72,18 +72,6 @@ class Shift < ActiveRecord::Base
     return json
   end
 
-  def to_ics
-    event = Icalendar::Event.new
-    event.start = self.start
-    event.end = self.finish
-    event.summary = self.name
-    event.description = self.description
-    event.location = self.location
-    event.klass = "PRIVATE"
-    event.uid = "#{ENV['URL']}/shift/#{self.id}"
-    return event
-  end
-
   def length
     (finish - start)/(1.hour)
   end

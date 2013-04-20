@@ -6,7 +6,7 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'will_paginate', '3.0.pre2'
 gem 'devise'
 gem 'devise_cas_authenticatable'
-gem 'icalendar'
+gem 'ri_cal'
 
 group :development do
   gem 'rspec-rails', '2.1.0'

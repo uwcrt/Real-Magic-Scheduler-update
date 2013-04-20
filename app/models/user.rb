@@ -52,6 +52,25 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name[0,1]}."
   end
 
+  def calendar
+    RiCal.Calendar do |cal|
+      self.shifts.each do |shift|
+        cal.event do |event|
+          event.dtstart = shift.start
+          event.dtend = shift.finish
+          event.summary = shift.name
+          event.uid = "#{ENV['URL']}/shifts/#{shift.id}"
+          event.dtstamp = shift.created_at
+          event.description = shift.description
+          event.alarm do |alarm|
+            alarm.action = "DISPLAY"
+            alarm.trigger = "-PT1H"
+          end
+        end
+      end
+    end
+  end
+
   def admin?
     admin
   end

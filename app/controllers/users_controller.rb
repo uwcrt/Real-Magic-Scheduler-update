@@ -61,13 +61,7 @@ class UsersController < ApplicationController
 
   def calendar
     @user = User.find(params[:id])
-    calendar = Icalendar::Calendar.new
-
-    @user.shifts.each do |shift|
-      calendar.add_event(shift.to_ics)
-    end
-
-    render :text => calendar.to_ical
+    render :text => @user.calendar
   end
 
   def index
