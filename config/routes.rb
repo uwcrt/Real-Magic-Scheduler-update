@@ -11,6 +11,7 @@ Tutorial::Application.routes.draw do
       put 'suspended'
       put 'make_admin'
       get 'edit_password'
+      get 'calendar'
     end
   end
 

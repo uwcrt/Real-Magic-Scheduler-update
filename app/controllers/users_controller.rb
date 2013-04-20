@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_user!, :only => [:edit, :update]
-  before_filter :correct_user, :only => [:show, :edit, :update]
+  before_filter :authenticate_user!, :only => [:edit, :update, :calendar]
+  before_filter :correct_user, :only => [:show, :edit, :update, :calendar]
   before_filter :admin, :only => [:edit, :update, :create, :new, :primary, :make_admin, :suspended, :eot, :admin, :destroy, :index]
 
   def create
@@ -57,6 +57,17 @@ class UsersController < ApplicationController
     else
       @responder_type = "Secondary"
     end
+  end
+
+  def calendar
+    @user = User.find(params[:id])
+    calendar = Icalendar::Calendar.new
+
+    @user.shifts.each do |shift|
+      calendar.add_event(shift.to_ics)
+    end
+
+    render :text => calendar.to_ical
   end
 
   def index
