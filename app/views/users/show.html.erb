@@ -22,6 +22,7 @@ style = "progress-danger" if current + upcoming >= max
     <div class='bar' style='width: <%= (@user.hours(type) / @user.hours_quota(type) * 100) %>%'></div>
   </div>
 <% end %>
+<div class='well well-small visible-desktop'>Automatically sync your shifts to Google Calendar, Apple iCal, Windows Calendar, etc. Your calendar subscription link: <strong><%= calendar_user_url(@user.id, :auth_token => @user.authentication_token) %></strong></div>
 <h3>Upcoming Shifts</h3>
 <%= render 'shifts/table', :shifts => @current_shifts %>
 <h3>Past Shifts</h3>
