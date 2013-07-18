@@ -40,7 +40,7 @@ class ShiftTypesController < ApplicationController
     @type = ShiftType.find_by_id(params[:id])
     flash[:success] = "#{@type.name} deleted successfully!"
     @type.destroy
-    redirect_back_or shift_types_path
+    redirect_to shift_types_path
   end
 
   def create
