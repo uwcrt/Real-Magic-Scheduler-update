@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(:version => 20130812011140) do
     t.string   "username",             :default => "",                    :null => false
     t.string   "authentication_token"
     t.boolean  "wants_notifications",  :default => false
-    t.datetime "last_notified",        :default => '1970-01-01 05:00:00'
+    t.datetime "last_notified",        :default => '1970-01-01 00:00:00'
   end
 
   add_index "users", ["username"], :name => "index_users_on_username"
