@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h2>Hello from the CRT Scheduler!</h2>
+    <p>Just letting you know there is a new shift available on RMS.<p>
+
+    <h2><%= @shift.name %></h2>
+    <p>
+      <strong>Time:</strong> <%= @shift.start.strftime("%a %b %e %H:%M") %> - <%= @shift.finish.strftime("%H:%M") %>
+      <br />
+      <strong>Location:</strong> <%= @shift.location %>
+      <br />
+      <% if !@shift.description.blank? %>
+        <strong>Description:</strong> <%= @shift.description %>
+      <% end %>
+    </p>
+
+    <p>You can disable these notification emails from your profile page on RMS.</p>
+  </body>
+</html>

@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
 
   before_save :downcase_username!, :ensure_authentication_token
 
-  attr_accessible :first_name, :last_name, :username
+  attr_accessible :first_name, :last_name, :username, :wants_notifications
 
   validates :first_name, :presence => true
   validates :last_name, :presence => true
@@ -32,6 +32,13 @@ class User < ActiveRecord::Base
   has_many :shifts, :class_name => "Shift", :finder_sql => 'SELECT * FROM shifts WHERE shifts.primary_id = #{id} OR shifts.secondary_id = #{id} ORDER BY shifts.start'
 
   default_scope :order => 'users.last_name ASC'
+
+  def self.notifiable_of_shift(shift)
+    users = User.where(:wants_notifications => true, :disabled => false).where('last_notified <= ?', Time.now - 3.hours);
+    users.to_a.select! {|user| user.can_primary?(shift) || user.can_secondary?(shift)}
+
+    return users
+  end
   
   def as_json
     {
@@ -142,5 +149,9 @@ class User < ActiveRecord::Base
 
   def downcase_username!
     username.downcase!
+  end
+
+  def email
+    "#{username}@uwaterloo.ca"
   end
 end

@@ -26,7 +26,7 @@ class Shift < ActiveRecord::Base
   validates_numericality_of :shift_type_id
   validate :primary_cannot_equal_secondary, :secondary_cannot_take_primary, :finish_after_start
 
-  before_save :remove_from_disabled
+  before_save :remove_from_disabled, :notify_responders
 
   belongs_to :primary, :class_name => "User", :foreign_key => "primary_id"
   belongs_to :secondary, :class_name => "User", :foreign_key => "secondary_id"
@@ -78,6 +78,14 @@ class Shift < ActiveRecord::Base
 
   def critical_days
     shift_type.critical_days
+  end
+
+  def notify_responders
+    if (self.new_record?)
+      ShiftMailer.new_email(self).deliver
+    elsif (self.location_changed? || self.start_changed? || self.finish_changed? || self.name_changed?)
+      ShiftMailer.update_email(self).deliver
+    end
   end
 
   private
