@@ -59,6 +59,19 @@ class UsersController < ApplicationController
     end
   end
 
+  def toggle_notifications
+    current_user.wants_notifications = !current_user.wants_notifications
+    current_user.save
+
+    if (current_user.wants_notifications)
+      flash[:success] = "You will now receive notifications for new shifts"
+    elsif
+      flash[:success] = "You will no longer receive notifications for new shifts"
+    end
+
+    redirect_to user_path(current_user)
+  end
+
   def calendar
     @user = User.find(params[:id])
     render :text => @user.calendar

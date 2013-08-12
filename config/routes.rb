@@ -5,6 +5,7 @@ Tutorial::Application.routes.draw do
     collection do
       put 'reset'
       put 'eot'
+      post 'toggle_notifications'
     end
     member do
       put 'primary'
