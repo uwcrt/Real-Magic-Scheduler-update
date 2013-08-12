@@ -40,15 +40,15 @@
 <% end %>
 
 <% if current_user.admin? && @mode != :history %>
-  <a class="btn" href="<%=shifts_path(:history => true)%>"><i class='icon-filter'></i> All Shifts</a>
+  <a class="btn" href="<%=shifts_path(:history => true)%>"><i class='icon-filter'></i> Show All Shifts</a>
 <% end %>
 
 <% if @mode != :current %>
-  <a class="btn" href="<%=shifts_path%>"><i class='icon-filter'></i> Current Shifts</a>
+  <a class="btn" href="<%=shifts_path%>"><i class='icon-filter'></i> Show Current Shifts</a>
 <% end %>
 
 <% if @mode != :available %>
-  <a class="btn" href="<%=available_shifts_path%>"><i class='icon-filter'></i> Available Shifts</a>
+  <a class="btn" href="<%=available_shifts_path%>"><i class='icon-filter'></i> Show Available Shifts</a>
 <% end %>
 <br />
 <br />
