@@ -1,20 +1,12 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.19'
-gem 'jquery-rails', '~> 2.1'
-gem 'sqlite3-ruby', :require => 'sqlite3'
-gem 'will_paginate', '3.0.pre2'
+ruby "1.9.3"
+
 gem 'devise'
 gem 'devise_cas_authenticatable'
+gem 'jquery-rails', '~> 2.1'
+gem 'pg'
+gem 'rails', '3.0.19'
 gem 'ri_cal'
-
-group :development do
-  gem 'rspec-rails', '2.1.0'
-  gem 'figaro'
-end
-
-group :test do
-  gem 'rspec', '2.1.0'
-  gem 'webrat', '0.7.1'
-  gem 'factory_girl_rails'
-end
+gem 'unicorn'
+gem 'will_paginate', '3.0.pre2'

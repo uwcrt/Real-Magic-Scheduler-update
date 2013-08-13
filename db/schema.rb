@@ -35,11 +35,11 @@ ActiveRecord::Schema.define(:version => 20130812011140) do
     t.string   "note"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "description",        :limit => 255
-    t.boolean  "aed",                               :default => true
-    t.boolean  "vest",                              :default => false
-    t.boolean  "primary_disabled",                  :default => false
-    t.boolean  "secondary_disabled",                :default => false
+    t.text     "description"
+    t.boolean  "aed",                :default => true
+    t.boolean  "vest",               :default => false
+    t.boolean  "primary_disabled",   :default => false
+    t.boolean  "secondary_disabled", :default => false
   end
 
   create_table "users", :force => true do |t|
