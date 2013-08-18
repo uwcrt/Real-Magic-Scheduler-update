@@ -13,3 +13,7 @@ body {
   margin-right: 25px;
   text-align: center;
 }
+
+form.button {
+  margin-bottom: 4px;
+}

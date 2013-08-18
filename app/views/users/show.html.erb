@@ -3,18 +3,18 @@
     <%= @user.full_name %>
     (<%= @responder_type %>)
   </h1>
-  <br />
 
-  <%= form_tag(toggle_notifications_users_path, :method => "POST") do %>
-    <% if current_user.wants_notifications %>
-      <button class="btn"><i class='icon-envelope'></i> Disable New Shift Notifications</button>
-    <% else %>
-      <button class="btn"><i class='icon-envelope'></i> Enable New Shift Notifications</button>
+  <% if current_user == @user %>
+    <%= form_tag(toggle_notifications_users_path, :method => "POST", :class => 'button') do %>
+      <% if current_user.wants_notifications %>
+        <button class="btn"><i class='icon-envelope'></i> Disable New Shift Notifications</button>
+      <% else %>
+        <button class="btn"><i class='icon-envelope'></i> Enable New Shift Notifications</button>
+      <% end %>
     <% end %>
   <% end %>
 
   <% if current_user.admin? %>
-    <br />
     <%= link_to '<i class="icon-edit icon-white"></i> Edit Responder'.html_safe, edit_user_path(@user.id), :title => "Edit", :class => 'btn btn-primary' %>
   <% end %>
 </div>
@@ -23,13 +23,16 @@
 current = format("%7.1f", @user.hours(type))
 upcoming = format("%7.1f", @user.upcoming_hours(type))
 max = format("%7.1f", @user.hours_quota(type))
-style = "progress-success"
-style = "progress-danger" if current + upcoming >= max
+
+# With bootstrap if a bar exceeds the total width it is hidden, so the upcoming hours bar
+# is limited by the # of remaining hours
+upcoming_hours = [@user.hours_quota(type) - @user.hours(type), @user.upcoming_hours(type)].min
 %>
   <%= type.name %>:
   <%= "#{current} / #{max} (#{upcoming} hours upcoming)" %>
-  <div class='progress <%= style %>' style='width:33%'>
-    <div class='bar' style='width: <%= (@user.hours(type) / @user.hours_quota(type) * 100) %>%'></div>
+  <div class='progress' style=''>
+    <div class='bar bar-success' style='width: <%= (@user.hours(type) / @user.hours_quota(type) * 100) %>%'></div>
+    <div class='bar bar-warning' style='width: <%= (upcoming_hours / @user.hours_quota(type) * 100) %>%'></div>
   </div>
 <% end %>
 
