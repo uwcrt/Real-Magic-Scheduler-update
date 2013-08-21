@@ -18,23 +18,25 @@
 
 require 'digest'
 class User < ActiveRecord::Base
-  devise :cas_authenticatable,
-         :token_authenticatable
+  attr_accessible :first_name, :last_name, :username, :wants_notifications
 
   before_save :downcase_username!, :ensure_authentication_token
 
-  attr_accessible :first_name, :last_name, :username, :wants_notifications
+  default_scope :order => 'users.last_name ASC'
+
+  devise :cas_authenticatable,
+         :token_authenticatable
+
+  has_many :shifts, :class_name => "Shift", :finder_sql => 'SELECT * FROM shifts WHERE shifts.primary_id = #{id} OR shifts.secondary_id = #{id} ORDER BY shifts.start'
 
   validates :first_name, :presence => true
   validates :last_name, :presence => true
   validates :username, :presence => true
 
-  has_many :shifts, :class_name => "Shift", :finder_sql => 'SELECT * FROM shifts WHERE shifts.primary_id = #{id} OR shifts.secondary_id = #{id} ORDER BY shifts.start'
-
-  default_scope :order => 'users.last_name ASC'
+  NOTIFICATION_BACKOFF = ENV['NOTIFICATION_BACKOFF'].to_i || 3.hours
 
   def self.notifiable_of_shift(shift)
-    users = User.where(:wants_notifications => true, :disabled => false).where('last_notified <= ?', Time.now - 3.hours);
+    users = User.where(:wants_notifications => true, :disabled => false).where('last_notified <= ?', Time.now - NOTIFICATION_BACKOFF);
     users.to_a.select! {|user| user.can_primary?(shift) || user.can_secondary?(shift)}
 
     return users
