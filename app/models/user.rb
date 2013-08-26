@@ -125,7 +125,7 @@ class User < ActiveRecord::Base
   def can_secondary?(shift)
     return false if shift.start < Time.zone.now
     return false if over_hours(shift.shift_type) && !critical(shift)
-    return false if self.primary unless (critical(shift) || shift.shift_type.ignore_primary)
+    return false if self.primary unless ((critical(shift) && shift.primary != nil)  || shift.shift_type.ignore_primary)
     return false if self.disabled && !shift.shift_type.ignore_suspended
     return false if shift.secondary != nil
     return false if conflict(shift)

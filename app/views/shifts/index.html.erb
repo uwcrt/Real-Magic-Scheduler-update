@@ -16,7 +16,7 @@
       <% end %>
     </li>
     <li>
-      If you are a primary you cannot take a secondary shift until it is critical
+      If you are a primary you cannot take a secondary shift until it is critical and the primary spot is taken
       <% if ShiftType.primary_ignored.any? %>
         except for <%= ShiftType.primary_ignored.map(&:name).to_sentence %> shifts
       <% end %>
