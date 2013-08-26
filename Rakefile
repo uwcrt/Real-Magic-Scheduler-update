@@ -4,4 +4,4 @@
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
-Tutorial::Application.load_tasks
+Rms::Application.load_tasks

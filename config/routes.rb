@@ -1,4 +1,4 @@
-Tutorial::Application.routes.draw do
+Rms::Application.routes.draw do
   devise_for :users
 
   resources :users do
