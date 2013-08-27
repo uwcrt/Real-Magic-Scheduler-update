@@ -18,7 +18,7 @@
 
 require 'digest'
 class User < ActiveRecord::Base
-  attr_accessible :first_name, :last_name, :username, :wants_notifications
+  attr_accessible :first_name, :last_name, :username, :wants_notifications, :last_notified
 
   before_save :downcase_username!, :ensure_authentication_token
 
