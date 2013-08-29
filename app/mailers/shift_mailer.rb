@@ -11,6 +11,7 @@ class ShiftMailer < ActionMailer::Base
 
   def new_email(shift)
     @shift = shift
+    subject = "New CRT Shift"
     users = User.notifiable_of_shift(@shift).to_a
 
     mail(:bcc => users.map(&:email), :subject => subject)
