@@ -92,7 +92,6 @@ GEM
       raindrops (~> 0.7)
     warden (1.2.1)
       rack (>= 1.0)
-    will_paginate (3.0.pre2)
 
 PLATFORMS
   ruby
@@ -105,4 +104,3 @@ DEPENDENCIES
   rails (= 3.0.19)
   ri_cal
   unicorn
-  will_paginate (= 3.0.pre2)

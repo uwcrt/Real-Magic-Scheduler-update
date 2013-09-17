@@ -20,6 +20,10 @@ Rms::Application.configure do
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
+  # Print out verbose messages
+  config.logger = Logger.new(STDOUT)
+  config.logger.level = Logger::DEBUG
+
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
 end
