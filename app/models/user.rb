@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
   NOTIFICATION_BACKOFF = ENV['NOTIFICATION_BACKOFF'].to_i || 3.hours
 
   def self.notifiable_of_shift(shift)
-    users = User.where(:wants_notifications => true, :disabled => false).where('last_notified <= ?', Time.now - NOTIFICATION_BACKOFF)
+    users = User.where(:wants_notifications => true).where('last_notified <= ?', Time.now - NOTIFICATION_BACKOFF)
     users.to_a.select! {|user| user.can_primary?(shift) || user.can_secondary?(shift)}
 
     return users
