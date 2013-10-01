@@ -83,7 +83,7 @@ class Shift < ActiveRecord::Base
   def notify_responders
     if (self.new_record?)
       users = User.notifiable_of_shift(self).to_a
-      ShiftMailer.new_email(self).deliver if users.any?
+      ShiftMailer.new_email(self, users).deliver if users.any?
     elsif (self.location_changed? || self.start_changed? || self.finish_changed? || self.name_changed?)
       users_to_notify = [self.primary, self.secondary].compact
       ShiftMailer.update_email(self, users_to_notify).deliver if users_to_notify.any?
