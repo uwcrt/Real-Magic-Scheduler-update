@@ -18,7 +18,7 @@
 
 require 'digest'
 class User < ActiveRecord::Base
-  attr_accessible :first_name, :last_name, :username, :wants_notifications, :last_notified
+  attr_accessible :first_name, :last_name, :username, :wants_notifications, :last_notified, :hcp_expiry, :sfa_expiry
 
   before_save :downcase_username!, :ensure_authentication_token
 
@@ -38,6 +38,10 @@ class User < ActiveRecord::Base
     users.to_a.select! {|user| user.can_primary?(shift) || user.can_secondary?(shift)}
 
     return users
+  end
+
+  def days_until_cert_expiration
+    ([sfa_expiry || Date.today, hcp_expiry || Date.today].min - Date.today).to_i
   end
   
   def as_json

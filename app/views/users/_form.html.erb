@@ -6,6 +6,10 @@
     <%= f.text_field :last_name %>
     <%= f.label :username %>
     <%= f.text_field :username %>
+    <%= f.label :sfa_expiry %>
+    <%= f.date_select :sfa_expiry %>
+    <%= f.label :hcp_expiry %>
+    <%= f.date_select :hcp_expiry %>
     <br />
     <%= f.submit button_text %>
   </div>
