@@ -72,6 +72,10 @@ class Shift < ActiveRecord::Base
     return json
   end
 
+  def days_away
+    ((finish - DateTime.now) / 1.day).ceil
+  end
+
   def length
     (finish - start)/(1.hour)
   end

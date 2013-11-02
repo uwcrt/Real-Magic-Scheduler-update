@@ -8,10 +8,13 @@
     <%= f.text_field :secondary_requirement %>
     <%= f.label :critical_time, '# of days before shift that it\'s critical' %>
     <%= f.text_field :critical_time %>
-    <%= f.label :ignore_primary, "Secondary can take primary slot (e.g. FnP)" %>
+    <%= f.label :ignore_primary, "Secondary responders can take the primary slot for shifts of this type" %>
     <%= f.check_box :ignore_primary %>
-    <%= f.label :ignore_suspended, "Suspended responders can take shift (e.g. Debriefs or Shift Tests)" %>
+    <%= f.label :ignore_certs, "Responders with expired certs can take shifts of this type" %>
     <%= f.check_box :ignore_suspended %><br />
+    <%= f.label :ignore_suspended, "Suspended responders can take shifts of this type" %>
+    <%= f.check_box :ignore_suspended %><br />
+    <br />
     <%= f.submit button_text %>
   </div>
 <% end %>

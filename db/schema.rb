@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131003143512) do
+ActiveRecord::Schema.define(:version => 20131003150053) do
 
   create_table "shift_types", :force => true do |t|
     t.string   "name"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20131003143512) do
     t.boolean  "ignore_primary",        :default => false
     t.boolean  "ignore_suspended",      :default => false
     t.integer  "critical_time",         :default => 7
+    t.boolean  "ignore_certs",          :default => false
   end
 
   create_table "shifts", :force => true do |t|

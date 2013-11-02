@@ -114,24 +114,25 @@ class User < ActiveRecord::Base
     primary ? type.primary_requirement : type.secondary_requirement
   end
 
-  def can_primary?(shift)
-    return false if shift.start < Time.zone.now
-    return false if self.disabled && !shift.shift_type.ignore_suspended
-    return false if over_hours(shift.shift_type) && !critical(shift)
-    return false if shift.primary != nil
-    return false if !self.primary unless shift.shift_type.ignore_primary
+  def can_take?(shift)
     return false if conflict(shift)
+    return false if self.disabled && !shift.shift_type.ignore_suspended
+    return false if shift.start < Time.zone.now
+    return false if over_hours(shift.shift_type) && !critical(shift)
+    return false if (shift.days_away > days_until_cert_expiration) && !shift.shift_type.ignore_certs
     return true
   end
 
+  def can_primary?(shift)
+    return false if shift.primary != nil
+    return false if !self.primary unless shift.shift_type.ignore_primary
+    return can_take?(shift)
+  end
+
   def can_secondary?(shift)
-    return false if shift.start < Time.zone.now
-    return false if over_hours(shift.shift_type) && !critical(shift)
     return false if self.primary unless ((critical(shift) && shift.primary != nil)  || shift.shift_type.ignore_primary)
-    return false if self.disabled && !shift.shift_type.ignore_suspended
     return false if shift.secondary != nil
-    return false if conflict(shift)
-    return true
+    return can_take?(shift)
   end
 
   def conflict(shift)

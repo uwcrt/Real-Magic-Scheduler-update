@@ -2,6 +2,9 @@
   <h1>
     <%= @user.full_name %>
     (<%= @responder_type %>)
+    <% if current_user.admin? %>
+      <%= link_to '<i class="icon-edit icon-white"></i> Edit Responder'.html_safe, edit_user_path(@user.id), :title => "Edit", :class => 'btn btn-primary' %>
+    <% end %>
   </h1>
 
   <% if current_user == @user %>
@@ -14,9 +17,16 @@
     <% end %>
   <% end %>
 
-  <% if current_user.admin? %>
-    <%= link_to '<i class="icon-edit icon-white"></i> Edit Responder'.html_safe, edit_user_path(@user.id), :title => "Edit", :class => 'btn btn-primary' %>
-  <% end %>
+  <div class='row'>
+    <div class='well well-small span-6'>
+      <h4>Certifications</h4>
+      <p>SFA expiration date: <%= @user.sfa_expiry %></p>
+      <p>HCP expiration date: <%= @user.hcp_expiry %></p>
+      <p>Based on your expiration dates, you will not be able to take shifts after <%= Date.today + @user.days_until_cert_expiration %>
+      <p>Contact the directors of membership if you have more recent certifications</p>
+    </div>
+  </div>
+
 </div>
 <% @shift_types.each do |type| %>
 <%
