@@ -46,29 +46,15 @@ class ShiftsController < ApplicationController
 
     split = params[:split] == '1' && params[:split_length].to_i > 0
 
-    if (split)
-      base = Shift.new(params[:shift])
-      split_length = params[:split_length].to_i * 1.minute
-      num_shifts = (base.length * 60.minute) / split_length
-      shift = nil
-      (0...num_shifts).each do |n|
-        shift = Shift.new(params[:shift])
-        shift.start = base.start + split_length * n
-        shift.finish = shift.start + split_length
-        shift.save
-      end
-      shift.finish = base.finish
-      shift.save
+    @shift = Shift.new(params[:shift])
+    @shift.split!(params[:split_length].to_i.minutes) if split
+
+    if @shift.save
+      flash[:success] = "Shift created successfully!"
       redirect_to shifts_path
-    elsif
-      @shift = Shift.new(params[:shift])
-      if @shift.save
-        flash[:success] = "Shift created successfully!"
-        redirect_to shifts_path
-      else
-        @title = "New Shift"
-        render 'new'
-      end
+    else
+      @title = "New Shift"
+      render 'new'
     end
   end
 
@@ -80,6 +66,10 @@ class ShiftsController < ApplicationController
   def update
     @shift = Shift.find params[:id]
     if @shift.update_attributes(params[:shift])
+      if params[:split] == '1' && params[:split_length].to_i > 0
+        @shift.split!(params[:split_length].to_i.minutes)
+      end
+
       flash[:success] = "Shift updated."
       redirect_to shifts_path
     else

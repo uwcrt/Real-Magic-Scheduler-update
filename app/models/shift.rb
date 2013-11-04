@@ -94,6 +94,21 @@ class Shift < ActiveRecord::Base
     end
   end
 
+  def split!(split_length)
+    start = self.start
+    finish = self.finish
+
+    num_shifts = (self.length.hours) / split_length
+    shift = self
+
+    (0...num_shifts).each do |n|
+      shift.start = start + split_length * n
+      shift.finish = [shift.start + split_length, finish].min
+      shift.save
+      shift = self.clone
+    end
+  end
+
   private
 
     def primary_cannot_equal_secondary
