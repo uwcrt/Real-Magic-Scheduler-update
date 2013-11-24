@@ -44,10 +44,10 @@ class ShiftsController < ApplicationController
       return
     end
 
-    split = params[:split] == '1' && params[:split_length].to_i > 0
+    split_length = params[:split_length].to_i
 
     @shift = Shift.new(params[:shift])
-    @shift.split!(params[:split_length].to_i.minutes) if split
+    @shift.split!(split_length.minutes) if split_length > 0
 
     if @shift.save
       flash[:success] = "Shift created successfully!"
@@ -66,9 +66,8 @@ class ShiftsController < ApplicationController
   def update
     @shift = Shift.find params[:id]
     if @shift.update_attributes(params[:shift])
-      if params[:split] == '1' && params[:split_length].to_i > 0
-        @shift.split!(params[:split_length].to_i.minutes)
-      end
+      split_length = params[:split_length].to_i
+      @shift.split!(split_length.minutes) if split_length > 0
 
       flash[:success] = "Shift updated."
       redirect_to shifts_path
