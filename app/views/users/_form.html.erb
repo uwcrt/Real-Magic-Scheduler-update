@@ -7,9 +7,9 @@
     <%= f.label :username %>
     <%= f.text_field :username %>
     <%= f.label :sfa_expiry %>
-    <%= f.date_select :sfa_expiry %>
+    <%= f.date_select :sfa_expiry, :start_year => Time.now.year - 5, :end_year => Time.now.year + 5 %>
     <%= f.label :hcp_expiry %>
-    <%= f.date_select :hcp_expiry %>
+    <%= f.date_select :hcp_expiry ,:start_year => Time.now.year - 5, :end_year => Time.now.year + 5 %>
     <br />
     <%= f.submit button_text %>
   </div>
