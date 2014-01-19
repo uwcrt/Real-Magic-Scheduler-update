@@ -1,24 +1,8 @@
-# == Schema Information
-# Schema version: 20110222181535
-#
-# Table name: users
-#
-#  id                 :integer         primary key
-#  first_name         :string(255)
-#  email              :string(255)
-#  created_at         :timestamp
-#  updated_at         :timestamp
-#  encrypted_password :string(255)
-#  salt               :string(255)
-#  last_name          :string(255)
-#  admin              :boolean
-#  primary            :boolean
-#  disabled           :boolean
-#
-
 require 'digest'
 class User < ActiveRecord::Base
-  attr_accessible :first_name, :last_name, :username, :wants_notifications, :last_notified, :hcp_expiry, :sfa_expiry
+  attr_accessible :first_name, :last_name, :username, :wants_notifications, :last_notified, :hcp_expiry, :sfa_expiry, :position
+
+  POSITION_OPTIONS = {'Rookie' => 0, 'Secondary' => 1, 'Primary' => 2}
 
   before_save :downcase_username!, :ensure_authentication_token
 
@@ -27,15 +11,16 @@ class User < ActiveRecord::Base
   devise :cas_authenticatable,
          :token_authenticatable
 
-  has_many :shifts, :class_name => "Shift", :finder_sql => 'SELECT * FROM shifts WHERE shifts.primary_id = #{id} OR shifts.secondary_id = #{id} ORDER BY shifts.start'
+  has_many :shifts, :class_name => "Shift", :finder_sql => 'SELECT * FROM shifts WHERE shifts.primary_id = #{id} OR shifts.secondary_id = #{id} OR shifts.rookie_id = #{id} ORDER BY shifts.start'
 
   validates :first_name, :presence => true
   validates :last_name, :presence => true
   validates :username, :presence => true
+  validates_inclusion_of :position, :in => POSITION_OPTIONS.map {|p| p[1]}
 
   def self.notifiable_of_shift(shift)
     users = User.where(:wants_notifications => true).where('last_notified <= ?', Time.now - 3.hours)
-    users.to_a.select! {|user| user.can_primary?(shift) || user.can_secondary?(shift)}
+    users.to_a.select! {|user| user.can_primary?(shift) || user.can_secondary?(shift) || user.can_rookie?(shift)}
 
     return users
   end
@@ -43,12 +28,12 @@ class User < ActiveRecord::Base
   def days_until_cert_expiration
     ([sfa_expiry || Date.today, hcp_expiry || Date.today].min - Date.today).to_i
   end
-  
+
   def as_json
     {
       :first_name => self.first_name,
       :last_name => self.last_name,
-      :primary => self.primary,
+      :position => self.position,
       :suspended => self.disabled,
       :shifts => self.shifts.as_json(self),
       :shift_types => ShiftType.all.as_json(self)
@@ -61,6 +46,10 @@ class User < ActiveRecord::Base
 
   def name
     "#{first_name} #{last_name[0,1]}."
+  end
+
+  def position_name
+    @responder_type = User::POSITION_OPTIONS.to_a[self.position][0]
   end
 
   def calendar
@@ -87,7 +76,15 @@ class User < ActiveRecord::Base
   end
 
   def primary?
-    primary
+    position == POSITION_OPTIONS['Primary']
+  end
+
+  def secondary?
+    position == POSITION_OPTIONS['Secondary']
+  end
+
+  def rookie?
+    position == POSITION_OPTIONS['Rookie']
   end
 
   def past_shifts
@@ -111,7 +108,7 @@ class User < ActiveRecord::Base
   end
 
   def hours_quota(type)
-    primary ? type.primary_requirement : type.secondary_requirement
+    primary? ? type.primary_requirement : type.secondary_requirement
   end
 
   def can_take?(shift)
@@ -125,13 +122,20 @@ class User < ActiveRecord::Base
 
   def can_primary?(shift)
     return false if shift.primary != nil
-    return false if !self.primary unless shift.shift_type.ignore_primary
+    return false if !self.primary? unless shift.shift_type.ignore_primary
     return can_take?(shift)
   end
 
   def can_secondary?(shift)
-    return false if self.primary unless ((critical(shift) && shift.primary != nil)  || shift.shift_type.ignore_primary)
+    return false if self.primary? unless ((critical(shift) && shift.primary != nil)  || shift.shift_type.ignore_primary)
     return false if shift.secondary != nil
+    return false if self.rookie? unless shift.shift_type.ignore_primary
+    return can_take?(shift)
+  end
+
+  def can_rookie?(shift)
+    return false if (self.primary? || self.secondary?) unless shift.shift_type.ignore_primary
+    return false if shift.rookie != nil
     return can_take?(shift)
   end
 

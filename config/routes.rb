@@ -29,8 +29,10 @@ Rms::Application.routes.draw do
     member do
       put 'primary'
       put 'secondary'
+      put 'rookie'
       put 'drop_primary'
       put 'drop_secondary'
+      put 'drop_rookie'
       get 'next_week'
     end
   end

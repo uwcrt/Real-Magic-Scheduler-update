@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131003150053) do
+ActiveRecord::Schema.define(:version => 20140119014549) do
 
   create_table "shift_types", :force => true do |t|
     t.string   "name"
@@ -41,6 +41,8 @@ ActiveRecord::Schema.define(:version => 20131003150053) do
     t.boolean  "vest",               :default => false
     t.boolean  "primary_disabled",   :default => false
     t.boolean  "secondary_disabled", :default => false
+    t.integer  "rookie_id"
+    t.boolean  "rookie_disabled",    :default => true
   end
 
   create_table "users", :force => true do |t|
@@ -48,8 +50,7 @@ ActiveRecord::Schema.define(:version => 20131003150053) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "last_name"
-    t.boolean  "primary",              :default => false
-    t.boolean  "admin",                :default => false
+    t.boolean  "admin"
     t.boolean  "disabled",             :default => false
     t.string   "username",             :default => "",                    :null => false
     t.string   "authentication_token"
@@ -57,6 +58,7 @@ ActiveRecord::Schema.define(:version => 20131003150053) do
     t.datetime "last_notified",        :default => '1970-01-01 00:00:00'
     t.date     "sfa_expiry",           :default => '0001-01-01'
     t.date     "hcp_expiry",           :default => '0001-01-01'
+    t.integer  "position",             :default => 0
   end
 
   add_index "users", ["username"], :name => "index_users_on_username"

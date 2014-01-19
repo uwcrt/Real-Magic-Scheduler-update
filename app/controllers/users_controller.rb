@@ -52,10 +52,8 @@ class UsersController < ApplicationController
 
     if @user.disabled
       @responder_type = "Suspended"
-    elsif @user.primary
-      @responder_type = "Primary"
     else
-      @responder_type = "Secondary"
+      @responder_type = @user.position_name
     end
   end
 

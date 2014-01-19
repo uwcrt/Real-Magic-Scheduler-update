@@ -1,35 +1,17 @@
-# == Schema Information
-# Schema version: 20110222181535
-#
-# Table name: shifts
-#
-#  id            :integer         primary key
-#  name          :string(255)
-#  start         :timestamp
-#  finish        :timestamp
-#  location      :string(255)
-#  primary_id    :integer
-#  secondary_id  :integer
-#  shift_type_id :integer
-#  note          :string(255)
-#  created_at    :timestamp
-#  updated_at    :timestamp
-#  description   :string(255)
-#
-
 class Shift < ActiveRecord::Base
-  attr_accessible :name, :start, :finish, :location, :shift_type_id, :note, :description, :primary_id, :secondary_id, :aed, :vest, :primary_disabled, :secondary_disabled
+  attr_accessible :name, :start, :finish, :location, :shift_type_id, :note, :description, :primary_id, :secondary_id, :rookie_id, :aed, :vest, :primary_disabled, :secondary_disabled, :rookie_disabled
 
   default_scope :order => 'shifts.start ASC'
 
   validates_presence_of :name, :start, :finish, :location, :shift_type_id
   validates_numericality_of :shift_type_id
-  validate :primary_cannot_equal_secondary, :secondary_cannot_take_primary, :finish_after_start
+  validate :unique_responders, :secondary_cannot_take_primary, :finish_after_start
 
   before_save :remove_from_disabled, :notify_responders
 
   belongs_to :primary, :class_name => "User", :foreign_key => "primary_id"
   belongs_to :secondary, :class_name => "User", :foreign_key => "secondary_id"
+  belongs_to :rookie, :class_name => "User", :foreign_key => "rookie_id"
   belongs_to :shift_type
 
   def self.current
@@ -111,9 +93,13 @@ class Shift < ActiveRecord::Base
 
   private
 
-    def primary_cannot_equal_secondary
+    def unique_responders
       errors.add(:primary_id, "can't be the same as the Secondary") if
         primary_id != nil && primary_id == secondary_id
+      errors.add(:secondary_id, "can't be the same as the Rookie") if
+        secondary_id != nil && secondary_id == rookie_id
+      errors.add(:rookie_id, "can't be the same as the Primary") if
+        rookie_id != nil && rookie_id == primary_id
     end
 
     def secondary_cannot_take_primary

@@ -1,6 +1,6 @@
 <%=
-link_to user.disabled.to_s, 
+link_to user.disabled ? "Yes" : "No",
         suspended_user_path(user),
         :method => :put,
-        :remote => true 
+        :remote => true
 %>

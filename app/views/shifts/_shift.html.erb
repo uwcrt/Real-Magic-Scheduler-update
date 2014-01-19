@@ -33,8 +33,7 @@
     <i class="icon-ok center"></i>
   <% else %>
     <i class="icon-remove center"></i>
-  <% end %>
-</td>
+  <% end %> </td>
 <td>
   <% if shift.vest %>
     <i class="icon-ok center"></i>
@@ -44,3 +43,25 @@
 </td>
 <td><%= shift.note %></td>
 </tr>
+<% if !shift.rookie_disabled %>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>
+      <%= if shift.rookie != nil
+        current_user.admin? ? (link_to shift.rookie.name, drop_rookie_shift_path(shift), :method => :put, :confirm => "Are you sure you want to withdraw this responder?") : shift.rookie.name
+        elsif current_user.can_rookie?(shift)
+          link_to "Take Shift", rookie_shift_path(shift), :method => :put, :confirm => "Are you sure you want to take this shift?"
+        end
+      %>
+    </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td><%= "Rookie Slot" unless shift.shift_type.ignore_primary %></td>
+  </tr>
+<% end %>

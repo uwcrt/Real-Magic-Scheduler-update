@@ -6,6 +6,8 @@
     <%= f.text_field :last_name %>
     <%= f.label :username %>
     <%= f.text_field :username %>
+    <%= f.label :position %>
+    <%= f.select :position, User::POSITION_OPTIONS %>
     <%= f.label :sfa_expiry %>
     <%= f.date_select :sfa_expiry, :start_year => Time.now.year - 5, :end_year => Time.now.year + 5 %>
     <%= f.label :hcp_expiry %>

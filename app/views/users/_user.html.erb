@@ -5,8 +5,8 @@
   <td><%= format("%7.2f", user.total_hours(n)) %></td>
 <% end %>
 <td><%= pluralize(user.days_until_cert_expiration, 'day') %></td>
-<td id="p<%= user.id %>">
-<%= render 'users/primary', :user => user %>
+<td>
+  <%= user.position_name %>
 </td>
 <td id="d<%= user.id %>">
 <%= render 'users/suspended', :user => user %>

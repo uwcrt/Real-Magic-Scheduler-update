@@ -108,6 +108,18 @@ class ShiftsController < ApplicationController
     redirect_to shifts_path
   end
 
+  def rookie
+    shift = Shift.find(params[:id])
+    if current_user.can_rookie?(shift)
+      shift.rookie = current_user
+      shift.save
+      flash[:success] = "You are now the rookie for #{shift.name}"
+    else
+      flash[:error] = "There was a problem processing your request. If this problem continues please contact the scheduler."
+    end
+    redirect_to shifts_path
+  end
+
   def drop_primary
     shift = Shift.find(params[:id])
     shift.primary = nil
@@ -118,6 +130,13 @@ class ShiftsController < ApplicationController
   def drop_secondary
     shift = Shift.find(params[:id])
     shift.secondary = nil
+    shift.save
+    redirect_to shifts_path
+  end
+
+  def drop_rookie
+    shift = Shift.find(params[:id])
+    shift.rookie = nil
     shift.save
     redirect_to shifts_path
   end

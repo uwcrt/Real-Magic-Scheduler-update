@@ -18,6 +18,10 @@
     <%= f.collection_select(:secondary_id, User.all, :id, :full_name, {:include_blank => true}) %>
     <%= f.label :secondary_disabled, "Make unavailable", :class => "checkbox inline" %>
     <%= f.check_box :secondary_disabled %>
+    <%= f.label :rookie_id %>
+    <%= f.collection_select(:rookie_id, User.all, :id, :full_name, {:include_blank => true}) %>
+    <%= f.label :rookie_disabled, "Make unavailable", :class => "checkbox inline" %>
+    <%= f.check_box :rookie_disabled %>
     <br />
     <%= f.label :description %>
     <%= f.text_area :description, :rows => 6, :cols => "100" %><br />
