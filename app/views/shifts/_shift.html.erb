@@ -28,8 +28,11 @@
      %>
 </td>
 <td>
-  <%= if shift.rookie != nil
-    current_user.admin? ? (link_to shift.rookie.name, drop_rookie_shift_path(shift), :method => :put, :confirm => "Are you sure you want to withdraw this responder?") : shift.rookie.name
+  <%=
+    if shift.rookie_disabled
+     "Unavailable"
+    elsif shift.rookie != nil
+      current_user.admin? ? (link_to shift.rookie.name, drop_rookie_shift_path(shift), :method => :put, :confirm => "Are you sure you want to withdraw this responder?") : shift.rookie.name
     elsif current_user.can_rookie?(shift)
       link_to "Take Shift", rookie_shift_path(shift), :method => :put, :confirm => "Are you sure you want to take this shift?"
     end
