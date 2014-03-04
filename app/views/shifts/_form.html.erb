@@ -24,19 +24,7 @@
     <%= f.check_box :rookie_disabled %>
     <br />
     <%= f.label :description %>
-    <%= f.text_area :description, :rows => 6, :cols => "100" %><br />
-    <%= f.label :note %>
-    <%= f.text_field :note %>
-    <br />
-    <div class='shift-checkbox'>
-        <%= label_tag :aed %>
-        <%= f.check_box :aed %>
-    </div>
-    <div class='shift-checkbox'>
-        <%= label_tag :vest %>
-        <%= f.check_box :vest, :value => false %>
-    </div>
-    <br />
+    <%= f.text_area :description, :class => 'field span6', :rows => 8 %><br />
     <%= label_tag :split_length, "Split Length (minutes)" %>
     <%= text_field_tag :split_length %>
     <br />

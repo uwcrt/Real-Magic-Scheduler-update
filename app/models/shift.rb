@@ -1,5 +1,5 @@
 class Shift < ActiveRecord::Base
-  attr_accessible :name, :start, :finish, :location, :shift_type_id, :note, :description, :primary_id, :secondary_id, :rookie_id, :aed, :vest, :primary_disabled, :secondary_disabled, :rookie_disabled
+  attr_accessible :name, :start, :finish, :location, :shift_type_id, :description, :primary_id, :secondary_id, :rookie_id, :primary_disabled, :secondary_disabled, :rookie_disabled
 
   default_scope :order => 'shifts.start ASC'
 
@@ -32,11 +32,8 @@ class Shift < ActiveRecord::Base
   def as_json(user = nil)
     json = {
       :id => self.id,
-      :aed => self.aed,
-      :vest => self.vest,
       :start => self.start,
       :finish => self.finish,
-      :note => self.note,
       :description => self.description,
       :primary_disabled => self.primary_disabled,
       :secondary_disabled => self.secondary_disabled,
