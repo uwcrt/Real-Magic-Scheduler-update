@@ -1,6 +1,8 @@
 development:
   adapter: postgresql
+  encoding: unicode
+  host: localhost
   database: rms
   username: postgres
   password: foobar
-  host: localhost
+  pool: 5

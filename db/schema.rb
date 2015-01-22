@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(:version => 20140304044613) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "last_name"
-    t.boolean  "admin"
+    t.boolean  "admin",                :default => false
     t.boolean  "disabled",             :default => false
     t.string   "username",             :default => "",                    :null => false
     t.string   "authentication_token"
