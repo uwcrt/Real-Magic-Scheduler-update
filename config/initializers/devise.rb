@@ -7,6 +7,7 @@ Devise.setup do |config|
   config.mailer_sender = "scheduler@crt.feds.ca"
   config.cas_base_url = "https://cas.uwaterloo.ca/cas"
   config.cas_create_user = false
+  OpenSSL::SSL::SSLContext::DEFAULT_PARAMS[:ssl_version] = 'TLSv1'
 
   config.cas_client_config_options = {
     :force_ssl_verification => true
