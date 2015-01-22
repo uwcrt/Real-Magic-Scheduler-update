@@ -8,6 +8,10 @@ Devise.setup do |config|
   config.cas_base_url = "https://cas.uwaterloo.ca/cas"
   config.cas_create_user = false
 
+  config.cas_client_config_options = {
+    :force_ssl_verification => true
+  }
+
   # Configure the class responsible to send e-mails.
   # config.mailer = "Devise::Mailer"
 
