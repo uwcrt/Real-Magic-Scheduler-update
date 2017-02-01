@@ -22,8 +22,9 @@
       <h4>Certifications</h4>
       <p>SFA expiration date: <%= @user.sfa_expiry %></p>
       <p>HCP expiration date: <%= @user.hcp_expiry %></p>
+      <p>AMFR expiration date: <%= @user.amfr_expiry %><p>
       <p>Based on your expiration dates, you will not be able to take shifts after <%= Date.today + @user.days_until_cert_expiration %>
-      <p>Contact the directors of membership if you have more recent certifications</p>
+      <p>Contact the Directors of Membership and Scheduling if you have more recent certifications</p>
     </div>
   </div>
 

@@ -1,6 +1,6 @@
 require 'digest'
 class User < ActiveRecord::Base
-  attr_accessible :first_name, :last_name, :username, :wants_notifications, :last_notified, :hcp_expiry, :sfa_expiry, :position
+  attr_accessible :first_name, :last_name, :username, :wants_notifications, :last_notified, :hcp_expiry, :sfa_expiry, :amfr_expiry, :position
 
   POSITION_OPTIONS = {'Rookie' => 0, 'Secondary' => 1, 'Primary' => 2}
 
@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   end
 
   def days_until_cert_expiration
-    ([sfa_expiry || Date.today, hcp_expiry || Date.today].min - Date.today).to_i
+    ([sfa_expiry || Date.today, [hcp_expiry || Date.today, amfr_expiry || Date.today].max || Date.today].min - Date.today).to_i
   end
 
   def as_json

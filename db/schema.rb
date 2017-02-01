@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140304044613) do
+ActiveRecord::Schema.define(:version => 20170125224028) do
 
   create_table "shift_types", :force => true do |t|
     t.string   "name"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(:version => 20140304044613) do
     t.date     "sfa_expiry",           :default => '0001-01-01'
     t.date     "hcp_expiry",           :default => '0001-01-01'
     t.integer  "position",             :default => 0
+    t.date     "amfr_expiry",          :default => '0001-01-01'
   end
 
   add_index "users", ["username"], :name => "index_users_on_username"
