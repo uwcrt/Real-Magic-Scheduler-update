@@ -129,7 +129,7 @@ class User < ActiveRecord::Base
   def can_secondary?(shift)
     return false if self.primary? unless ((critical(shift) && shift.primary != nil)  || shift.shift_type.ignore_primary)
     return false if shift.secondary != nil
-    return false if self.rookie? unless (shift.rookie_disabled || shift.shift_type.ignore_primary)
+    return false if self.rookie? unless (shift.shift_type.ignore_primary)
     return can_take?(shift)
   end
 
