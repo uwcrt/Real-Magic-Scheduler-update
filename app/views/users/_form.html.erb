@@ -11,9 +11,9 @@
     <%= f.label :sfa_expiry %>
     <%= f.date_select :sfa_expiry, :start_year => Time.now.year - 5, :end_year => Time.now.year + 5 %>
     <%= f.label :hcp_expiry %>
-    <%= f.date_select :hcp_expiry ,:start_year => Time.now.year - 5, :end_year => Time.now.year + 5 %>
+    <%= f.date_select :hcp_expiry ,:start_year => Time.now.year - 5, :end_year => Time.now.year + 5, :include_blank => true %>
     <%= f.label :amfr_expiry %>
-    <%= f.date_select :amfr_expiry ,:start_year => Time.now.year - 5, :end_year => Time.now.year + 5 %>
+    <%= f.date_select :amfr_expiry ,:start_year => Time.now.year - 5, :end_year => Time.now.year + 5, :include_blank => true %>
     <br />
     <%= f.submit button_text %>
   </div>
