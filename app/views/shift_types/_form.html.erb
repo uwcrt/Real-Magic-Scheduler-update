@@ -14,6 +14,8 @@
     <%= f.check_box :ignore_suspended %><br />
     <%= f.label :ignore_suspended, "Suspended responders can take shifts of this type" %>
     <%= f.check_box :ignore_suspended %><br />
+    <%= f.label :limit, "The amount of hours a responder can take within 24 hours (leave as 0 for no limitation)" %>
+    <%= f.text_field :limit %>
     <br />
     <%= f.submit button_text %>
   </div>
