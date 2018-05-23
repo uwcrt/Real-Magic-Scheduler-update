@@ -37,8 +37,10 @@ class Shift < ActiveRecord::Base
       :description => self.description,
       :primary_disabled => self.primary_disabled,
       :secondary_disabled => self.secondary_disabled,
+      :rookie_disabled => self.rookie_disabled,
       :primary => self.primary.try(:full_name),
       :secondary => self.secondary.try(:full_name),
+      :rookie => self.rookie.try(:full_name),
       :shift_type => self.shift_type.name,
       :duration => self.length
     }
@@ -113,5 +115,6 @@ class Shift < ActiveRecord::Base
     def remove_from_disabled
       self.primary = nil if self.primary_disabled
       self.secondary = nil if self.secondary_disabled
+      self.rookie = nil if self.rookie_disabled
     end
 end

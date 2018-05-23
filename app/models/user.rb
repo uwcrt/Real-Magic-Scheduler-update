@@ -1,6 +1,6 @@
 require 'digest'
 class User < ActiveRecord::Base
-  attr_accessible :first_name, :last_name, :username, :wants_notifications, :last_notified, :hcp_expiry, :sfa_expiry, :position
+  attr_accessible :first_name, :last_name, :username, :wants_notifications, :last_notified, :hcp_expiry, :sfa_expiry, :amfr_expiry, :position
 
   POSITION_OPTIONS = {'Rookie' => 0, 'Secondary' => 1, 'Primary' => 2}
 
@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   end
 
   def days_until_cert_expiration
-    ([sfa_expiry || Date.today, hcp_expiry || Date.today].min - Date.today).to_i
+    ([sfa_expiry || Date.today, [hcp_expiry || Date.today, amfr_expiry || Date.today].max || Date.today].min - Date.today).to_i
   end
 
   def as_json
@@ -129,7 +129,7 @@ class User < ActiveRecord::Base
   def can_secondary?(shift)
     return false if self.primary? unless ((critical(shift) && shift.primary != nil)  || shift.shift_type.ignore_primary)
     return false if shift.secondary != nil
-    return false if self.rookie? unless (shift.rookie_disabled || shift.shift_type.ignore_primary)
+    return false if self.rookie? unless (shift.shift_type.ignore_primary)
     return can_take?(shift)
   end
 
@@ -140,12 +140,15 @@ class User < ActiveRecord::Base
   end
 
   def conflict(shift)
+    consecutiveHrs = 0
     self.shifts.each do |compare|
       if shift.start < compare.finish && shift.finish > compare.start
         return true
+       elsif shift.shift_type_id == compare.shift_type_id && (shift.start - compare.start).abs / 3600 <= 24
+         consecutiveHrs += (compare.finish - compare.start) / 3600
       end
     end
-    return false
+    return shift.shift_type.limit != 0 && consecutiveHrs >= shift.shift_type.limit
   end
 
   def critical(shift)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140304044613) do
+ActiveRecord::Schema.define(:version => 20170222153740) do
 
   create_table "shift_types", :force => true do |t|
     t.string   "name"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(:version => 20140304044613) do
     t.boolean  "primary_disabled",   :default => false
     t.boolean  "secondary_disabled", :default => false
     t.integer  "rookie_id"
-    t.boolean  "rookie_disabled",    :default => true
+    t.boolean  "rookie_disabled",    :default => false
   end
 
   create_table "users", :force => true do |t|
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(:version => 20140304044613) do
     t.date     "sfa_expiry",           :default => '0001-01-01'
     t.date     "hcp_expiry",           :default => '0001-01-01'
     t.integer  "position",             :default => 0
+    t.date     "amfr_expiry",          :default => '0001-01-01'
   end
 
   add_index "users", ["username"], :name => "index_users_on_username"

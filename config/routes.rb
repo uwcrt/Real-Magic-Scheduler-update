@@ -34,6 +34,7 @@ Rms::Application.routes.draw do
       put 'drop_secondary'
       put 'drop_rookie'
       get 'next_week'
+      get 'copy_shift'
     end
   end
 

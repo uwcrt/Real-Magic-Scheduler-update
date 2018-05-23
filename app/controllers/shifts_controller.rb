@@ -33,6 +33,17 @@ class ShiftsController < ApplicationController
     @shift.finish += 1.week
     @shift.primary = nil
     @shift.secondary = nil
+    @shift.rookie = nil
+    render 'new'
+  end
+
+  def copy_shift
+    @shift = Shift.find params[:id]
+    @shift = @shift.clone
+    @shift.name = nil
+    @shift.primary = nil
+    @shift.secondary = nil
+    @shift.rookie = nil 
     render 'new'
   end
 

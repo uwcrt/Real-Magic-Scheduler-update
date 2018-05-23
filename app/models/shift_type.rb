@@ -13,13 +13,14 @@
 #
 
 class ShiftType < ActiveRecord::Base
-  attr_accessible :name, :primary_requirement, :secondary_requirement, :ignore_primary, :ignore_suspended, :critical_time, :ignore_certs
+  attr_accessible :name, :primary_requirement, :secondary_requirement, :ignore_primary, :ignore_suspended, :critical_time, :ignore_certs, :limit
 
   has_many :shifts, :dependent => :destroy
 
   validates :name, :presence => true
   validates_numericality_of :primary_requirement, :presence => true
   validates_numericality_of :secondary_requirement, :presence => true
+  validates_numericality_of :limit, :presence => true, :greater_than_or_equal_to => 0
   validates_numericality_of :critical_time, :presence => true, :greater_than_or_equal_to => 0
 
   def self.suspended_allowed
