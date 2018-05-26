@@ -9,3 +9,8 @@ gem 'pg', '~> 0.18.4'
 gem 'rails', '3.0.20'
 gem 'ri_cal', '~> 0.8.8'
 gem 'unicorn', '~> 4.6.3'
+
+group :development, :test do
+  gem "rspec-rails", '3.0.0'
+  gem 'rspec', '3.0.0'
+end

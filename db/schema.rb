@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170222153740) do
+ActiveRecord::Schema.define(:version => 20170424024827) do
 
   create_table "shift_types", :force => true do |t|
     t.string   "name"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 20170222153740) do
     t.boolean  "ignore_suspended",      :default => false
     t.integer  "critical_time",         :default => 7
     t.boolean  "ignore_certs",          :default => false
+    t.integer  "limit",                 :default => 0,     :null => false
   end
 
   create_table "shifts", :force => true do |t|
@@ -58,7 +59,5 @@ ActiveRecord::Schema.define(:version => 20170222153740) do
     t.integer  "position",             :default => 0
     t.date     "amfr_expiry",          :default => '0001-01-01'
   end
-
-  add_index "users", ["username"], :name => "index_users_on_username"
 
 end
