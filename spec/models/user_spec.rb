@@ -84,10 +84,5 @@ describe User do
     it "should not be a primary by default" do
       @user.should_not be_primary
     end
-
-    it "should be convertible to a primary" do
-      @user.toggle!(:primary)
-      @user.should be_primary
-    end
   end
 end

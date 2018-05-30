@@ -80,7 +80,7 @@ describe Shift do
       
       before(:each) do
         @primary = create(:user, :position => 2)
-        @secondary = create(:user, :position => 1, :username => create.next(:username))
+        @secondary = create(:user, :position => 1)
       end
       
       it "should be store a primary responder" do
