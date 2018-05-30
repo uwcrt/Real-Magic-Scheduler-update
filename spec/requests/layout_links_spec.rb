@@ -17,7 +17,7 @@ describe "LayoutLinks" do
 
     it "should have a sign in link" do
       visit root_path
-      response.should have_selector('a', :href => signin_path, :content => "Sign in")
+      response.should have_selector('a', :href => new_user_session_path, :content => "Sign in")
     end
   end
 

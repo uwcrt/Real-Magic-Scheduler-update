@@ -7,7 +7,7 @@ describe ShiftTypesController do
     describe "Not logged in" do
       it "should redirect to te login path" do
         get :new
-        response.should redirect_to(signin_path)
+        response.should redirect_to(new_user_session_path)
       end
     end
 
@@ -39,7 +39,7 @@ describe ShiftTypesController do
 
       it "should redirect to the login page" do
         get :index
-        response.should redirect_to(signin_path)
+        response.should redirect_to(new_user_session_path)
       end
     end
 

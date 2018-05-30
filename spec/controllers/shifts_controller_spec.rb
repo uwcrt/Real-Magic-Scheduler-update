@@ -7,18 +7,18 @@ describe ShiftsController do
     describe "Not logged in" do
 
       it "should redirect the 'new' page to the login page" do
-        get :new
-        response.should redirect_to(signin_path)
+       get :new
+        response.should redirect_to(new_user_session_path)
       end
 
       it "should redirect the 'index' page to the login page" do
         get :index
-        response.should redirect_to(signin_path)
+        response.should redirect_to(new_user_session_path)
       end
 
       it "should redirect the 'create' action to the login page" do
         post :create
-        response.should redirect_to(signin_path)
+        response.should redirect_to(new_user_session_path)
       end
     end
 
