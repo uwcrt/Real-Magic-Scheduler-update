@@ -10,7 +10,12 @@ gem 'rails', '3.0.20'
 gem 'ri_cal', '~> 0.8.8'
 gem 'unicorn', '~> 4.6.3'
 
-group :development, :test do
+group :development do
   gem "rspec-rails", '3.0.0'
+end
+
+group :test do
   gem 'rspec', '3.0.0'
+  gem 'factory_bot'
+  gem 'capybara'
 end

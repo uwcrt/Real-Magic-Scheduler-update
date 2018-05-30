@@ -7,28 +7,9 @@ describe "LayoutLinks" do
     response.should have_selector('title', :content => "Home")
   end
 
-  it "should have a Contact page at '/contact'" do
-    get '/contact'
-    response.should have_selector('title', :content => "Contact")
-  end
-
-  it "should have an About page at '/about'" do
-    get '/about'
-    response.should have_selector('title', :content => "About")
-  end
-
-  it "should have a Help page at '/help'" do
-    get '/help'
-    response.should have_selector('title', :content => "Help")
-  end
-
-   it "should have the right links on the layout" do
+  it "should have the right links on the layout" do
     visit root_path
-    click_link "About"
-    response.should have_selector('title', :content => "About")
-    click_link "Contact"
-    response.should have_selector('title', :content => "Contact")
-    click_link "Home"
+   click_link "Home"
     response.should have_selector('title', :content => "Home")
   end
 
@@ -43,7 +24,7 @@ describe "LayoutLinks" do
   describe "when signed in" do
 
     before(:each) do
-      @user = Factory(:user)
+      @user = create(:user)
       integration_sign_in(@user)
     end
 

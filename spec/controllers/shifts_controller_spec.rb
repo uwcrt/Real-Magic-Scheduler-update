@@ -25,7 +25,7 @@ describe ShiftsController do
     describe "Logged in as a regular user" do
 
       before(:each) do
-        test_sign_in(Factory(:user))
+        test_sign_in(create(:user))
       end
 
       it "should redirect the 'new' page to the root path" do
@@ -47,7 +47,7 @@ describe ShiftsController do
     describe "Logged in as an adminstrator" do
 
       before(:each) do
-        test_sign_in(Factory(:user)).toggle!(:admin)
+        test_sign_in(create(:user)).toggle!(:admin)
       end
 
       it "should render the 'new' page" do
@@ -60,7 +60,7 @@ describe ShiftsController do
   describe "GET 'index'" do
 
     before(:each) do
-      @user = test_sign_in(Factory(:user))
+      @user = test_sign_in(create(:user))
     end
 
     it "should be successful" do
@@ -77,7 +77,7 @@ describe ShiftsController do
   describe "GET 'new'" do
 
     before(:each) do
-      @user = test_sign_in(Factory(:user))
+      @user = test_sign_in(create(:user))
       @user.toggle!(:admin)
     end
 

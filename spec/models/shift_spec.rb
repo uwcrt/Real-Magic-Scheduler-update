@@ -79,8 +79,8 @@ describe Shift do
     describe "Taking shifts" do
       
       before(:each) do
-        @primary = Factory(:user, :primary => true)
-        @secondary = Factory(:user, :email => Factory.next(:email))
+        @primary = create(:user, :position => 2)
+        @secondary = create(:user, :position => 1, :username => create.next(:username))
       end
       
       it "should be store a primary responder" do

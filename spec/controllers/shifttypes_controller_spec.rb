@@ -14,7 +14,7 @@ describe ShiftTypesController do
     describe "not an administrator" do
 
       before(:each) do
-        test_sign_in(Factory(:user))
+        test_sign_in(create(:user))
       end
       it "should redirect to the home page" do
         get :new
@@ -24,7 +24,7 @@ describe ShiftTypesController do
 
     describe "as an administrator" do
       before(:each) do
-        test_sign_in(Factory(:user)).toggle!(:admin)
+        test_sign_in(create(:user)).toggle!(:admin)
       end
       it 'should be successfull' do
         get :new
@@ -46,7 +46,7 @@ describe ShiftTypesController do
     describe "Not an administrator" do
 
       before(:each) do
-        @user = test_sign_in(Factory(:user))
+        @user = test_sign_in(create(:user))
       end
 
       it "should redirect to the home page" do
@@ -57,7 +57,7 @@ describe ShiftTypesController do
 
     describe "as an administrator" do
       before (:each) do
-        test_sign_in(Factory(:user)).toggle!(:admin)
+        test_sign_in(create(:user)).toggle!(:admin)
       end
 
       it "should be successful" do
@@ -69,7 +69,7 @@ describe ShiftTypesController do
 
   describe "POST 'create'" do
     before(:each) do
-      test_sign_in(Factory(:user)).toggle!(:admin)
+      test_sign_in(create(:user)).toggle!(:admin)
     end
     describe "failure" do
 

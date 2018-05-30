@@ -4,7 +4,7 @@ describe User do
   before(:each) do
     @attr = { :first_name => "Justin",
               :last_name => "Vanderheide",
-              :email => "user@example.com",
+              :username => "user",
               :password => "foobar",
               :password_confirmation => "foobar"}
   end
@@ -93,25 +93,6 @@ describe User do
       @user = User.create!(@attr)
     end
 
-    it "Should have an encrypted password attribute" do
-      @user.should respond_to(:encrypted_password)
-    end
-
-    it "should set the encrypted password attribute" do
-      @user.encrypted_password.should_not be_blank
-    end
-
-    describe "has_password? method" do
-
-      it "should be true if the passwords match" do
-        @user.has_password?(@attr[:password]).should be_true
-      end
-
-      it "should be false if the passwords don't match" do
-        @user.has_password?("invalid").should be_false
-      end
-    end
-
     describe "authenticate method" do
 
       it "should return nil on email/password mismatch" do
@@ -135,11 +116,11 @@ describe User do
 
     before(:each) do
       @user = User.create!(@attr)
-      @user.toggle!(:primary)
-      @shifttype = Factory(:shift_type)
-      @shift_secondary = Factory(:shift, :secondary => @user, :start => DateTime.now - 5.days)
-      @shift_primary = Factory(:shift, :primary => @user, :start => DateTime.now - 4.days)
-      @shift_neither = Factory(:shift, :start => DateTime.now - 3.days)
+      @user.position = 2
+      @shifttype = create(:shift_type)
+      @shift_secondary = create(:shift, :secondary => @user, :start => DateTime.now - 5.days)
+      @shift_primary = create(:shift, :primary => @user, :start => DateTime.now - 4.days)
+      @shift_neither = create(:shift, :start => DateTime.now - 3.days)
     end
 
     it "should have a shifts attribute" do
@@ -185,8 +166,8 @@ describe User do
       @user = User.create!(@attr)
     end
 
-    it "should respond to primary" do
-      @user.should respond_to(:primary)
+    it "should respond to position" do
+      @user.should respond_to(:position)
     end
 
     it "should not be a primary by default" do

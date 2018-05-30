@@ -45,7 +45,7 @@ describe "Users" do
     end
 
     it "should log in and out" do
-      integration_sign_in Factory(:user)
+      integration_sign_in create(:user)
       controller.should be_signed_in
       click_link "Sign out"
       controller.should_not be_signed_in

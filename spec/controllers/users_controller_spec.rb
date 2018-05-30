@@ -6,7 +6,7 @@ describe UsersController do
   describe "GET 'show'" do
 
     before(:each) do
-      @user = test_sign_in(Factory(:user))
+      @user = test_sign_in(create(:user))
     end
 
     it "should be successful" do
@@ -33,7 +33,7 @@ describe UsersController do
   describe "GET 'new'" do
 
     before(:each) do
-      @user = test_sign_in(Factory(:user))
+      @user = test_sign_in(create(:user))
       @user.toggle(:admin)
     end
 
@@ -57,9 +57,9 @@ describe UsersController do
       response.should have_selector("input[name='user[last_name]'][type='text']")
     end
 
-    it "should have an email field" do
+    it "should have an username field" do
       get :new
-      response.should have_selector("input[name='user[email]'][type='text']")
+      response.should have_selector("input[name='user[username]'][type='text']")
     end
 
     it "should have a password field" do
@@ -78,7 +78,7 @@ describe UsersController do
     describe "failure" do
 
       before(:each) do
-        @attr = { :name => "", :email => "", :password => "",
+        @attr = { :name => "", :username => "", :password => "",
                   :password_confirmation => "" }
       end
 
@@ -104,7 +104,7 @@ describe UsersController do
       before(:each) do
         @attr = { :first_name => "Justin",
                   :last_name => "Vanderheide",
-                  :email => "user@example.com",
+                  :username => "user",
                   :password => "foobar",
                   :password_confirmation => "foobar" }
       end
@@ -120,7 +120,7 @@ describe UsersController do
   describe "GET 'edit'" do
 
     before(:each) do
-      @user = Factory(:user)
+      @user = create(:user)
       test_sign_in(@user)
     end
 
@@ -138,14 +138,14 @@ describe UsersController do
   describe "PUT 'update'" do
 
     before(:each) do
-      @user = Factory(:user)
+      @user = create(:user)
       test_sign_in(@user)
     end
 
     describe "failure" do
 
       before(:each) do
-        @attr = { :email => "", :name => "", :password => "", :password_confirmation => "" }
+        @attr = { :username => "", :name => "", :password => "", :password_confirmation => "" }
       end
 
       it "should display the edit page" do
@@ -162,7 +162,7 @@ describe UsersController do
     describe "success" do
 
       before(:each) do
-        @attr = { :first_name => "New", :last_name => "Name", :email => "user@example.org",
+        @attr = { :first_name => "New", :last_name => "Name", :username => "user",
                   :password => "barbaz", :password_confirmation => "barbaz" }
       end
 
@@ -171,7 +171,7 @@ describe UsersController do
         @user.reload
         @user.first_name.should  == @attr[:first_name]
         @user.last_name.should == @attr[:last_name]
-        @user.email.should == @attr[:email]
+        @user.username.should == @attr[:username]
       end
 
       it "should redirect to the user show page" do
@@ -189,7 +189,7 @@ describe UsersController do
   describe "authentication of edit/update pages" do
 
     before(:each) do
-      @user = Factory(:user)
+      @user = create(:user)
     end
 
     describe "for non-signed-in users" do
@@ -208,7 +208,7 @@ describe UsersController do
     describe "for wrong users" do
 
       before(:each) do
-       wrong_user = Factory(:user, :email => "user@example.net")
+       wrong_user = create(:user, :username => "user")
        test_sign_in(wrong_user)
       end
 
