@@ -83,11 +83,6 @@ describe ShiftTypesController do
         end.should_not change(ShiftType, :count)
       end
 
-      it "should have the right title" do
-        post :create, :shift_type => @attr
-        response.should have_selector("title", :content => "New Shift Type")
-      end
-
       it "should render the 'new' page" do
         post :create, :shift_type => @attr
         response.should render_template('new')

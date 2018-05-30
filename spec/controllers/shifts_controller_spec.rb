@@ -67,11 +67,6 @@ describe ShiftsController do
       get :index
       response.should be_successful
     end
-
-    it "should have the right title" do
-      get :index
-      response.should have_selector("title", :content => "Shifts")
-    end
   end
 
   describe "GET 'new'" do
@@ -84,46 +79,6 @@ describe ShiftsController do
     it "should be successful" do
       get :new
       response.should be_success
-    end
-
-    it "should have the right title" do
-      get :new
-      response.should have_selector("title", :content => "New Shift")
-    end
-
-    it "should have a name field" do
-      get :new
-      response.should have_selector("input[name='shift[name]'][type='text']")
-    end
-
-    it "should have a location field" do
-      get :new
-      response.should have_selector("input[name='shift[location]'][type='text']")
-    end
-
-    it "should have a start field" do
-      get :new
-      response.should have_selector("label[for='shift_start']")
-    end
-
-    it "should have a finish field" do
-      get :new
-      response.should have_selector("label[for='shift_finish']")
-    end
-
-    it "should have a note field" do
-      get :new
-      response.should have_selector("input[name='shift[note]'][type='text']")
-    end
-
-    it "should have a link back to the index" do
-      get :new
-      response.should have_selector("a", :href => shifts_path, :content => "Back")
-    end
-
-    it "should have a submit button" do
-      get :new
-      response.should have_selector("input", :type => "submit", :value => "Create")
     end
   end
 end
