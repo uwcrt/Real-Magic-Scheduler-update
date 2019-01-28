@@ -4,19 +4,18 @@ class User < ActiveRecord::Base
 
   POSITION_OPTIONS = {'Rookie' => 0, 'Secondary' => 1, 'Primary' => 2}
 
-  before_save :downcase_username!, :ensure_authentication_token
+  before_save :downcase_username!
 
-  default_scope :order => 'users.last_name ASC'
-
-  devise :cas_authenticatable,
-         :token_authenticatable
-
-  has_many :shifts, :class_name => "Shift", :finder_sql => 'SELECT * FROM shifts WHERE shifts.primary_id = #{id} OR shifts.secondary_id = #{id} OR shifts.rookie_id = #{id} ORDER BY shifts.start'
+  devise :cas_authenticatable
 
   validates :first_name, :presence => true
   validates :last_name, :presence => true
   validates :username, :presence => true
   validates_inclusion_of :position, :in => POSITION_OPTIONS.map {|p| p[1]}
+
+  def shifts
+    Shift.where("primary_id = ? OR secondary_id = ? OR rookie_id = ?", self.id, self.id, self.id)
+  end
 
   def self.notifiable_of_shift(shift)
     users = User.where(:wants_notifications => true).where('last_notified <= ?', Time.now - 3.hours)
@@ -144,8 +143,8 @@ class User < ActiveRecord::Base
     self.shifts.each do |compare|
       if shift.start < compare.finish && shift.finish > compare.start
         return true
-       elsif shift.shift_type_id == compare.shift_type_id && (shift.start - compare.start).abs / 3600 <= 24
-         consecutiveHrs += (compare.finish - compare.start) / 3600
+      elsif shift.shift_type_id == compare.shift_type_id && (shift.start - compare.start).abs / 3600 <= 24
+        consecutiveHrs += (compare.finish - compare.start) / 3600
       end
     end
     return shift.shift_type.limit != 0 && consecutiveHrs >= shift.shift_type.limit

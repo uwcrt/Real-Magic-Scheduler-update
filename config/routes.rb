@@ -38,7 +38,7 @@ Rms::Application.routes.draw do
     end
   end
 
-  match '/eot',             :to => 'pages#eot'
+  get '/eot',             :to => 'pages#eot'
 
   namespace :api do
     resources :tokens, :only => :show
@@ -101,4 +101,5 @@ Rms::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
+         :token_authenticatable
 end
