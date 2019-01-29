@@ -5,11 +5,10 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class with default "from" parameter.
   config.mailer_sender = "scheduler@crt.feds.ca"
-  # config.cas_base_url = "https://cas.uwaterloo.ca/cas"
   # OpenSSL::SSL::SSLContext::DEFAULT_PARAMS[:ssl_version] = 'TLSv1'
 
-  config.cas_base_url ="https://cassid.habilis.net"
-  config.cas_validate_url = "https://cassid.habilis.net/serviceValidate"
+  config.cas_base_url = Rails.env.production? ? "https://cas.uwaterloo.ca/cas" : "https://cassid.habilis.net"
+  config.cas_validate_url = Rails.env.production? ? "https://cas.uwaterloo.ca/cas/serviceValidate" : "https://cassid.habilis.net/serviceValidate"
 
   config.cas_create_user = false
 
@@ -167,6 +166,7 @@ Devise.setup do |config|
 
   # ==> Configuration for :token_authenticatable
   # Defines name of the authentication token params key
+  # config.token_authentication_key = :auth_token
 
   # If true, authentication through token does not store user in session and needs
   # to be supplied on each request. Useful if you are using the token as API token.
