@@ -1,6 +1,6 @@
 class ShiftTypesController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :admin
+  before_action :authenticate_user!
+  before_action :admin
 
   def index
     @title = "Shift Types"

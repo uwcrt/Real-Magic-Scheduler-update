@@ -1,7 +1,7 @@
 class ShiftsController < ApplicationController
   include ShiftsHelper
-  before_filter :authenticate_user!
-  before_filter :admin, :only => [:new, :create, :drop_primary, :drop_secondary, :edit, :update]
+  before_action :authenticate_user!
+  before_action :admin, :only => [:new, :create, :drop_primary, :drop_secondary, :edit, :update]
 
   def index
     @title = "Shifts"
@@ -43,7 +43,7 @@ class ShiftsController < ApplicationController
     @shift.name = nil
     @shift.primary = nil
     @shift.secondary = nil
-    @shift.rookie = nil 
+    @shift.rookie = nil
     render 'new'
   end
 
