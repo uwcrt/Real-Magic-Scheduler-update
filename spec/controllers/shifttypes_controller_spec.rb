@@ -79,12 +79,12 @@ describe ShiftTypesController do
 
       it "should not create a type" do
         lambda do
-          post :create, :shift_type => @attr
+          post :create, params: { shift_type: @attr }
         end.should_not change(ShiftType, :count)
       end
 
       it "should render the 'new' page" do
-        post :create, :shift_type => @attr
+        post :create, params: { shift_type: @attr }
         response.should render_template('new')
       end
     end
@@ -99,12 +99,12 @@ describe ShiftTypesController do
 
       it "should create a type" do
         lambda do
-          post :create, :shift_type => @attr
+          post :create, params: { shift_type: @attr }
         end.should change(ShiftType, :count).by(1)
       end
 
       it "should show the types index" do
-        post :create, :shift_type => @attr
+        post :create, params: { shift_type: @attr }
         response.should redirect_to shift_types_path
       end
     end

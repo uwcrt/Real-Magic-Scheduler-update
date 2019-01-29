@@ -10,12 +10,12 @@ describe UsersController do
     end
 
     it "should be successful" do
-      get :show, :id => @user
+      get :show, params: { id: @user }
       response.should be_success
     end
 
     it "should find the right user" do
-      get :show, :id => @user
+      get :show, params: { id: @user }
       assigns(:user).should == @user
     end
   end
@@ -50,12 +50,12 @@ describe UsersController do
     describe "for non-signed-in users" do
 
       it "should deny access to 'edit'" do
-        get :edit, :id => @user
+        get :edit, params: { id: @user }
         response.should redirect_to(new_user_session_path)
       end
 
       it "should deny access to 'update'" do
-        put :update, :id => @user, :user => {}
+        put :update, params: { id: @user, user: {} }
         response.should redirect_to(new_user_session_path)
       end
     end
@@ -68,12 +68,12 @@ describe UsersController do
       end
 
       it "should deny access to 'edit'" do
-        get :edit, :id => @user
+        get :edit, params: { id: @user }
         response.should redirect_to(root_path)
       end
 
       it "should deny access to 'update'" do
-        put :update, :id => @user, :user => {}
+        put :update, params: { id: @user, user: {} }
         response.should redirect_to(root_path)
       end
     end

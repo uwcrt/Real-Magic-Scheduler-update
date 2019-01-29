@@ -19,6 +19,7 @@ gem 'rails', '5.2.2'
 gem 'ri_cal'
 gem 'unicorn'
 gem 'protected_attributes_continued'
+gem 'rails-controller-testing'
 gem 'pg', '~> 0.15'
 
 group :production, :staging do
