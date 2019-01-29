@@ -28,14 +28,14 @@ RSpec.configure do |config|
   # config.use_transactional_fixtures = true
 
   config.infer_spec_type_from_file_location!
-  config.include Devise::TestHelpers, :type => :controller
+  config.include Devise::Test::ControllerHelpers, :type => :controller
   config.include Capybara::RSpecMatchers, :type => :controller
   config.include Capybara::DSL
-  
+
   def test_sign_in(user)
     controller.sign_in(user)
   end
-  
+
   def integration_sign_in(user)
     visit root_path
     click_link "Sign in"
