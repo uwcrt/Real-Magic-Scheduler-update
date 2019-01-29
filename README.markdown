@@ -16,10 +16,10 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-This runs on an old version of ruby. Should probably update that at some point. But until that happens you'll have to install ruby 1.9
+Install ruby 2.6.0
 
 ```
-rvm install "ruby-1.9.3-p551" 
+rvm install "ruby-2.6.0" 
 ```
 
 When doing this I got an error. This fixed it for me
@@ -28,10 +28,10 @@ When doing this I got an error. This fixed it for me
 brew install gcc49  
 ```
 
-Then install Rails 3
+Then install Rails 5
 
 ```
-gem install rails -v 3.0.20
+gem install rails -v 5.2.2
 ```
 
 Finally install PostgreSQL. 
@@ -72,7 +72,9 @@ u = User.create :username => "...", :first_name => "...", :last_name => "...", :
 
 ### Running Tests
 
-That's cute. You think I know how testing works.
+```
+bundle exec rspec rspec
+```
 
 ### Deployment
 
