@@ -56,6 +56,5 @@ upcoming_hours = [@user.hours_quota(type) - @user.hours(type), @user.upcoming_ho
 <% if current_user == @user %>
   <div class='well well-small visible-desktop'>
     Automatically sync your shifts to Google Calendar, Apple iCal, Windows Calendar, etc. Your calendar subscription link:
-    <strong><%= calendar_user_url(@user.id, :auth_token => @user.authentication_token) %></strong>
   </div>
 <% end %>
