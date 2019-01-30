@@ -1,4 +1,4 @@
-class AddTokenToUser < ActiveRecord::Migration
+class AddTokenToUser < ActiveRecord::Migration[4.2]
   def self.up
     change_table :users do |t|
       t.token_authenticatable

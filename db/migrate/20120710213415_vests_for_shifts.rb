@@ -1,4 +1,4 @@
-class VestsForShifts < ActiveRecord::Migration
+class VestsForShifts < ActiveRecord::Migration[4.2]
   def self.up
     add_column :shifts, :vest, :boolean, :default => true
     Shift.all.each do |shift|

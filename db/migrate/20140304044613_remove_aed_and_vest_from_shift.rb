@@ -1,4 +1,4 @@
-class RemoveAedAndVestFromShift < ActiveRecord::Migration
+class RemoveAedAndVestFromShift < ActiveRecord::Migration[4.2]
   def self.up
     Shift.all.each do |shift|
       shift.description += shift.aed ? "\nBring the AED" : "\nDo not bring the AED"

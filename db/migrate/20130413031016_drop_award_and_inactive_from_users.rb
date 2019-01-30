@@ -1,4 +1,4 @@
-class DropAwardAndInactiveFromUsers < ActiveRecord::Migration
+class DropAwardAndInactiveFromUsers < ActiveRecord::Migration[4.2]
   def self.up
     remove_column :users, :inactive
     remove_column :users, :award

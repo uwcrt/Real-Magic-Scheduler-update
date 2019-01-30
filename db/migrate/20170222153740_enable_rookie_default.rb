@@ -1,4 +1,4 @@
-class EnableRookieDefault < ActiveRecord::Migration
+class EnableRookieDefault < ActiveRecord::Migration[4.2]
   def self.up
       change_column :shifts, :rookie_disabled, :boolean, :default => false
   end

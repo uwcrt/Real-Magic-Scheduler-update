@@ -1,4 +1,4 @@
-class AddAdminAndPrimaryToUsers < ActiveRecord::Migration
+class AddAdminAndPrimaryToUsers < ActiveRecord::Migration[4.2]
   def self.up
     add_column :users, :primary, :boolean, :default => false
     add_column :users, :admin, :boolean, :default => false
