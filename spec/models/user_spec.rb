@@ -85,4 +85,17 @@ describe User do
       @user.should_not be_primary
     end
   end
+
+  describe "taking shifts" do
+    describe "rookie" do
+      before do
+        @user = create(:user, position: 0)
+      end
+
+      it "should not be able to take secondary slot on rookie disable shift" do
+        @shift = create(:shift, rookie_disabled: true)
+        expect(@user.can_secondary? @shift).to be false
+      end
+    end
+  end
 end
