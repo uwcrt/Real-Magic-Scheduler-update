@@ -28,7 +28,7 @@ class ShiftsController < ApplicationController
 
   def next_week
     @shift = Shift.find params[:id]
-    @shift = @shift.clone
+    @shift = @shift.dup
     @shift.start += 1.week
     @shift.finish += 1.week
     @shift.primary = nil
@@ -39,7 +39,7 @@ class ShiftsController < ApplicationController
 
   def copy_shift
     @shift = Shift.find params[:id]
-    @shift = @shift.clone
+    @shift = @shift.dup
     @shift.primary = nil
     @shift.secondary = nil
     @shift.rookie = nil
