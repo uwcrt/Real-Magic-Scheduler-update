@@ -10,4 +10,10 @@ describe "users/index" do
     render
     expect(rendered).to have_text('Rank')
   end
+
+  it "should display Active/Suspended under suspended column" do
+    render
+    expect(rendered).to have_text('Active')
+    expect(rendered).to have_text('Suspended')
+  end
 end
