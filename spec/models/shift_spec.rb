@@ -58,6 +58,24 @@ describe Shift do
     end
   end
 
+  describe "Defaults" do
+    before(:each) do
+      @shift = Shift.new(@attr)
+    end
+
+    it "primary slot should be enabled by default" do
+      expect(@shift.primary_disabled).to be false
+    end
+
+    it "secondary slot should be enabled by default" do
+      expect(@shift.secondary_disabled).to be false
+    end
+
+    it "rookie slot should be enabled by default" do
+      expect(@shift.rookie_disabled).to be false
+    end
+  end
+
   describe "Associations" do
 
     before(:each) do
