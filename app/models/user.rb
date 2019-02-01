@@ -139,15 +139,12 @@ class User < ActiveRecord::Base
   end
 
   def conflict(shift)
-    consecutiveHrs = 0
     self.shifts.each do |compare|
       if shift.start < compare.finish && shift.finish > compare.start
         return true
-      elsif shift.shift_type_id == compare.shift_type_id && (shift.start - compare.start).abs / 3600 <= 24
-        consecutiveHrs += (compare.finish - compare.start) / 3600
       end
     end
-    return shift.shift_type.limit != 0 && consecutiveHrs >= shift.shift_type.limit
+    return false
   end
 
   def critical(shift)
