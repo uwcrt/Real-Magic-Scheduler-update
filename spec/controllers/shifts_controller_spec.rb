@@ -103,7 +103,7 @@ describe ShiftsController do
       expect(response.body).to have_select("shift_start_1i", selected: @shift.start.strftime("%Y"))
       expect(response.body).to have_select("shift_start_2i", selected: @shift.start.strftime("%B"))
       expect(response.body).to have_select("shift_start_3i", selected: @shift.start.strftime("%-d"))
-      expect(response.body).to have_select("shift_start_4i", selected: @shift.start.strftime("%k"))
+      expect(response.body).to have_select("shift_start_4i", selected: @shift.start.strftime("%H"))
       expect(response.body).to have_select("shift_start_5i", selected: @shift.start.strftime("%M"))
     end
 
@@ -112,7 +112,7 @@ describe ShiftsController do
       expect(response.body).to have_select("shift_finish_1i", selected: @shift.finish.strftime("%Y"))
       expect(response.body).to have_select("shift_finish_2i", selected: @shift.finish.strftime("%B"))
       expect(response.body).to have_select("shift_finish_3i", selected: @shift.finish.strftime("%-d"))
-      expect(response.body).to have_select("shift_finish_4i", selected: @shift.finish.strftime("%k"))
+      expect(response.body).to have_select("shift_finish_4i", selected: @shift.finish.strftime("%H"))
       expect(response.body).to have_select("shift_finish_5i", selected: @shift.finish.strftime("%M"))
     end
 
@@ -169,7 +169,7 @@ describe ShiftsController do
       expect(response.body).to have_select("shift_start_1i", selected: (@shift.start + 1.week).strftime("%Y"))
       expect(response.body).to have_select("shift_start_2i", selected: (@shift.start + 1.week).strftime("%B"))
       expect(response.body).to have_select("shift_start_3i", selected: (@shift.start + 1.week).strftime("%-d"))
-      expect(response.body).to have_select("shift_start_4i", selected: (@shift.start + 1.week).strftime("%k"))
+      expect(response.body).to have_select("shift_start_4i", selected: (@shift.start + 1.week).strftime("%H"))
       expect(response.body).to have_select("shift_start_5i", selected: (@shift.start + 1.week).strftime("%M"))
     end
 
@@ -178,7 +178,7 @@ describe ShiftsController do
       expect(response.body).to have_select("shift_finish_1i", selected: (@shift.finish + 1.week).strftime("%Y"))
       expect(response.body).to have_select("shift_finish_2i", selected: (@shift.finish + 1.week).strftime("%B"))
       expect(response.body).to have_select("shift_finish_3i", selected: (@shift.finish + 1.week).strftime("%-d"))
-      expect(response.body).to have_select("shift_finish_4i", selected: (@shift.finish + 1.week).strftime("%k"))
+      expect(response.body).to have_select("shift_finish_4i", selected: (@shift.finish + 1.week).strftime("%H"))
       expect(response.body).to have_select("shift_finish_5i", selected: (@shift.finish + 1.week).strftime("%M"))
     end
 
