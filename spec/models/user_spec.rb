@@ -111,32 +111,32 @@ describe User do
       end
 
       it "should not allow taking over 16 hours of shift within 48 hours" do
-        create(:shift, start: Time.current + 10.hour, finish: Time.current + 23.hours)
+        create(:shift, start: Time.current + 10.hour, finish: Time.current + 23.hours, rookie: @user)
         expect(@user.can_take? @shift).to be false
       end
 
       it "should allow taking 16 hours of shift over more than 48 hours" do
-        create(:shift, start: Time.current + 38.hour, finish: Time.current + 51.hours)
+        create(:shift, start: Time.current + 38.hour, finish: Time.current + 51.hours, rookie: @user)
         expect(@user.can_take? @shift).to be true
       end
 
       it "should allow taking exactly 16 hours of shift in 48 hours" do
-        create(:shift, start: Time.current + 37.hour, finish: Time.current + 59.hours)
+        create(:shift, start: Time.current + 37.hour, finish: Time.current + 59.hours, rookie: @user)
         expect(@user.can_take? @shift).to be true
       end
 
       it "should not allow taking over 40 hours of shift within 7 days" do
-        create(:shift, start: Time.current + 10.hour, finish: Time.current + 47.hours)
+        create(:shift, start: Time.current + 10.hour, finish: Time.current + 47.hours, rookie: @user)
         expect(@user.can_take? @shift).to be false
       end
 
       it "should allow taking over 40 hours of shift over more than 7 days" do
-        create(:shift, start: Time.current + 150.hour, finish: Time.current + 187.hours)
+        create(:shift, start: Time.current + 150.hour, finish: Time.current + 187.hours, rookie: @user)
         expect(@user.can_take? @shift).to be true
       end
 
       it "should allow taking exactly 40 hours of shift in 7 days" do
-        create(:shift, start: Time.current + 133.hour, finish: Time.current + 169.hours)
+        create(:shift, start: Time.current + 133.hour, finish: Time.current + 169.hours, rookie: @user)
         expect(@user.can_take? @shift).to be true
       end
 

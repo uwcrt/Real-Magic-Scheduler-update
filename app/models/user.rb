@@ -112,6 +112,7 @@ class User < ActiveRecord::Base
 
   def can_take?(shift)
     return false if conflict(shift)
+    return false if violates_overwork?(shift)
     return false if self.disabled && !shift.shift_type.ignore_suspended
     return false if shift.start < Time.zone.now
     return false if over_hours(shift.shift_type) && !critical(shift)
@@ -144,6 +145,12 @@ class User < ActiveRecord::Base
         return true
       end
     end
+    return false
+  end
+
+  def violates_overwork?(shift)
+    return true if max_hours(shifts + [shift], 2*24) > 16
+    return true if max_hours(shifts + [shift], 7*24) > 40
     return false
   end
 
