@@ -6,7 +6,7 @@ class ShiftsController < ApplicationController
   def index
     @title = "Shifts"
     @mode = params[:history] ? :history : :current
-    @shifts = params[:history] ? Shift.all : Shift.current
+    @shifts = params[:history] ? Shift.all.sort_by{|s| s.start} : Shift.current.sort_by{|s| s.start}
   end
 
   def available
