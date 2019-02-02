@@ -10,6 +10,7 @@ group :test do
   gem 'rspec', '~> 3.8.0'
   gem 'factory_bot', '~>4.11.1'
   gem 'capybara', '~> 3.13.2'
+  gem 'database_cleaner'
 end
 
 gem 'devise', '~> 4.5.0'

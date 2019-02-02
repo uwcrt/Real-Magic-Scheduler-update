@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'database_cleaner'
 
 describe User do
   before(:each) do
@@ -95,6 +96,71 @@ describe User do
       it "should not be able to take secondary slot on rookie disable shift" do
         @shift = create(:shift, rookie_disabled: true)
         expect(@user.can_secondary? @shift).to be false
+      end
+    end
+
+    describe "overwork policy" do
+      before(:each) do
+        DatabaseCleaner.clean
+        @shift = build(:shift, start: Time.current + 1.hour)
+        @user = create(:user, sfa_expiry: Time.current + 1.year, hcp_expiry: Time.current + 1.year)
+      end
+
+      it "should allow taking a shift" do
+        expect(@user.can_take? @shift).to be true
+      end
+
+      it "should not allow taking over 16 hours of shift within 48 hours" do
+        create(:shift, start: Time.current + 10.hour, finish: Time.current + 23.hours)
+        expect(@user.can_take? @shift).to be false
+      end
+
+      it "should allow taking 16 hours of shift over more than 48 hours" do
+        create(:shift, start: Time.current + 38.hour, finish: Time.current + 51.hours)
+        expect(@user.can_take? @shift).to be true
+      end
+
+      it "should allow taking exactly 16 hours of shift in 48 hours" do
+        create(:shift, start: Time.current + 37.hour, finish: Time.current + 59.hours)
+        expect(@user.can_take? @shift).to be true
+      end
+
+      it "should not allow taking over 40 hours of shift within 7 days" do
+        create(:shift, start: Time.current + 10.hour, finish: Time.current + 47.hours)
+        expect(@user.can_take? @shift).to be false
+      end
+
+      it "should allow taking over 40 hours of shift over more than 7 days" do
+        create(:shift, start: Time.current + 150.hour, finish: Time.current + 187.hours)
+        expect(@user.can_take? @shift).to be true
+      end
+
+      it "should allow taking exactly 40 hours of shift in 7 days" do
+        create(:shift, start: Time.current + 133.hour, finish: Time.current + 169.hours)
+        expect(@user.can_take? @shift).to be true
+      end
+
+      describe "max hours in" do
+        before(:each) do
+          @shifts = [
+            build(:shift, start: Time.current, finish: Time.current + 2.hour),
+            build(:shift, start: Time.current + 4.hour, finish: Time.current + 8.hour),
+            build(:shift, start: Time.current + 9.hour, finish: Time.current + 11.hour),
+            build(:shift, start: Time.current + 13.5.hour, finish: Time.current + 17.5.hour)
+          ]
+        end
+
+        it "8 hours should be 6" do
+          expect(max_hours(@shifts, 8)).to be 6
+        end
+
+        it "2 hours should be 2" do
+          expect(max_hours(@shifts, 2)).to be 2
+        end
+
+        it "10 hours should be 7" do
+          expect(max_hours(@shifts, 10)).to be 7
+        end
       end
     end
   end

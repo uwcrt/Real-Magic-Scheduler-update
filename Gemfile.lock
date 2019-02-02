@@ -57,6 +57,7 @@ GEM
       xpath (~> 3.2)
     concurrent-ruby (1.1.4)
     crass (1.0.4)
+    database_cleaner (1.7.0)
     devise (4.5.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -192,6 +193,7 @@ PLATFORMS
 
 DEPENDENCIES
   capybara (~> 3.13.2)
+  database_cleaner
   devise (~> 4.5.0)
   devise_cas_authenticatable (~> 1.10.3)
   factory_bot (~> 4.11.1)
