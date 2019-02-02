@@ -147,6 +147,32 @@ class User < ActiveRecord::Base
     return false
   end
 
+  def max_hours(shifts, window)
+    shifts = shifts.sort_by{|shift| shift.start}
+    first = last = 0
+    max_hours = hours_taken = shifts[0].length
+    while last < shifts.length - 1 do
+      if (shifts[last].finish - shifts[first].start) / 1.hour < window
+        last += 1
+        hours_taken += shifts[last].length
+        if (shifts[last].finish - shifts[first].start) / 1.hour > window
+          hours_taken -= (shifts[last].finish - shifts[first].start) / 1.hour - window
+        end
+      else
+        hours_taken -= shifts[first].length
+        if (shifts[last].finish - shifts[first].start) / 1.hour > window
+          hours_taken += (shifts[last].finish - shifts[first].start) / 1.hour - window
+        end
+        first += 1
+      end
+
+      if hours_taken > max_hours
+        max_hours = hours_taken
+      end
+    end
+    return max_hours
+  end
+
   def critical(shift)
     shift.start - Time.zone.now < shift.critical_days
   end
