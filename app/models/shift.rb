@@ -4,7 +4,7 @@ class Shift < ActiveRecord::Base
 
   validates_presence_of :name, :start, :finish, :location, :shift_type_id
   validates_numericality_of :shift_type_id
-  validate :unique_responders, :secondary_cannot_take_primary, :finish_after_start
+  validate :unique_responders, :secondary_cannot_take_primary, :finish_after_start, :responders_have_no_conflicts
 
   before_save :remove_from_disabled, :notify_responders
 
@@ -109,6 +109,12 @@ class Shift < ActiveRecord::Base
       if (finish.present? && start.present? && finish < start)
         errors.add(:finish, "The shift cannot finish before it starts!")
       end
+    end
+
+    def responders_have_no_conflicts
+      errors.add(:primary_id, "can't have shift conflicts") if primary != nil && primary.conflict(self)
+      errors.add(:secondary_id, "can't have shift conflicts") if secondary != nil && secondary.conflict(self)
+      errors.add(:rookie_id, "can't have shift conflicts") if rookie != nil && rookie.conflict(self)
     end
 
     def remove_from_disabled
