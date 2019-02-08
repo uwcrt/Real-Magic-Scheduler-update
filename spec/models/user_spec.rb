@@ -30,9 +30,9 @@ describe User do
       @user = User.create!(@attr)
       @user.position = 2
       @shifttype = create(:shift_type)
-      @shift_secondary = create(:shift, :secondary => @user, :start => DateTime.now - 5.days)
-      @shift_primary = create(:shift, :primary => @user, :start => DateTime.now - 4.days)
-      @shift_neither = create(:shift, :start => DateTime.now - 3.days)
+      @shift_secondary = create(:shift, :secondary => @user, :start => DateTime.now - 5.days, :finish => DateTime.now - 5.days + 2.hours)
+      @shift_primary = create(:shift, :primary => @user, :start => DateTime.now - 4.days, :finish => DateTime.now - 4.days + 2.hours)
+      @shift_neither = create(:shift, :start => DateTime.now - 3.days, :finish => DateTime.now - 3.days + 2.hours)
     end
 
     it "should have a shifts attribute" do
