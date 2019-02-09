@@ -156,6 +156,15 @@ describe Shift do
         @shift.primary = @rookie
         @shift.should_not be_valid
       end
+
+      it "should not let a responder take two shifts at the same time" do
+        shift = create(:shift)
+        shift2 = create(:shift)
+        shift.primary = @primary
+        shift.save
+        shift2.primary = @primary
+        shift2.should_not be_valid
+      end
     end
   end
 end
