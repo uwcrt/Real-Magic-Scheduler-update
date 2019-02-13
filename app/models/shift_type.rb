@@ -62,4 +62,12 @@ class ShiftType < ActiveRecord::Base
 
     self.default = true
   end
+
+  def self.get_default
+    if ShiftType.find_by default: true != nil
+      return ShiftType.find_by(default: true).id
+    else
+      return 0
+    end
+  end
 end
