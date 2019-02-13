@@ -19,6 +19,7 @@ Rms::Application.routes.draw do
   resources :shift_types, :except => :show do
     member do
       get 'naughty'
+      get 'make_default'
     end
   end
 

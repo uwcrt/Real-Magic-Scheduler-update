@@ -53,4 +53,13 @@ class ShiftType < ActiveRecord::Base
     secondary_filled = Shift.where('shift_type_id = ? AND secondary_id IS NOT NULL', id).map(&:length).reduce{|a,b| a+b} || 0
     return primary_filled + secondary_filled
   end
+
+  def make_default
+    ShiftType.all.each do |shift_type|
+      shift_type.default = false
+      shift_type.save
+    end
+
+    self.default = true
+  end
 end

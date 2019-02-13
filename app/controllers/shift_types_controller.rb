@@ -53,4 +53,14 @@ class ShiftTypesController < ApplicationController
       render 'new'
     end
   end
+
+  def make_default
+    @type = ShiftType.find_by_id(params[:id])
+    @type.make_default
+    @type.save
+
+    @title = "Shift Types"
+    @types = ShiftType.all
+    render 'index'
+  end
 end
