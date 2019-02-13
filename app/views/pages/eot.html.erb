@@ -10,6 +10,6 @@
   <%= form_tag(eot_users_path, :method => :put) do %>
     <%= select_date Date.today, :prefix => :eot_date %>
     <p>If you are sure that you wish to remove all shifts before the selected date please click the button</p>
-    <%= submit_tag("Reset RMS".html_safe, :class => 'btn btn-large btn-danger', :confirm => "Are you sure you want to reset RMS?", :title => "Nuking RMS") %>
+    <%= submit_tag("Reset RMS".html_safe, :class => 'btn btn-large btn-danger', data: { :confirm => "Are you sure you want to reset RMS?" }, :title => "Nuking RMS") %>
   <% end %>
 </div>

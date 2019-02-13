@@ -9,21 +9,21 @@
           "Unavailable"
         elsif shift.primary != nil
           if current_user.admin? then
-            link_to shift.primary.name, drop_primary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to withdraw this responder?"
+            link_to shift.primary.name, drop_primary_shift_path(shift), :method => :put, data: { :confirm => "Are you sure you want to withdraw this responder?" }
           else
             shift.primary.name
           end
         elsif current_user.can_primary?(shift)
-          link_to "Take Shift", primary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to take this shift?"
+          link_to "Take Shift", primary_shift_path(shift), :method => :put, data: { :confirm => "Are you sure you want to take this shift?" }
         end
      %>
 </td>
 <td><%= if shift.secondary_disabled
           "Unavailable"
         elsif shift.secondary != nil
-          current_user.admin? ? (link_to shift.secondary.name, drop_secondary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to withdraw this responder?") : shift.secondary.name
+          current_user.admin? ? (link_to shift.secondary.name, drop_secondary_shift_path(shift), :method => :put, data: { :confirm => "Are you sure you want to withdraw this responder?" }) : shift.secondary.name
         elsif current_user.can_secondary?(shift)
-          link_to "Take Shift", secondary_shift_path(shift), :method => :put, :confirm => "Are you sure you want to take this shift?"
+          link_to "Take Shift", secondary_shift_path(shift), :method => :put, data: { :confirm => "Are you sure you want to take this shift?" }
         end
      %>
 </td>
@@ -32,9 +32,9 @@
     if shift.rookie_disabled
      "Unavailable"
     elsif shift.rookie != nil
-      current_user.admin? ? (link_to shift.rookie.name, drop_rookie_shift_path(shift), :method => :put, :confirm => "Are you sure you want to withdraw this responder?") : shift.rookie.name
+      current_user.admin? ? (link_to shift.rookie.name, drop_rookie_shift_path(shift), :method => :put, data: { :confirm => "Are you sure you want to withdraw this responder?" }) : shift.rookie.name
     elsif current_user.can_rookie?(shift)
-      link_to "Take Shift", rookie_shift_path(shift), :method => :put, :confirm => "Are you sure you want to take this shift?"
+      link_to "Take Shift", rookie_shift_path(shift), :method => :put, data: { :confirm => "Are you sure you want to take this shift?" }
     end
   %>
 </td>
