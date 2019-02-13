@@ -5,7 +5,7 @@
     <%= f.label :location %>
     <%= f.text_field :location %>
     <%= f.label :shift_type_id %>
-    <%= f.collection_select(:shift_type_id, ShiftType.all, :id, :name) %>
+    <%= f.collection_select(:shift_type_id, ShiftType.all, :id, :name, {:selected => ShiftType.find_by(:default => true).id}) %>
     <%= f.label :start %>
     <%= f.datetime_select :start %>
     <%= f.label :finish %>

@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(version: 2019_02_09_182657) do
     t.integer "critical_time", default: 7
     t.boolean "ignore_certs", default: false
     t.integer "limit", default: 0, null: false
-    t.boolean "default?", default: false
     t.boolean "default", default: false
   end
 
