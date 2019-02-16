@@ -13,6 +13,42 @@ class User < ActiveRecord::Base
   validates :username, :presence => true
   validates_inclusion_of :position, :in => POSITION_OPTIONS.map {|p| p[1]}
 
+  filterrific(
+    default_filter_params: { },
+    available_filters: [
+      :search_query
+    ]
+  )
+
+  scope :search_query, ->(query) {
+    # Searches the users table on the 'first_name' and 'last_name' columns.
+    # Matches using LIKE, automatically appends '%' to each term.
+    # LIKE is case INsensitive with MySQL, however it is case
+    # sensitive with PostGreSQL. To make it work in both worlds,
+    # we downcase everything.
+    return nil  if query.blank?
+
+    # condition query, parse into individual keywords
+    terms = query.downcase.split(/\s+/)
+
+    # replace "*" with "%" for wildcard searches,
+    # append '%', remove duplicate '%'s
+    terms = terms.map { |e|
+      (e.tr("*", "%") + "%").gsub(/%+/, "%")
+    }
+    # configure number of OR conditions for provision
+    # of interpolation arguments. Adjust this if you
+    # change the number of OR conditions.
+    num_or_conds = 2
+    where(
+      terms.map { |_term|
+        "(LOWER(users.first_name) LIKE ? OR LOWER(users.last_name) LIKE ?)"
+      }.join(" AND "),
+      *terms.map { |e| [e] * num_or_conds }.flatten,
+    )
+  }
+
+
   def shifts
     Shift.where("primary_id = ? OR secondary_id = ? OR rookie_id = ?", self.id, self.id, self.id)
   end

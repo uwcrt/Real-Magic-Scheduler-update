@@ -22,6 +22,7 @@ gem 'unicorn', '~> 5.4.1'
 gem 'protected_attributes_continued', '~> 1.4.0'
 gem 'rails-controller-testing', '~> 1.0.4'
 gem 'pg', '~> 0.15'
+gem 'filterrific'
 
 group :production, :staging do
   gem 'rails_12factor', '~> 0.0.3'

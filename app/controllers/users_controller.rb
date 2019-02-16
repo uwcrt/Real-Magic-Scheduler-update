@@ -76,9 +76,18 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.all
+    @filterrific = initialize_filterrific(
+      User,
+      params[:filterrific]
+    ) or return
+    @users = @filterrific.find
     @shift_types = ShiftType.all
     @title = "Users"
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def primary

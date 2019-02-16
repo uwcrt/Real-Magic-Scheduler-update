@@ -1,14 +1,16 @@
-<table class='table table-striped table-bordered'>
-<tr>
-<th>Name</th>
-<% shift_types.each do |n| %>
-  <th><%= n.name %></th>
-<% end %>
-<th>Cert Expiration</th>
-<th>Rank</th>
-<th>Suspended</th>
-<th>Admin</th>
-<th>Delete</th>
-</tr>
-<%= render users, :shift_types => shift_types %>
-</table>
+<div id="filterrific_results">
+  <table class='table table-striped table-bordered'>
+    <tr>
+      <th>Name</th>
+      <% shift_types.each do |n| %>
+        <th><%= n.name %></th>
+      <% end %>
+      <th>Cert Expiration</th>
+      <th>Rank</th>
+      <th>Suspended</th>
+      <th>Admin</th>
+      <th>Delete</th>
+    </tr>
+    <%= render users, :shift_types => shift_types %>
+  </table>
+</div>

@@ -71,6 +71,7 @@ GEM
     erubi (1.8.0)
     factory_bot (4.11.1)
       activesupport (>= 3.0.0)
+    filterrific (5.1.0)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     i18n (1.5.3)
@@ -197,6 +198,7 @@ DEPENDENCIES
   devise (~> 4.5.0)
   devise_cas_authenticatable (~> 1.10.3)
   factory_bot (~> 4.11.1)
+  filterrific
   jquery-rails (~> 4.3.3)
   pg (~> 0.15)
   protected_attributes_continued (~> 1.4.0)
