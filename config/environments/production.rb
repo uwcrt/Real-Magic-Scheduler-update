@@ -30,7 +30,7 @@ Rms::Application.configure do
 
   # Disable Rails's static asset server
   # In production, Apache or nginx will already do this
-  config.serve_static_assets = true
+  # config.serve_static_assets = true
 
   # Enable serving of images, stylesheets, and javascripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
@@ -45,6 +45,20 @@ Rms::Application.configure do
   # the I18n.default_locale when a translation can not be found)
   config.i18n.fallbacks = true
 
+  # Choose the compressors to use (if any)
+  config.assets.js_compressor = :uglifier
+  # config.assets.css_compressor = :yui
+
+  # Don't fallback to assets pipeline if a precompiled asset is missed
+  config.assets.compile = false
+
+  # Generate digests for assets URLs.
+  config.assets.digest = true
+
+  # Precompile additional assets (application.js, application.css, and all
+  # non-JS/CSS are already added)
+  # config.assets.precompile += %w( admin.js admin.css )
+
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
@@ -52,4 +66,8 @@ Rms::Application.configure do
     :enable_starttls_auto => false,
     :address => "mail.feds.uwaterloo.ca"
   }
+
+  config.assets.compress = true
+  config.assets.compile = false
+  config.assets.digest = true
 end

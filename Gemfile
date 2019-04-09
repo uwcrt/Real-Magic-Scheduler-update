@@ -24,6 +24,10 @@ gem 'rails-controller-testing', '~> 1.0.4'
 gem 'pg', '~> 0.15'
 gem 'filterrific'
 
+gem 'sass-rails', '~> 5.0'
+gem 'coffee-rails'
+gem 'uglifier'
+
 group :production, :staging do
   gem 'rails_12factor', '~> 0.0.3'
 end
