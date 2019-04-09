@@ -7,8 +7,7 @@ describe Shift do
               :start => Time.now,
               :finish => Time.now + 5.hours,
               :location => "SLC",
-              :shift_type_id => 1,
-              :note => "No Booze"}
+              :shift_type_id => 1}
   end
 
   describe "Validation" do

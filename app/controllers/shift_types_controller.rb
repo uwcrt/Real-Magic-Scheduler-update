@@ -27,7 +27,7 @@ class ShiftTypesController < ApplicationController
 
   def update
     @type = ShiftType.find_by_id(params[:id])
-    if @type.update_attributes(params[:shift_type])
+    if @type.update_attributes(shift_type_params)
       flash[:success] = "Shift type updated successfully!"
       redirect_to shift_types_path
     else
@@ -44,7 +44,7 @@ class ShiftTypesController < ApplicationController
   end
 
   def create
-    @type = ShiftType.new(params[:shift_type])
+    @type = ShiftType.new(shift_type_params)
     if @type.save
       flash[:success] = "Shift typed created successfully!"
       redirect_to shift_types_path
@@ -63,4 +63,9 @@ class ShiftTypesController < ApplicationController
     @types = ShiftType.all
     render 'index'
   end
+
+  private
+    def shift_type_params
+      params.require(:shift_type).permit(:name, :primary_requirement, :secondary_requirement, :ignore_primary, :ignore_suspended, :critical_time, :ignore_certs)
+    end
 end

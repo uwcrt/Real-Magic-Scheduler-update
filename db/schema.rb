@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2019_02_09_182657) do
   enable_extension "plpgsql"
 
   create_table "shift_types", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
+    t.string "name"
     t.float "primary_requirement"
     t.float "secondary_requirement"
     t.datetime "created_at"
@@ -25,15 +25,14 @@ ActiveRecord::Schema.define(version: 2019_02_09_182657) do
     t.boolean "ignore_suspended", default: false
     t.integer "critical_time", default: 7
     t.boolean "ignore_certs", default: false
-    t.integer "limit", default: 0, null: false
     t.boolean "default", default: false
   end
 
   create_table "shifts", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
+    t.string "name"
     t.datetime "start"
     t.datetime "finish"
-    t.string "location", limit: 255
+    t.string "location"
     t.integer "primary_id"
     t.integer "secondary_id"
     t.integer "shift_type_id"
@@ -47,14 +46,13 @@ ActiveRecord::Schema.define(version: 2019_02_09_182657) do
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
-    t.string "first_name", limit: 255
+    t.string "first_name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string "last_name", limit: 255
+    t.string "last_name"
     t.boolean "admin", default: false
     t.boolean "disabled", default: false
-    t.string "username", limit: 255, default: "", null: false
-    t.string "authentication_token", limit: 255
+    t.string "username", default: "", null: false
     t.boolean "wants_notifications", default: false
     t.datetime "last_notified", default: "1970-01-01 00:00:00"
     t.date "sfa_expiry", default: "0001-01-01"

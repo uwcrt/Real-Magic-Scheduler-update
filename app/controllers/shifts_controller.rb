@@ -47,7 +47,7 @@ class ShiftsController < ApplicationController
   end
 
   def create
-    @shift = Shift.new(params[:shift])
+    @shift = Shift.new(shift_params)
     if !@shift.valid?
       @title = "New Shift"
       render 'new'
@@ -56,7 +56,7 @@ class ShiftsController < ApplicationController
 
     split_length = params[:split_length].to_i
 
-    @shift = Shift.new(params[:shift])
+    @shift = Shift.new(shift_params)
     @shift.split!(split_length.minutes) if split_length > 0
 
     if @shift.save
@@ -75,7 +75,7 @@ class ShiftsController < ApplicationController
 
   def update
     @shift = Shift.find params[:id]
-    if @shift.update_attributes(params[:shift])
+    if @shift.update_attributes(shift_params)
       split_length = params[:split_length].to_i
       @shift.split!(split_length.minutes) if split_length > 0
 
@@ -150,4 +150,9 @@ class ShiftsController < ApplicationController
     shift.save
     redirect_to shifts_path
   end
+
+  private
+    def shift_params
+      params.require(:shift).permit(:name, :start, :finish, :location, :shift_type_id, :description, :primary_id, :secondary_id, :rookie_id, :primary_disabled, :secondary_disabled, :rookie_disabled)
+    end
 end

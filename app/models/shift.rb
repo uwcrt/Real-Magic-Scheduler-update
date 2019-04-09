@@ -1,7 +1,4 @@
 class Shift < ActiveRecord::Base
-  attr_accessible :name, :start, :finish, :location, :shift_type_id, :description, :primary_id, :secondary_id, :rookie_id, :primary_disabled, :secondary_disabled, :rookie_disabled
-
-
   validates_presence_of :name, :start, :finish, :location, :shift_type_id
   validates_numericality_of :shift_type_id
   validate :unique_responders, :secondary_cannot_take_primary, :finish_after_start, :responders_have_no_conflicts

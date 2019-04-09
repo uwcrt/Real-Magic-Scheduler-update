@@ -13,8 +13,6 @@
 #
 
 class ShiftType < ActiveRecord::Base
-  attr_accessible :name, :primary_requirement, :secondary_requirement, :ignore_primary, :ignore_suspended, :critical_time, :ignore_certs
-
   has_many :shifts, :dependent => :destroy
 
   validates :name, :presence => true

@@ -5,9 +5,7 @@ describe User do
   before(:each) do
     @attr = { :first_name => "Justin",
               :last_name => "Vanderheide",
-              :username => "user",
-              :password => "foobar",
-              :password_confirmation => "foobar"}
+              :username => "user"}
   end
 
   it "should create a new instance given valid attributes" do

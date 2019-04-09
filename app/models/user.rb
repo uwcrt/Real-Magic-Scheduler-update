@@ -1,7 +1,5 @@
 require 'digest'
 class User < ActiveRecord::Base
-  attr_accessible :first_name, :last_name, :username, :wants_notifications, :last_notified, :hcp_expiry, :sfa_expiry, :amfr_expiry, :position
-
   POSITION_OPTIONS = {'Rookie' => 0, 'Secondary' => 1, 'Primary' => 2}
 
   before_save :downcase_username!
