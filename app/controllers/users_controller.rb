@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, :only => [:edit, :update, :calendar]
-  before_action :correct_user, :only => [:show, :edit, :update, :calendar]
+  before_action :authenticate_user!, :only => [:edit, :update]
+  before_action :correct_user, :only => [:show, :edit, :update]
   before_action :admin, :only => [:edit, :update, :create, :new, :primary, :make_admin, :suspended, :eot, :admin, :destroy, :index]
 
   def create
@@ -72,7 +72,7 @@ class UsersController < ApplicationController
 
   def calendar
     @user = User.find(params[:id])
-    render :text => @user.calendar
+    render plain: @user.calendar
   end
 
   def index
