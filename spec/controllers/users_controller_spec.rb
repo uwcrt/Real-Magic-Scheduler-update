@@ -11,12 +11,12 @@ describe UsersController do
 
     it "should be successful" do
       get :show, params: { id: @user }
-      response.should be_success
+      expect(response).to be_successful
     end
 
     it "should find the right user" do
       get :show, params: { id: @user }
-      assigns(:user).should == @user
+      expect(assigns(:user)).to eq(@user)
     end
   end
 
@@ -29,7 +29,7 @@ describe UsersController do
 
     it "should be successful" do
       get 'new'
-      response.should be_success
+      expect(response).to be_successful
     end
   end
 
@@ -51,12 +51,12 @@ describe UsersController do
 
       it "should deny access to 'edit'" do
         get :edit, params: { id: @user }
-        response.should redirect_to(new_user_session_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
 
       it "should deny access to 'update'" do
         put :update, params: { id: @user, user: {} }
-        response.should redirect_to(new_user_session_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
 
@@ -69,12 +69,12 @@ describe UsersController do
 
       it "should deny access to 'edit'" do
         get :edit, params: { id: @user }
-        response.should redirect_to(root_path)
+        expect(response).to redirect_to(root_path)
       end
 
       it "should deny access to 'update'" do
         put :update, params: { id: @user, user: {} }
-        response.should redirect_to(root_path)
+        expect(response).to redirect_to(root_path)
       end
     end
   end

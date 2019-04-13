@@ -8,17 +8,17 @@ describe ShiftsController do
 
       it "should redirect the 'new' page to the login page" do
        get :new
-        response.should redirect_to(new_user_session_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
 
       it "should redirect the 'index' page to the login page" do
         get :index
-        response.should redirect_to(new_user_session_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
 
       it "should redirect the 'create' action to the login page" do
         post :create
-        response.should redirect_to(new_user_session_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
 
@@ -30,17 +30,17 @@ describe ShiftsController do
 
       it "should redirect the 'new' page to the root path" do
         get :new
-        response.should redirect_to(root_path)
+        expect(response).to redirect_to(root_path)
       end
 
       it "should render the 'index' page" do
         get :index
-        response.should be_successful
+        expect(response).to be_successful
       end
 
       it "should redirect the 'create' action to the root path" do
         post :create
-        response.should redirect_to(root_path)
+        expect(response).to redirect_to(root_path)
       end
     end
 
@@ -52,7 +52,7 @@ describe ShiftsController do
 
       it "should render the 'new' page" do
         get :new
-        response.should be_successful
+        expect(response).to be_successful
       end
     end
   end
@@ -65,7 +65,7 @@ describe ShiftsController do
 
     it "should be successful" do
       get :index
-      response.should be_successful
+      expect(response).to be_successful
     end
   end
 
@@ -78,7 +78,7 @@ describe ShiftsController do
 
     it "should be successful" do
       get :new
-      response.should be_success
+      expect(response).to be_successful
     end
   end
 

@@ -18,42 +18,42 @@ describe Shift do
 
     it "should require a name" do
       @shift = Shift.new(@attr.merge(:name => ""))
-      @shift.should_not be_valid
+      expect(@shift).not_to be_valid
     end
 
     it "should require a start time" do
       @shift = Shift.new(@attr.merge(:start => nil))
-      @shift.should_not be_valid
+      expect(@shift).not_to be_valid
     end
 
     it "should reject invalid start times" do
       @shift = Shift.new(@attr.merge(:start => "fake time"))
-      @shift.should_not be_valid
+      expect(@shift).not_to be_valid
     end
 
     it "should require an end time" do
       @shift = Shift.new(@attr.merge(:finish => nil))
-      @shift.should_not be_valid
+      expect(@shift).not_to be_valid
     end
 
     it "should reject invalid end times" do
       @shift = Shift.new(@attr.merge(:finish => "fake time"))
-      @shift.should_not be_valid
+      expect(@shift).not_to be_valid
     end
 
     it "should require a location" do
       @shift = Shift.new(@attr.merge(:location => ""))
-      @shift.should_not be_valid
+      expect(@shift).not_to be_valid
     end
 
     it "should require a shift type" do
       @shift = Shift.new(@attr.merge(:shift_type_id => nil))
-      @shift.should_not be_valid
+      expect(@shift).not_to be_valid
     end
 
     it "should require a numeric shift type" do
       @shift = Shift.new(@attr.merge(:shift_type_id => "fake"))
-      @shift.should_not be_valid
+      expect(@shift).not_to be_valid
     end
   end
 
@@ -82,19 +82,19 @@ describe Shift do
     end
 
     it "should have a primary attribute" do
-      @shift.should respond_to(:primary)
+      expect(@shift).to respond_to(:primary)
     end
 
     it "should have a secondary attribute" do
-      @shift.should respond_to(:secondary)
+      expect(@shift).to respond_to(:secondary)
     end
 
     it "should have a rookie attribute" do
-      @shift.should respond_to(:rookie)
+      expect(@shift).to respond_to(:rookie)
     end
 
     it "should have a shift_type attribute" do
-      @shift.should respond_to(:shift_type)
+      expect(@shift).to respond_to(:shift_type)
     end
 
     describe "Taking shifts" do
@@ -107,53 +107,53 @@ describe Shift do
 
       it "should be store a primary responder" do
         @shift.primary = @primary
-        @shift.should be_valid
-        @shift.primary.should == @primary
+        expect(@shift).to be_valid
+        expect(@shift.primary).to eq(@primary)
       end
 
       it "should be able to store a secondary responder" do
         @shift.secondary = @secondary
-        @shift.should be_valid
-        @shift.secondary.should == @secondary
+        expect(@shift).to be_valid
+        expect(@shift.secondary).to eq(@secondary)
       end
 
       it "should be able to store a rookie responder" do
         @shift.rookie = @rookie
-        @shift.should be_valid
-        @shift.rookie.should == @rookie
+        expect(@shift).to be_valid
+        expect(@shift.rookie).to eq(@rookie)
       end
 
       it "should not allow the same person to be both primary and secondary" do
         @shift.primary = @shift.secondary = @primary
-        @shift.should_not be_valid
+        expect(@shift).not_to be_valid
       end
 
       it "should not allow the same person to be both rookie and secondary" do
         @shift.rookie = @shift.secondary = @primary
-        @shift.should_not be_valid
+        expect(@shift).not_to be_valid
       end
 
 
       it "should not allow the same person to be both primary and rookie" do
         @shift.primary = @shift.rookie = @primary
-        @shift.should_not be_valid
+        expect(@shift).not_to be_valid
       end
 
       it "should allow three seperate people to be primary secondary and rookie" do
         @shift.primary = @primary
         @shift.secondary = @secondary
         @shift.rookie = @rookie
-        @shift.should be_valid
+        expect(@shift).to be_valid
       end
 
       it "should not let a secondary responder take a primary shift" do
         @shift.primary = @secondary
-        @shift.should_not be_valid
+        expect(@shift).not_to be_valid
       end
 
       it "should not let a rookie responder take a primary shift" do
         @shift.primary = @rookie
-        @shift.should_not be_valid
+        expect(@shift).not_to be_valid
       end
 
       it "should not let a responder take two shifts at the same time" do
@@ -162,7 +162,7 @@ describe Shift do
         shift.primary = @primary
         shift.save
         shift2.primary = @primary
-        shift2.should_not be_valid
+        expect(shift2).not_to be_valid
       end
     end
   end

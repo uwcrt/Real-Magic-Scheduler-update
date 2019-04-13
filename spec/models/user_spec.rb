@@ -14,12 +14,12 @@ describe User do
 
   it "should require a first name" do
     no_name_user = User.new(@attr.merge(:first_name => ""))
-    no_name_user.should_not be_valid
+    expect(no_name_user).not_to be_valid
   end
 
   it "should require a last name" do
     no_name_user = User.new(@attr.merge(:last_name => ""))
-    no_name_user.should_not be_valid
+    expect(no_name_user).not_to be_valid
   end
 
   describe "shift attributes" do
@@ -34,19 +34,19 @@ describe User do
     end
 
     it "should have a shifts attribute" do
-      @user.should respond_to(:shifts)
+      expect(@user).to respond_to(:shifts)
     end
 
     it "should contain taken secondary shifts" do
-      @user.shifts.should include(@shift_secondary)
+      expect(@user.shifts).to include(@shift_secondary)
     end
 
     it "should contain taken primary shifts" do
-      @user.shifts.should include(@shift_primary)
+      expect(@user.shifts).to include(@shift_primary)
     end
 
     it "should not include shifts that don't belong to the user" do
-      @user.shifts.should_not include(@shift_neither)
+      expect(@user.shifts).not_to include(@shift_neither)
     end
   end
 
@@ -57,16 +57,16 @@ describe User do
     end
 
     it "should respond to admin" do
-      @user.should respond_to(:admin)
+      expect(@user).to respond_to(:admin)
     end
 
     it "should not be an admin by default" do
-      @user.should_not be_admin
+      expect(@user).not_to be_admin
     end
 
     it "should be convertible to an admin" do
       @user.toggle!(:admin)
-      @user.should be_admin
+      expect(@user).to be_admin
     end
   end
 
@@ -77,11 +77,11 @@ describe User do
     end
 
     it "should respond to position" do
-      @user.should respond_to(:position)
+      expect(@user).to respond_to(:position)
     end
 
     it "should not be a primary by default" do
-      @user.should_not be_primary
+      expect(@user).not_to be_primary
     end
   end
 
