@@ -1,14 +1,14 @@
 <div id="filterrific_results">
   <table class='table table-striped table-bordered'>
     <tr>
-      <th>Name</th>
+      <th><%= filterrific_sorting_link(@filterrific, :first_name, label: "Name") %></th>
       <% shift_types.each do |n| %>
-        <th><%= n.name %></th>
+        <th><%= filterrific_sorting_link(@filterrific, n.id.to_s, label: n.name) %></th>
       <% end %>
-      <th>Cert Expiration</th>
-      <th>Rank</th>
-      <th>Suspended</th>
-      <th>Admin</th>
+      <th><%= filterrific_sorting_link(@filterrific, 'cert', label: "Cert Expiration") %></th>
+      <th><%= filterrific_sorting_link(@filterrific, :position, label: "Rank") %></th>
+      <th><%= filterrific_sorting_link(@filterrific, :disabled, label: "Suspended") %></th>
+      <th><%= filterrific_sorting_link(@filterrific, :admin) %></th>
       <th>Delete</th>
     </tr>
     <%= render users, :shift_types => shift_types %>
