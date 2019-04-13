@@ -59,6 +59,7 @@ class ShiftType < ActiveRecord::Base
     end
 
     self.default = true
+    self.save
   end
 
   def self.get_default
