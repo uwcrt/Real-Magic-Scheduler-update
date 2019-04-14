@@ -202,7 +202,7 @@ class User < ActiveRecord::Base
 
   def conflict(shift)
     self.shifts.each do |compare|
-      if shift.start < compare.finish && shift.finish > compare.start
+      if shift != compare && shift.start < compare.finish && shift.finish > compare.start
         return true
       end
     end

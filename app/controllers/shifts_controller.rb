@@ -98,7 +98,7 @@ class ShiftsController < ApplicationController
     shift = Shift.find(params[:id])
     if current_user.can_secondary?(shift)
       shift.secondary = current_user
-      shift.save
+      shift.save!
       flash[:success] = "You are now the secondary for #{shift.name}"
     else
       flash[:error] = "There was a problem processing your request. If this problem continues please contact the scheduler."
@@ -110,7 +110,7 @@ class ShiftsController < ApplicationController
     shift = Shift.find(params[:id])
     if current_user.can_primary?(shift)
       shift.primary = current_user
-      shift.save
+      shift.save!
       flash[:success] = "You are now the primary for #{shift.name}"
     else
       flash[:error] = "There was a problem processing your request. If this problem continues please contact the scheduler."
@@ -122,7 +122,7 @@ class ShiftsController < ApplicationController
     shift = Shift.find(params[:id])
     if current_user.can_rookie?(shift)
       shift.rookie = current_user
-      shift.save
+      shift.save!
       flash[:success] = "You are now the rookie for #{shift.name}"
     else
       flash[:error] = "There was a problem processing your request. If this problem continues please contact the scheduler."
