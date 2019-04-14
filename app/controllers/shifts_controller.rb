@@ -12,7 +12,7 @@ class ShiftsController < ApplicationController
   def available
     @title = "Available Shifts"
     @mode = :available
-    @shifts = Shift.available
+    @shifts = Shift.available current_user
     render 'index'
   end
 

@@ -69,6 +69,18 @@ describe ShiftsController do
     end
   end
 
+  describe "GET 'available'" do
+
+    before(:each) do
+      @user = test_sign_in(create(:user))
+    end
+
+    it "should be successful" do
+      get :available
+      expect(response).to be_successful
+    end
+  end
+
   describe "GET 'new'" do
 
     before(:each) do

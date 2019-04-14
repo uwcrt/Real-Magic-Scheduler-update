@@ -18,10 +18,10 @@ class Shift < ActiveRecord::Base
     Shift.where("start < ?", Time.zone.now)
   end
 
-  def self.available
-    (Shift.where({:primary_id => nil, :primary_disabled => false}) +
-      Shift.where({:secondary_id => nil, :secondary_disabled => false}) -
-      past
+  def self.available(current_user)
+    (Shift.all.select{ |s| current_user.can_primary?(s) } +
+     Shift.all.select{ |s| current_user.can_secondary?(s) } +
+     Shift.all.select{ |s| current_user.can_rookie?(s) }
      ).uniq.sort {|x,y| x.start <=> y.start }
   end
 
