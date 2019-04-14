@@ -14,7 +14,8 @@ class User < ActiveRecord::Base
   filterrific(
     default_filter_params: { },
     available_filters: [
-      :search_query
+      :search_query,
+      :sorted_by
     ]
   )
 
@@ -46,6 +47,32 @@ class User < ActiveRecord::Base
     )
   }
 
+  scope :sorted_by, ->(sort_option) {
+    direction = /desc$/.match?(sort_option) ? "desc" : "asc"
+    case sort_option.to_s
+    when /^first_name/
+      order("LOWER(users.first_name) #{direction}")
+    when /^position/
+      order("users.position #{direction}")
+    when /^disabled/
+      order("users.disabled #{direction}")
+    when /^admin/
+      order("users.admin #{direction}")
+    when /^cert/
+      if direction == "asc"
+        User.all.sort_by { |u| u.days_until_cert_expiration }
+      else
+        User.all.sort_by { |u| u.days_until_cert_expiration }.reverse
+      end
+    else
+      type = ShiftType.find sort_option.to_i
+      if direction == "asc"
+        User.all.sort_by { |u| u.total_hours(type) }
+      else
+        User.all.sort_by { |u| u.total_hours(type) }.reverse
+      end
+    end
+  }
 
   def shifts
     Shift.where("primary_id = ? OR secondary_id = ? OR rookie_id = ?", self.id, self.id, self.id)
