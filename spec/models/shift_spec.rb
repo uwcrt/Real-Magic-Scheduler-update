@@ -164,6 +164,14 @@ describe Shift do
         shift2.primary = @primary
         expect(shift2).not_to be_valid
       end
+
+      it "should let a responder take a shift with another responder on it" do
+        shift = create(:shift)
+        shift.primary = @primary
+        shift.save
+        shift.secondary = @secondary
+        expect(shift).to be_valid
+      end
     end
   end
 end

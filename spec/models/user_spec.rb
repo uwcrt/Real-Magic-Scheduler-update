@@ -97,6 +97,19 @@ describe User do
       end
     end
 
+    describe "conflicts" do
+      before do
+        @user = create(:user, sfa_expiry: Time.current + 1.year, hcp_expiry: Time.current + 1.year, position: 2)
+      end
+
+      it "should not be able to take two slots on same shift" do
+        @shift = build(:shift, start: Time.current + 1.hour)
+        expect(@user.can_primary? @shift).to be true
+        @shift.secondary = @user
+        expect(@user.can_primary? @shift).to be false
+      end
+    end
+
     describe "overwork policy" do
       before(:each) do
         DatabaseCleaner.clean
