@@ -34,7 +34,6 @@ describe ShiftTypesController do
   end
 
   describe "GET 'index'" do
-
     describe "Not logged in" do
 
       it "should redirect to the login page" do
@@ -62,6 +61,43 @@ describe ShiftTypesController do
 
       it "should be successful" do
         get :index
+        expect(response).to be_successful
+      end
+    end
+  end
+
+  describe "GET 'naughty'" do
+    before (:all) do
+      @type = create(:shift_type)
+    end
+
+    describe "Not logged in" do
+
+      it "should redirect to the login page" do
+        get :naughty, params: { id: @type }
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    describe "Not an administrator" do
+
+      before(:each) do
+        @user = test_sign_in(create(:user))
+      end
+
+      it "should redirect to the home page" do
+        get :naughty, params: { id: @type }
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    describe "as an administrator" do
+      before (:each) do
+        test_sign_in(create(:user)).toggle!(:admin)
+      end
+
+      it "should be successful" do
+        get :naughty, params: { id: @type }
         expect(response).to be_successful
       end
     end
