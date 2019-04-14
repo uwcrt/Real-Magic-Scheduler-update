@@ -7,7 +7,7 @@ describe Shift do
               :start => Time.now,
               :finish => Time.now + 5.hours,
               :location => "SLC",
-              :shift_type_id => 1}
+              :shift_type => create(:shift_type) }
   end
 
   describe "Validation" do

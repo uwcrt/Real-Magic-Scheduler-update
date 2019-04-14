@@ -5,15 +5,15 @@ FactoryBot.define do
     username              { "jvand" }
   end
 
-  factory :shift do 
+  factory :shift do
     name      { "Example Shift" }
     start     { DateTime.now }
     finish    { DateTime.now + 5.hours }
     location  { "Student Life Center" }
-    shift_type_id { 1 }
+    shift_type
   end
 
-  factory :shift_type do 
+  factory :shift_type do
     name                  { "regular" }
     primary_requirement   { 10 }
     secondary_requirement { 12 }

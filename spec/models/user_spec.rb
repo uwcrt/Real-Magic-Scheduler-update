@@ -162,15 +162,15 @@ describe User do
         end
 
         it "8 hours should be 6" do
-          expect(@user.max_hours(@shifts, 8)).to be_within(0.000001).of 6
+          expect(@user.max_hours(@shifts, 8)).to be_within(0.00001).of 6
         end
 
         it "2 hours should be 2" do
-          expect(@user.max_hours(@shifts, 2)).to be_within(0.000001).of 2
+          expect(@user.max_hours(@shifts, 2)).to be_within(0.00001).of 2
         end
 
         it "10 hours should be 7" do
-          expect(@user.max_hours(@shifts, 10)).to be_within(0.000001).of 7
+          expect(@user.max_hours(@shifts, 10)).to be_within(0.00001).of 7
         end
       end
     end
