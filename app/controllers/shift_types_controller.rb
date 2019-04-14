@@ -18,10 +18,14 @@ class ShiftTypesController < ApplicationController
   end
 
   def naughty
+    @filterrific = initialize_filterrific(
+      User,
+      params[:filterrific]
+    ) or return
     @type = ShiftType.find_by_id(params[:id])
     @title = @type.name + " Naughty List"
-    @users = User.where(disabled: false)
-    @users.reject {|n| n.total_hours(@type) >= n.hours_quota(@type)}
+    @users = @filterrific.find.reject{|n| n.disabled}
+    @users.reject! {|n| n.total_hours(@type) >= n.hours_quota(@type)}
     @type = [@type]
   end
 
