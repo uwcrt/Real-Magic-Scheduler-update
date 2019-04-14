@@ -172,6 +172,7 @@ class User < ActiveRecord::Base
   end
 
   def can_take?(shift)
+    return false if shift.primary == self || shift.secondary == self || shift.rookie == self
     return false if conflict(shift)
     return false if violates_overwork?(shift)
     return false if self.disabled && !shift.shift_type.ignore_suspended
