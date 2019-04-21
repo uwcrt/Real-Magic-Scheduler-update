@@ -27,6 +27,8 @@ gem 'sass-rails', '~> 5.0'
 gem 'coffee-rails'
 gem 'uglifier'
 
+gem 'raptorize-rails'
+
 group :production, :staging do
   gem 'rails_12factor', '~> 0.0.3'
 end

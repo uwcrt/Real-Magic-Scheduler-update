@@ -4,6 +4,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require filterrific/filterrific-jquery
+//= require raptorize
+//= require raptorize-konami
 //= require_self
 //= require_tree .
 
