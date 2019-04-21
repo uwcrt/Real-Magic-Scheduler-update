@@ -28,10 +28,10 @@ When doing this I got an error. This fixed it for me
 brew install gcc49  
 ```
 
-Then install Rails 5
+Then install the necessary gems
 
 ```
-gem install rails -v 5.2.2
+bundle install
 ```
 
 Finally install PostgreSQL. 
@@ -67,18 +67,24 @@ Finally to use the app manually create your first admin user
 
 ```
 rails console
-u = User.create :username => "...", :first_name => "...", :last_name => "...", :admin => true
+u = User.create username: "...", first_name: "...", last_name: "...", admin: true
+```
+
+At this point you should be able to start a server locally
+
+```
+rails server
 ```
 
 ### Running Tests
 
 ```
-bundle exec rspec rspec
+bundle exec rspec spec
 ```
 
 ### Deployment
 
-I think if you push to github it automatically deploys to heroku. I'll update this once I know for sure.
+Submit a pull request to deploy to the production Heroku server.
 
 ### Optional Environment Variables
 
