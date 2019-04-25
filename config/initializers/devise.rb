@@ -5,9 +5,12 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class with default "from" parameter.
   config.mailer_sender = "scheduler@crt.feds.ca"
-  config.cas_base_url = "https://cas.uwaterloo.ca/cas"
+  # OpenSSL::SSL::SSLContext::DEFAULT_PARAMS[:ssl_version] = 'TLSv1'
+
+  config.cas_base_url = Rails.env.production? ? "https://cas.uwaterloo.ca/cas" : "https://cassid.habilis.net"
+  config.cas_validate_url = Rails.env.production? ? "https://cas.uwaterloo.ca/cas/serviceValidate" : "https://cassid.habilis.net/serviceValidate"
+
   config.cas_create_user = false
-  OpenSSL::SSL::SSLContext::DEFAULT_PARAMS[:ssl_version] = 'TLSv1'
 
   config.cas_client_config_options = {
     :force_ssl_verification => true
@@ -101,7 +104,6 @@ Devise.setup do |config|
 
   # If true, uses the password salt as remember token. This should be turned
   # to false if you are not using database authenticatable.
-  config.use_salt_as_remember_token = true
 
   # Options to be passed to the created cookie. For instance, you can set
   # :secure => true in order to force SSL only cookies.
@@ -164,7 +166,7 @@ Devise.setup do |config|
 
   # ==> Configuration for :token_authenticatable
   # Defines name of the authentication token params key
-  config.token_authentication_key = :auth_token
+  # config.token_authentication_key = :auth_token
 
   # If true, authentication through token does not store user in session and needs
   # to be supplied on each request. Useful if you are using the token as API token.

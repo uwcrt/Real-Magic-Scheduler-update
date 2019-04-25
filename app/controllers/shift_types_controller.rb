@@ -1,6 +1,6 @@
 class ShiftTypesController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :admin
+  before_action :authenticate_user!
+  before_action :admin
 
   def index
     @title = "Shift Types"
@@ -18,16 +18,20 @@ class ShiftTypesController < ApplicationController
   end
 
   def naughty
+    @filterrific = initialize_filterrific(
+      User,
+      params[:filterrific]
+    ) or return
     @type = ShiftType.find_by_id(params[:id])
     @title = @type.name + " Naughty List"
-    @users = User.find_all_by_disabled(false);
+    @users = @filterrific.find.reject{|n| n.disabled}
     @users.reject! {|n| n.total_hours(@type) >= n.hours_quota(@type)}
     @type = [@type]
   end
 
   def update
     @type = ShiftType.find_by_id(params[:id])
-    if @type.update_attributes(params[:shift_type])
+    if @type.update_attributes(shift_type_params)
       flash[:success] = "Shift type updated successfully!"
       redirect_to shift_types_path
     else
@@ -44,7 +48,7 @@ class ShiftTypesController < ApplicationController
   end
 
   def create
-    @type = ShiftType.new(params[:shift_type])
+    @type = ShiftType.new(shift_type_params)
     if @type.save
       flash[:success] = "Shift typed created successfully!"
       redirect_to shift_types_path
@@ -53,4 +57,19 @@ class ShiftTypesController < ApplicationController
       render 'new'
     end
   end
+
+  def make_default
+    @type = ShiftType.find_by_id(params[:id])
+    @type.make_default
+    @type.save
+
+    @title = "Shift Types"
+    @types = ShiftType.all
+    render 'index'
+  end
+
+  private
+    def shift_type_params
+      params.require(:shift_type).permit(:name, :primary_requirement, :secondary_requirement, :ignore_primary, :ignore_suspended, :critical_time, :ignore_certs)
+    end
 end

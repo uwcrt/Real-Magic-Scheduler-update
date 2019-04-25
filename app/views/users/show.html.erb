@@ -22,8 +22,9 @@
       <h4>Certifications</h4>
       <p>SFA expiration date: <%= @user.sfa_expiry %></p>
       <p>HCP expiration date: <%= @user.hcp_expiry %></p>
+      <p>AMFR expiration date: <%= @user.amfr_expiry %><p>
       <p>Based on your expiration dates, you will not be able to take shifts after <%= Date.today + @user.days_until_cert_expiration %>
-      <p>Contact the directors of membership if you have more recent certifications</p>
+      <p>Contact the Directors of Membership and Scheduling if you have more recent certifications</p>
     </div>
   </div>
 
@@ -55,6 +56,6 @@ upcoming_hours = [@user.hours_quota(type) - @user.hours(type), @user.upcoming_ho
 <% if current_user == @user %>
   <div class='well well-small visible-desktop'>
     Automatically sync your shifts to Google Calendar, Apple iCal, Windows Calendar, etc. Your calendar subscription link:
-    <strong><%= calendar_user_url(@user.id, :auth_token => @user.authentication_token) %></strong>
+    <strong><%= calendar_user_url(@user.id) %></strong>
   </div>
 <% end %>

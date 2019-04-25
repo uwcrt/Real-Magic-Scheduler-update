@@ -1,4 +1,4 @@
-class AddRookies < ActiveRecord::Migration
+class AddRookies < ActiveRecord::Migration[4.2]
   def self.up
     add_column :users, :position, :integer, :default => 0
     add_column :shifts, :rookie_id, :integer

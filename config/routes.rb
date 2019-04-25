@@ -19,6 +19,7 @@ Rms::Application.routes.draw do
   resources :shift_types, :except => :show do
     member do
       get 'naughty'
+      get 'make_default'
     end
   end
 
@@ -34,10 +35,11 @@ Rms::Application.routes.draw do
       put 'drop_secondary'
       put 'drop_rookie'
       get 'next_week'
+      get 'copy_shift'
     end
   end
 
-  match '/eot',             :to => 'pages#eot'
+  get '/eot',             :to => 'pages#eot'
 
   namespace :api do
     resources :tokens, :only => :show

@@ -1,5 +1,5 @@
 <%=
-link_to user.disabled ? "Yes" : "No",
+link_to user.disabled ? "Suspended" : "Active",
         suspended_user_path(user),
         :method => :put,
         :remote => true

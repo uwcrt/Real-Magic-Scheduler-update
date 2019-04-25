@@ -1,4 +1,4 @@
-class AddDisabledToUsers < ActiveRecord::Migration
+class AddDisabledToUsers < ActiveRecord::Migration[4.2]
   def self.up
     add_column :users, :disabled, :boolean, :default => false
   end

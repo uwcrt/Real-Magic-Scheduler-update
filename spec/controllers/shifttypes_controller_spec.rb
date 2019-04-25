@@ -7,69 +7,105 @@ describe ShiftTypesController do
     describe "Not logged in" do
       it "should redirect to te login path" do
         get :new
-        response.should redirect_to(signin_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
 
     describe "not an administrator" do
 
       before(:each) do
-        test_sign_in(Factory(:user))
+        test_sign_in(create(:user))
       end
       it "should redirect to the home page" do
         get :new
-        response.should redirect_to(root_path)
+        expect(response).to redirect_to(root_path)
       end
     end
 
     describe "as an administrator" do
       before(:each) do
-        test_sign_in(Factory(:user)).toggle!(:admin)
+        test_sign_in(create(:user)).toggle!(:admin)
       end
       it 'should be successfull' do
         get :new
-        response.should be_successful
+        expect(response).to be_successful
       end
     end
   end
 
   describe "GET 'index'" do
-
     describe "Not logged in" do
 
       it "should redirect to the login page" do
         get :index
-        response.should redirect_to(signin_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
 
     describe "Not an administrator" do
 
       before(:each) do
-        @user = test_sign_in(Factory(:user))
+        @user = test_sign_in(create(:user))
       end
 
       it "should redirect to the home page" do
         get :index
-        response.should redirect_to(root_path)
+        expect(response).to redirect_to(root_path)
       end
     end
 
     describe "as an administrator" do
       before (:each) do
-        test_sign_in(Factory(:user)).toggle!(:admin)
+        test_sign_in(create(:user)).toggle!(:admin)
       end
 
       it "should be successful" do
         get :index
-        response.should be_successful
+        expect(response).to be_successful
+      end
+    end
+  end
+
+  describe "GET 'naughty'" do
+    before (:all) do
+      @type = create(:shift_type)
+    end
+
+    describe "Not logged in" do
+
+      it "should redirect to the login page" do
+        get :naughty, params: { id: @type }
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    describe "Not an administrator" do
+
+      before(:each) do
+        @user = test_sign_in(create(:user))
+      end
+
+      it "should redirect to the home page" do
+        get :naughty, params: { id: @type }
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    describe "as an administrator" do
+      before (:each) do
+        test_sign_in(create(:user)).toggle!(:admin)
+      end
+
+      it "should be successful" do
+        get :naughty, params: { id: @type }
+        expect(response).to be_successful
       end
     end
   end
 
   describe "POST 'create'" do
     before(:each) do
-      test_sign_in(Factory(:user)).toggle!(:admin)
+      test_sign_in(create(:user)).toggle!(:admin)
     end
     describe "failure" do
 
@@ -78,19 +114,14 @@ describe ShiftTypesController do
       end
 
       it "should not create a type" do
-        lambda do
-          post :create, :shift_type => @attr
-        end.should_not change(ShiftType, :count)
-      end
-
-      it "should have the right title" do
-        post :create, :shift_type => @attr
-        response.should have_selector("title", :content => "New Shift Type")
+        expect(lambda do
+          post :create, params: { shift_type: @attr }
+        end).not_to change(ShiftType, :count)
       end
 
       it "should render the 'new' page" do
-        post :create, :shift_type => @attr
-        response.should render_template('new')
+        post :create, params: { shift_type: @attr }
+        expect(response).to render_template('new')
       end
     end
 
@@ -103,14 +134,14 @@ describe ShiftTypesController do
       end
 
       it "should create a type" do
-        lambda do
-          post :create, :shift_type => @attr
-        end.should change(ShiftType, :count).by(1)
+        expect(lambda do
+          post :create, params: { shift_type: @attr }
+        end).to change(ShiftType, :count).by(1)
       end
 
       it "should show the types index" do
-        post :create, :shift_type => @attr
-        response.should redirect_to shift_types_path
+        post :create, params: { shift_type: @attr }
+        expect(response).to redirect_to shift_types_path
       end
     end
   end

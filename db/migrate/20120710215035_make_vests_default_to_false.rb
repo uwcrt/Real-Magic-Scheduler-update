@@ -1,4 +1,4 @@
-class MakeVestsDefaultToFalse < ActiveRecord::Migration
+class MakeVestsDefaultToFalse < ActiveRecord::Migration[4.2]
   def self.up
     change_column_default(:shifts, :vest, false)
   end

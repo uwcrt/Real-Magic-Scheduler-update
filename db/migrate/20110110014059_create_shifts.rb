@@ -1,4 +1,4 @@
-class CreateShifts < ActiveRecord::Migration
+class CreateShifts < ActiveRecord::Migration[4.2]
   def self.up
     create_table :shifts do |t|
       t.string :name

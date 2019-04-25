@@ -1,4 +1,4 @@
-class SplitUsername < ActiveRecord::Migration
+class SplitUsername < ActiveRecord::Migration[4.2]
   def self.up
     change_table :users do |t|
       t.rename :name, :first_name

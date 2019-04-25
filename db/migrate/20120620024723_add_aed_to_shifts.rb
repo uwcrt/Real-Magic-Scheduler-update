@@ -1,4 +1,4 @@
-class AddAedToShifts < ActiveRecord::Migration
+class AddAedToShifts < ActiveRecord::Migration[4.2]
   def self.up
     add_column :shifts, :aed, :boolean, :default => true
     Shift.all.each do |shift|

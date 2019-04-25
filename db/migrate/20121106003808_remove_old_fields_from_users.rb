@@ -1,4 +1,4 @@
-class RemoveOldFieldsFromUsers < ActiveRecord::Migration
+class RemoveOldFieldsFromUsers < ActiveRecord::Migration[4.2]
   def self.up
     remove_column :users, :email
     remove_column :users, :encrypted_password

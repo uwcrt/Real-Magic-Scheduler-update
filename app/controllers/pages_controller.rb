@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_filter :admin, :only => [:eot]
+  before_action :admin, :only => [:eot]
 
   def home
     redirect_to shifts_path if signed_in?

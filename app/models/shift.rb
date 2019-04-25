@@ -1,11 +1,7 @@
 class Shift < ActiveRecord::Base
-  attr_accessible :name, :start, :finish, :location, :shift_type_id, :description, :primary_id, :secondary_id, :rookie_id, :primary_disabled, :secondary_disabled, :rookie_disabled
-
-  default_scope :order => 'shifts.start ASC'
-
   validates_presence_of :name, :start, :finish, :location, :shift_type_id
   validates_numericality_of :shift_type_id
-  validate :unique_responders, :secondary_cannot_take_primary, :finish_after_start
+  validate :unique_responders, :secondary_cannot_take_primary, :finish_after_start, :responders_have_no_conflicts
 
   before_save :remove_from_disabled, :notify_responders
 
@@ -22,10 +18,10 @@ class Shift < ActiveRecord::Base
     Shift.where("start < ?", Time.zone.now)
   end
 
-  def self.available
-    (Shift.where({:primary_id => nil, :primary_disabled => false}) +
-      Shift.where({:secondary_id => nil, :secondary_disabled => false}) -
-      past
+  def self.available(current_user)
+    (Shift.all.select{ |s| current_user.can_primary?(s) } +
+     Shift.all.select{ |s| current_user.can_secondary?(s) } +
+     Shift.all.select{ |s| current_user.can_rookie?(s) }
      ).uniq.sort {|x,y| x.start <=> y.start }
   end
 
@@ -37,8 +33,10 @@ class Shift < ActiveRecord::Base
       :description => self.description,
       :primary_disabled => self.primary_disabled,
       :secondary_disabled => self.secondary_disabled,
+      :rookie_disabled => self.rookie_disabled,
       :primary => self.primary.try(:full_name),
       :secondary => self.secondary.try(:full_name),
+      :rookie => self.rookie.try(:full_name),
       :shift_type => self.shift_type.name,
       :duration => self.length
     }
@@ -68,7 +66,7 @@ class Shift < ActiveRecord::Base
       users = User.notifiable_of_shift(self).to_a
       ShiftMailer.new_email(self, users).deliver if users.any?
     elsif (self.location_changed? || self.start_changed? || self.finish_changed? || self.name_changed?)
-      users_to_notify = [self.primary, self.secondary].compact
+      users_to_notify = [self.primary, self.secondary, self.rookie].compact
       ShiftMailer.update_email(self, users_to_notify).deliver if users_to_notify.any?
     end
   end
@@ -110,8 +108,15 @@ class Shift < ActiveRecord::Base
       end
     end
 
+    def responders_have_no_conflicts
+      errors.add(:primary_id, "can't have shift conflicts") if primary != nil && primary.conflict(self)
+      errors.add(:secondary_id, "can't have shift conflicts") if secondary != nil && secondary.conflict(self)
+      errors.add(:rookie_id, "can't have shift conflicts") if rookie != nil && rookie.conflict(self)
+    end
+
     def remove_from_disabled
       self.primary = nil if self.primary_disabled
       self.secondary = nil if self.secondary_disabled
+      self.rookie = nil if self.rookie_disabled
     end
 end

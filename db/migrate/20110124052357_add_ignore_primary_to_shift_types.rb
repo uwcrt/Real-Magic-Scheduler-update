@@ -1,4 +1,4 @@
-class AddIgnorePrimaryToShiftTypes < ActiveRecord::Migration
+class AddIgnorePrimaryToShiftTypes < ActiveRecord::Migration[4.2]
   def self.up
     add_column :shift_types, :ignore_primary, :boolean, :default => false
   end

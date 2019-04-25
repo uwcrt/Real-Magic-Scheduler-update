@@ -1,2 +1,13 @@
 <div class='page-header'><h1><%= @type[0].name + " Naughty List" %></h1></div>
+
+<%= form_for_filterrific @filterrific do |f| %>
+  <div>
+    Search
+    <%= f.text_field(
+      :search_query,
+      class: 'filterrific-periodically-observed'
+    ) %>
+  </div>
+<% end %>
+
 <%= render :partial => "users/table", :locals => {:users => @users, :shift_types => @type} %>

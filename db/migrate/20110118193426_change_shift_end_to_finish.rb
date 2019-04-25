@@ -1,4 +1,4 @@
-class ChangeShiftEndToFinish < ActiveRecord::Migration
+class ChangeShiftEndToFinish < ActiveRecord::Migration[4.2]
   def self.up
     change_table :shifts do |t|
       t.rename :end, :finish

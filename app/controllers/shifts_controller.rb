@@ -1,18 +1,18 @@
 class ShiftsController < ApplicationController
   include ShiftsHelper
-  before_filter :authenticate_user!
-  before_filter :admin, :only => [:new, :create, :drop_primary, :drop_secondary, :edit, :update]
+  before_action :authenticate_user!
+  before_action :admin, :only => [:new, :create, :drop_primary, :drop_secondary, :edit, :update]
 
   def index
     @title = "Shifts"
     @mode = params[:history] ? :history : :current
-    @shifts = params[:history] ? Shift.all : Shift.current
+    @shifts = params[:history] ? Shift.all.sort_by{|s| s.start} : Shift.current.sort_by{|s| s.start}
   end
 
   def available
     @title = "Available Shifts"
     @mode = :available
-    @shifts = Shift.available
+    @shifts = Shift.available current_user
     render 'index'
   end
 
@@ -28,16 +28,26 @@ class ShiftsController < ApplicationController
 
   def next_week
     @shift = Shift.find params[:id]
-    @shift = @shift.clone
+    @shift = @shift.dup
     @shift.start += 1.week
     @shift.finish += 1.week
     @shift.primary = nil
     @shift.secondary = nil
+    @shift.rookie = nil
+    render 'new'
+  end
+
+  def copy_shift
+    @shift = Shift.find params[:id]
+    @shift = @shift.dup
+    @shift.primary = nil
+    @shift.secondary = nil
+    @shift.rookie = nil
     render 'new'
   end
 
   def create
-    @shift = Shift.new(params[:shift])
+    @shift = Shift.new(shift_params)
     if !@shift.valid?
       @title = "New Shift"
       render 'new'
@@ -46,7 +56,7 @@ class ShiftsController < ApplicationController
 
     split_length = params[:split_length].to_i
 
-    @shift = Shift.new(params[:shift])
+    @shift = Shift.new(shift_params)
     @shift.split!(split_length.minutes) if split_length > 0
 
     if @shift.save
@@ -65,7 +75,7 @@ class ShiftsController < ApplicationController
 
   def update
     @shift = Shift.find params[:id]
-    if @shift.update_attributes(params[:shift])
+    if @shift.update_attributes(shift_params)
       split_length = params[:split_length].to_i
       @shift.split!(split_length.minutes) if split_length > 0
 
@@ -88,7 +98,7 @@ class ShiftsController < ApplicationController
     shift = Shift.find(params[:id])
     if current_user.can_secondary?(shift)
       shift.secondary = current_user
-      shift.save
+      shift.save!
       flash[:success] = "You are now the secondary for #{shift.name}"
     else
       flash[:error] = "There was a problem processing your request. If this problem continues please contact the scheduler."
@@ -100,7 +110,7 @@ class ShiftsController < ApplicationController
     shift = Shift.find(params[:id])
     if current_user.can_primary?(shift)
       shift.primary = current_user
-      shift.save
+      shift.save!
       flash[:success] = "You are now the primary for #{shift.name}"
     else
       flash[:error] = "There was a problem processing your request. If this problem continues please contact the scheduler."
@@ -112,7 +122,7 @@ class ShiftsController < ApplicationController
     shift = Shift.find(params[:id])
     if current_user.can_rookie?(shift)
       shift.rookie = current_user
-      shift.save
+      shift.save!
       flash[:success] = "You are now the rookie for #{shift.name}"
     else
       flash[:error] = "There was a problem processing your request. If this problem continues please contact the scheduler."
@@ -140,4 +150,9 @@ class ShiftsController < ApplicationController
     shift.save
     redirect_to shifts_path
   end
+
+  private
+    def shift_params
+      params.require(:shift).permit(:name, :start, :finish, :location, :shift_type_id, :description, :primary_id, :secondary_id, :rookie_id, :primary_disabled, :secondary_disabled, :rookie_disabled)
+    end
 end

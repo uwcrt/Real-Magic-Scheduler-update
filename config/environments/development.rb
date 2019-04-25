@@ -11,8 +11,8 @@ Rms::Application.configure do
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
-  config.action_view.debug_rjs             = true
   config.action_controller.perform_caching = false
+  config.eager_load = true
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
@@ -21,10 +21,12 @@ Rms::Application.configure do
   config.active_support.deprecation = :log
 
   # Print out verbose messages
-  config.logger = Logger.new(STDOUT)
-  config.logger.level = Logger::DEBUG
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
+
+  # Expands the lines which load the assets
+  config.assets.compress = false
+  config.assets.debug = true
 end
 

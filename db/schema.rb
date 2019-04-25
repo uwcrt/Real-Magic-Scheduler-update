@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -9,55 +8,58 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140304044613) do
+ActiveRecord::Schema.define(version: 2019_02_09_182657) do
 
-  create_table "shift_types", :force => true do |t|
-    t.string   "name"
-    t.float    "primary_requirement"
-    t.float    "secondary_requirement"
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "shift_types", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.float "primary_requirement"
+    t.float "secondary_requirement"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "ignore_primary",        :default => false
-    t.boolean  "ignore_suspended",      :default => false
-    t.integer  "critical_time",         :default => 7
-    t.boolean  "ignore_certs",          :default => false
+    t.boolean "ignore_primary", default: false
+    t.boolean "ignore_suspended", default: false
+    t.integer "critical_time", default: 7
+    t.boolean "ignore_certs", default: false
+    t.boolean "default", default: false
   end
 
-  create_table "shifts", :force => true do |t|
-    t.string   "name"
+  create_table "shifts", id: :serial, force: :cascade do |t|
+    t.string "name"
     t.datetime "start"
     t.datetime "finish"
-    t.string   "location"
-    t.integer  "primary_id"
-    t.integer  "secondary_id"
-    t.integer  "shift_type_id"
+    t.string "location"
+    t.integer "primary_id"
+    t.integer "secondary_id"
+    t.integer "shift_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "description"
-    t.boolean  "primary_disabled",   :default => false
-    t.boolean  "secondary_disabled", :default => false
-    t.integer  "rookie_id"
-    t.boolean  "rookie_disabled",    :default => true
+    t.text "description"
+    t.boolean "primary_disabled", default: false
+    t.boolean "secondary_disabled", default: false
+    t.integer "rookie_id"
+    t.boolean "rookie_disabled", default: false
   end
 
-  create_table "users", :force => true do |t|
-    t.string   "first_name"
+  create_table "users", id: :serial, force: :cascade do |t|
+    t.string "first_name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "last_name"
-    t.boolean  "admin",                :default => false
-    t.boolean  "disabled",             :default => false
-    t.string   "username",             :default => "",                    :null => false
-    t.string   "authentication_token"
-    t.boolean  "wants_notifications",  :default => false
-    t.datetime "last_notified",        :default => '1970-01-01 00:00:00'
-    t.date     "sfa_expiry",           :default => '0001-01-01'
-    t.date     "hcp_expiry",           :default => '0001-01-01'
-    t.integer  "position",             :default => 0
+    t.string "last_name"
+    t.boolean "admin", default: false
+    t.boolean "disabled", default: false
+    t.string "username", default: "", null: false
+    t.boolean "wants_notifications", default: false
+    t.datetime "last_notified", default: "1970-01-01 00:00:00"
+    t.date "sfa_expiry", default: "0001-01-01"
+    t.date "hcp_expiry", default: "0001-01-01"
+    t.integer "position", default: 0
+    t.date "amfr_expiry", default: "0001-01-01"
+    t.index ["username"], name: "index_users_on_username"
   end
-
-  add_index "users", ["username"], :name => "index_users_on_username"
 
 end

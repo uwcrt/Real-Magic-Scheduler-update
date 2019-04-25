@@ -8,6 +8,7 @@ Rms::Application.configure do
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
+  config.eager_load = false
 
   # Specifies the header that your server uses for sending files
   config.action_dispatch.x_sendfile_header = "X-Sendfile"
@@ -29,7 +30,7 @@ Rms::Application.configure do
 
   # Disable Rails's static asset server
   # In production, Apache or nginx will already do this
-  config.serve_static_assets = false
+  # config.serve_static_assets = true
 
   # Enable serving of images, stylesheets, and javascripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
@@ -44,11 +45,29 @@ Rms::Application.configure do
   # the I18n.default_locale when a translation can not be found)
   config.i18n.fallbacks = true
 
+  # Choose the compressors to use (if any)
+  config.assets.js_compressor = :uglifier
+  # config.assets.css_compressor = :yui
+
+  # Don't fallback to assets pipeline if a precompiled asset is missed
+  config.assets.compile = false
+
+  # Generate digests for assets URLs.
+  config.assets.digest = true
+
+  # Precompile additional assets (application.js, application.css, and all
+  # non-JS/CSS are already added)
+  # config.assets.precompile += %w( admin.js admin.css )
+
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  config.action_mailer.smtp_settings = { 
+  config.action_mailer.smtp_settings = {
     :enable_starttls_auto => false,
-    :address => "mail.feds.uwaterloo.ca" 
+    :address => "mail.feds.uwaterloo.ca"
   }
+
+  config.assets.compress = true
+  config.assets.compile = false
+  config.assets.digest = true
 end

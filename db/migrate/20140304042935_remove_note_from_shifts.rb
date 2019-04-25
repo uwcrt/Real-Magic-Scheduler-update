@@ -1,4 +1,4 @@
-class RemoveNoteFromShifts < ActiveRecord::Migration
+class RemoveNoteFromShifts < ActiveRecord::Migration[4.2]
   def self.up
     Shift.all.each do |shift|
       shift.description = shift.description.to_s + "\n" + shift.note.to_s

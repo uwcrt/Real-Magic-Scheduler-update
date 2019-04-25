@@ -13,8 +13,6 @@
 #
 
 class ShiftType < ActiveRecord::Base
-  attr_accessible :name, :primary_requirement, :secondary_requirement, :ignore_primary, :ignore_suspended, :critical_time, :ignore_certs
-
   has_many :shifts, :dependent => :destroy
 
   validates :name, :presence => true
@@ -52,5 +50,23 @@ class ShiftType < ActiveRecord::Base
     primary_filled = Shift.where('shift_type_id = ? AND primary_id IS NOT NULL', id).map(&:length).reduce{|a,b| a+b} || 0
     secondary_filled = Shift.where('shift_type_id = ? AND secondary_id IS NOT NULL', id).map(&:length).reduce{|a,b| a+b} || 0
     return primary_filled + secondary_filled
+  end
+
+  def make_default
+    ShiftType.all.each do |shift_type|
+      shift_type.default = false
+      shift_type.save
+    end
+
+    self.default = true
+    self.save
+  end
+
+  def self.get_default
+    if ShiftType.find_by default: true != nil
+      return ShiftType.find_by(default: true).id
+    else
+      return 0
+    end
   end
 end

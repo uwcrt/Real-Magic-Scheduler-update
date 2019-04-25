@@ -1,4 +1,4 @@
-class ChangeDataTypeForShiftQuota < ActiveRecord::Migration
+class ChangeDataTypeForShiftQuota < ActiveRecord::Migration[4.2]
   def self.up
     change_table :shift_types do |t|
       t.change :primary_requirement, :float

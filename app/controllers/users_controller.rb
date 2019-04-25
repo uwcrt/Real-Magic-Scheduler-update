@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_user!, :only => [:edit, :update, :calendar]
-  before_filter :correct_user, :only => [:show, :edit, :update, :calendar]
-  before_filter :admin, :only => [:edit, :update, :create, :new, :primary, :make_admin, :suspended, :eot, :admin, :destroy, :index]
+  before_action :authenticate_user!, :only => [:edit, :update]
+  before_action :correct_user, :only => [:show, :edit, :update]
+  before_action :admin, :only => [:edit, :update, :create, :new, :primary, :make_admin, :suspended, :eot, :admin, :destroy, :index]
 
   def create
-    @user = User.new(params[:user])
+    @user = User.new(user_params)
 
     if @user.save
       flash[:success] = "User created successfully!"
@@ -32,7 +32,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update_attributes(params[:user])
+    if @user.update_attributes(user_params)
       flash[:success] = "Profile updated."
       redirect_to users_path
     else
@@ -72,13 +72,22 @@ class UsersController < ApplicationController
 
   def calendar
     @user = User.find(params[:id])
-    render :text => @user.calendar
+    render plain: @user.calendar
   end
 
   def index
-    @users = User.all
+    @filterrific = initialize_filterrific(
+      User,
+      params[:filterrific]
+    ) or return
+    @users = @filterrific.find
     @shift_types = ShiftType.all
     @title = "Users"
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def primary
@@ -117,6 +126,9 @@ class UsersController < ApplicationController
   end
 
   private
+    def user_params
+      params.require(:user).permit(:first_name, :last_name, :username, :wants_notifications, :last_notified, :hcp_expiry, :sfa_expiry, :amfr_expiry, :position)
+    end
 
     def correct_user
       @user = User.find(params[:id])

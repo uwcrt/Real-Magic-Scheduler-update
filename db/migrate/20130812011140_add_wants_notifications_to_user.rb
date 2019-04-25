@@ -1,4 +1,4 @@
-class AddWantsNotificationsToUser < ActiveRecord::Migration
+class AddWantsNotificationsToUser < ActiveRecord::Migration[4.2]
   def self.up
     add_column :users, :wants_notifications, :boolean, :default => false
     add_column :users, :last_notified, :datetime, :default => Time.at(0)

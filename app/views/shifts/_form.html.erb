@@ -5,7 +5,11 @@
     <%= f.label :location %>
     <%= f.text_field :location %>
     <%= f.label :shift_type_id %>
-    <%= f.collection_select(:shift_type_id, ShiftType.all, :id, :name) %>
+    <% if @shift.name == nil %>
+      <%= f.collection_select(:shift_type_id, ShiftType.all, :id, :name, {:selected => ShiftType.get_default}) %>
+    <% else %>
+      <%= f.collection_select(:shift_type_id, ShiftType.all, :id, :name) %>
+    <% end %>
     <%= f.label :start %>
     <%= f.datetime_select :start %>
     <%= f.label :finish %>
