@@ -50,7 +50,8 @@ Rms::Application.configure do
   # config.assets.css_compressor = :yui
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
-  config.assets.compile = false
+  config.assets.compile = true
+  config.assets.precompile =  ['*.js', '*.css', '*.css.erb']
 
   # Generate digests for assets URLs.
   config.assets.digest = true
@@ -68,6 +69,5 @@ Rms::Application.configure do
   }
 
   config.assets.compress = true
-  config.assets.compile = false
   config.assets.digest = true
 end
