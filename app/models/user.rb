@@ -224,6 +224,10 @@ class User < ActiveRecord::Base
       if (shifts[last].finish - shifts[first].start) / 1.hour < window
         last += 1
         hours_taken += shifts[last].length
+        while (shifts[last].finish - shifts[first].finish)/1.hour > window do
+          hours_taken -= shifts[first].length
+          first += 1
+        end
         if (shifts[last].finish - shifts[first].start) / 1.hour > window
           hours_taken -= (shifts[last].finish - shifts[first].start) / 1.hour - window
         end
