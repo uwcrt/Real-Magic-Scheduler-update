@@ -19,19 +19,7 @@ These instructions will get you a copy of the project up and running on your loc
 Install ruby 2.6.0
 
 ```
-rvm install "ruby-2.6.0" 
-```
-
-When doing this I got an error. This fixed it for me
-
-```
-brew install gcc49  
-```
-
-Then install the necessary gems
-
-```
-bundle install
+brew install ruby
 ```
 
 Finally install PostgreSQL. 
@@ -50,10 +38,22 @@ Next clone this repository
 git clone https://github.com/uwcrt/Real-Magic-Scheduler-update.git
 ```
 
+Then install the necessary gems
+
+```
+bundle install
+```
+
 Start PostgreSQL:
 
 ```
 brew services start postgresql
+```
+
+Create a postgres user 
+
+```
+/usr/local/opt/postgres/bin/createuser -s postgres
 ```
 
 And create your database
