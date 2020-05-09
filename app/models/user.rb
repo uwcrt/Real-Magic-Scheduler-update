@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   validates_inclusion_of :position, :in => POSITION_OPTIONS.map {|p| p[1]}
 
   filterrific(
-    default_filter_params: { },
+    default_filter_params: { sorted_by: 'first_name' },
     available_filters: [
       :search_query,
       :sorted_by
