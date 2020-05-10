@@ -46,8 +46,8 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @title = @user.name
-    @past_shifts = @user.past_shifts
-    @current_shifts = @user.current_shifts
+    @past_shifts = @user.past_shifts.sort_by{|s| s.start}
+    @current_shifts = @user.current_shifts.sort_by{|s| s.start}
     @shift_types = ShiftType.all
 
     if @user.disabled
