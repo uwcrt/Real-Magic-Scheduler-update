@@ -15,15 +15,15 @@
     <%= f.label :finish %>
     <%= f.datetime_select :finish %>
     <%= f.label :primary_id %>
-    <%= f.collection_select(:primary_id, User.all, :id, :full_name, {:include_blank => true}) %>
+    <%= f.collection_select(:primary_id, User.order(:first_name), :id, :full_name, {:include_blank => true}) %>
     <%= f.label :primary_disabled, "Make unavailable", :class => "checkbox inline" %>
     <%= f.check_box :primary_disabled %>
     <%= f.label :secondary_id %>
-    <%= f.collection_select(:secondary_id, User.all, :id, :full_name, {:include_blank => true}) %>
+    <%= f.collection_select(:secondary_id, User.order(:first_name), :id, :full_name, {:include_blank => true}) %>
     <%= f.label :secondary_disabled, "Make unavailable", :class => "checkbox inline" %>
     <%= f.check_box :secondary_disabled %>
     <%= f.label :rookie_id %>
-    <%= f.collection_select(:rookie_id, User.all, :id, :full_name, {:include_blank => true}) %>
+    <%= f.collection_select(:rookie_id, User.order(:first_name), :id, :full_name, {:include_blank => true}) %>
     <%= f.label :rookie_disabled, "Make unavailable", :class => "checkbox inline" %>
     <%= f.check_box :rookie_disabled %>
     <br />
