@@ -177,5 +177,31 @@ TODO the following tests all violate the 16 hours in 48 rule
         end
       end
     end
+
+    describe "certfications" do
+      before(:each) do
+        @shift = build(:shift, start: Time.current + 1.hour)
+      end
+
+      it "should allow taking shifts with valid MFR and HCP" do
+        user = build(:user, sfa_expiry: Time.current - 1.year, hcp_expiry: Time.current + 1.year, amfr_expiry: Time.current + 1.year)
+        expect(user.can_take? @shift).to be true
+      end
+
+      it "should allow taking shifts with valid SFA and HCP" do
+        user = build(:user, sfa_expiry: Time.current + 1.year, hcp_expiry: Time.current + 1.year, amfr_expiry: Time.current - 1.year)
+        expect(user.can_take? @shift).to be true
+      end
+
+      it "should not allow taking shifts without valid HCP" do
+        user = build(:user, sfa_expiry: Time.current + 1.year, hcp_expiry: Time.current - 1.year, amfr_expiry: Time.current + 1.year)
+        expect(user.can_take? @shift).to be false
+      end
+
+      it "should not allow taking shifts without valid SFA or MFR" do
+        user = build(:user, sfa_expiry: Time.current - 1.year, hcp_expiry: Time.current + 1.year, amfr_expiry: Time.current - 1.year)
+        expect(user.can_take? @shift).to be false
+      end
+    end
   end
 end
