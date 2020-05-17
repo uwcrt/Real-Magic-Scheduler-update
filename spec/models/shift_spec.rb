@@ -174,4 +174,14 @@ describe Shift do
       end
     end
   end
+
+  describe "Creating shifts" do
+    it "should create multiple shifts when using split shift" do
+      shift_count = Shift.all.count
+      @shift = build(:shift, start: Time.current + 1.hour, finish: Time.current + 2.hours)
+      @shift.split!(15.minutes)
+      @shift.save
+      expect(Shift.all.count).to eq(shift_count + 4)
+    end
+  end
 end
