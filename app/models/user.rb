@@ -80,9 +80,7 @@ class User < ActiveRecord::Base
 
   def self.notifiable_of_shift(shift)
     users = User.where(:wants_notifications => true).where('last_notified <= ?', Time.now - 3.hours)
-    users.to_a.select! {|user| user.can_primary?(shift) || user.can_secondary?(shift) || user.can_rookie?(shift)}
-
-    return users
+    return users.to_a.select {|user| user.can_primary?(shift) || user.can_secondary?(shift) || user.can_rookie?(shift)}
   end
 
   def days_until_cert_expiration
