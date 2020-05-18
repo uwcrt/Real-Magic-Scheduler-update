@@ -204,4 +204,25 @@ TODO the following tests all violate the 16 hours in 48 rule
       end
     end
   end
+
+  describe "notifications" do
+      before(:each) do
+        @shift = build(:shift, start: Time.current + 1.hour)
+      end
+
+      it "should notify user who can take shift and wants notifications" do
+        user = create(:user, sfa_expiry: Time.current - 1.year, hcp_expiry: Time.current + 1.year, amfr_expiry: Time.current + 1.year, wants_notifications: true)
+        expect(User.notifiable_of_shift(@shift)).to include(user)
+      end
+
+      it "should not notify user who does not want notifications" do
+        user = create(:user, sfa_expiry: Time.current - 1.year, hcp_expiry: Time.current + 1.year, amfr_expiry: Time.current + 1.year, wants_notifications: false)
+        expect(User.notifiable_of_shift(@shift)).not_to include(user)
+      end
+
+      it "should not notify user who can not take shift" do
+        user = create(:user, sfa_expiry: Time.current - 1.year, hcp_expiry: Time.current + 1.year, amfr_expiry: Time.current - 1.year, wants_notifications: true)
+        expect(User.notifiable_of_shift(@shift)).not_to include(user)
+      end
+  end
 end
