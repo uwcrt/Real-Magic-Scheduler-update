@@ -22,7 +22,7 @@ Install ruby 2.6.0
 brew install ruby
 ```
 
-Finally install PostgreSQL. 
+Finally install PostgreSQL.
 
 On Mac:
 
@@ -50,7 +50,7 @@ Start PostgreSQL:
 brew services start postgresql
 ```
 
-Create a postgres user 
+Create a postgres user
 
 ```
 /usr/local/opt/postgres/bin/createuser -s postgres
@@ -59,7 +59,7 @@ Create a postgres user
 And create your database
 
 ```
-rake db:create:all  
+rake db:create:all
 rake db:migrate
 ```
 
@@ -95,6 +95,7 @@ There should not be any mandatory environment variables. The app should run fine
 * SENDGRID_USERNAME - The sendgrid username used to send emails, no default. Email will not send without this
 * SENDGRID_PASSWORD - The sendgrid password used to send emails, no default. Email will not send without this
 * WEB_CONCURRENCY - The number of unicorns to run concurrently. Defaults to 3
+* SCHEDULER_EMAIL - The Director of Scheduling's email address
 
 ## Feature Tracking
 
