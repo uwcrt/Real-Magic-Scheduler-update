@@ -96,6 +96,7 @@ There should not be any mandatory environment variables. The app should run fine
 * SENDGRID_PASSWORD - The sendgrid password used to send emails, no default. Email will not send without this
 * WEB_CONCURRENCY - The number of unicorns to run concurrently. Defaults to 3
 * SCHEDULER_EMAIL - The Director of Scheduling's email address
+* SHIFT_SIGN_OUT - The link to the shift sign out form (link is not displayed if unset)
 
 ## Feature Tracking
 

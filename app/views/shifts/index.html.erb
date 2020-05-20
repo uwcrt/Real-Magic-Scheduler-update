@@ -32,7 +32,9 @@
   </ul>
   <p>You can see a report of your hours and shifts by clicking "profile" in the navigation bar.</p>
   <p>If a shift changes or is cancelled, those affected will be notified by telephone or e-mail and details will be posted here within 24 hours of the shift. If you notice any errors, please contact the Director of Scheduling ASAP.</p>
-  <p>Please complete the following form at the end of the shift: <a href=<%=ENV['SHIFT_SIGN_OUT']%>>Shift Sign out </a></p>
+  <% if ENV['SHIFT_SIGN_OUT'] %>
+    <p>Please complete the following form at the end of the shift: <a href=<%=ENV['SHIFT_SIGN_OUT']%>>Shift Sign out </a></p>
+  <% end %>
 </div>
 <% if current_user.admin? %>
   <a class="btn btn-success" href="<%= new_shift_path %>"><i class="icon-asterisk icon-white"></i> New Shift</a>
