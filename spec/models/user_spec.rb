@@ -99,7 +99,7 @@ describe User do
 
     describe "conflicts" do
       before do
-        @user = create(:user, sfa_expiry: Time.current + 1.year, hcp_expiry: Time.current + 1.year, position: 2)
+        @user = create(:user, sfa_expiry: Time.current + 1.year, bls_expiry: Time.current + 1.year, position: 2)
       end
 
       it "should not be able to take two slots on same shift" do
@@ -114,7 +114,7 @@ describe User do
       before(:each) do
         DatabaseCleaner.clean
         @shift = build(:shift, start: Time.current + 1.hour)
-        @user = create(:user, sfa_expiry: Time.current + 1.year, hcp_expiry: Time.current + 1.year)
+        @user = create(:user, sfa_expiry: Time.current + 1.year, bls_expiry: Time.current + 1.year)
       end
 
       it "should allow taking a shift" do
@@ -183,23 +183,23 @@ TODO the following tests all violate the 16 hours in 48 rule
         @shift = build(:shift, start: Time.current + 1.hour)
       end
 
-      it "should allow taking shifts with valid MFR and HCP" do
-        user = build(:user, sfa_expiry: Time.current - 1.year, hcp_expiry: Time.current + 1.year, amfr_expiry: Time.current + 1.year)
+      it "should allow taking shifts with valid FR and BLS" do
+        user = build(:user, sfa_expiry: Time.current - 1.year, bls_expiry: Time.current + 1.year, fr_expiry: Time.current + 1.year)
         expect(user.can_take? @shift).to be true
       end
 
-      it "should allow taking shifts with valid SFA and HCP" do
-        user = build(:user, sfa_expiry: Time.current + 1.year, hcp_expiry: Time.current + 1.year, amfr_expiry: Time.current - 1.year)
+      it "should allow taking shifts with valid SFA and BLS" do
+        user = build(:user, sfa_expiry: Time.current + 1.year, bls_expiry: Time.current + 1.year, fr_expiry: Time.current - 1.year)
         expect(user.can_take? @shift).to be true
       end
 
-      it "should not allow taking shifts without valid HCP" do
-        user = build(:user, sfa_expiry: Time.current + 1.year, hcp_expiry: Time.current - 1.year, amfr_expiry: Time.current + 1.year)
+      it "should not allow taking shifts without valid BLS" do
+        user = build(:user, sfa_expiry: Time.current + 1.year, bls_expiry: Time.current - 1.year, fr_expiry: Time.current + 1.year)
         expect(user.can_take? @shift).to be false
       end
 
       it "should not allow taking shifts without valid SFA or MFR" do
-        user = build(:user, sfa_expiry: Time.current - 1.year, hcp_expiry: Time.current + 1.year, amfr_expiry: Time.current - 1.year)
+        user = build(:user, sfa_expiry: Time.current - 1.year, bls_expiry: Time.current + 1.year, fr_expiry: Time.current - 1.year)
         expect(user.can_take? @shift).to be false
       end
     end
@@ -211,17 +211,17 @@ TODO the following tests all violate the 16 hours in 48 rule
       end
 
       it "should notify user who can take shift and wants notifications" do
-        user = create(:user, sfa_expiry: Time.current - 1.year, hcp_expiry: Time.current + 1.year, amfr_expiry: Time.current + 1.year, wants_notifications: true)
+        user = create(:user, sfa_expiry: Time.current - 1.year, bls_expiry: Time.current + 1.year, fr_expiry: Time.current + 1.year, wants_notifications: true)
         expect(User.notifiable_of_shift(@shift)).to include(user)
       end
 
       it "should not notify user who does not want notifications" do
-        user = create(:user, sfa_expiry: Time.current - 1.year, hcp_expiry: Time.current + 1.year, amfr_expiry: Time.current + 1.year, wants_notifications: false)
+        user = create(:user, sfa_expiry: Time.current - 1.year, bls_expiry: Time.current + 1.year, fr_expiry: Time.current + 1.year, wants_notifications: false)
         expect(User.notifiable_of_shift(@shift)).not_to include(user)
       end
 
       it "should not notify user who can not take shift" do
-        user = create(:user, sfa_expiry: Time.current - 1.year, hcp_expiry: Time.current + 1.year, amfr_expiry: Time.current - 1.year, wants_notifications: true)
+        user = create(:user, sfa_expiry: Time.current - 1.year, bls_expiry: Time.current + 1.year, fr_expiry: Time.current - 1.year, wants_notifications: true)
         expect(User.notifiable_of_shift(@shift)).not_to include(user)
       end
   end

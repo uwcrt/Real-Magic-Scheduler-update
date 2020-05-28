@@ -127,7 +127,7 @@ class UsersController < ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :username, :wants_notifications, :last_notified, :hcp_expiry, :sfa_expiry, :amfr_expiry, :position)
+      params.require(:user).permit(:first_name, :last_name, :username, :wants_notifications, :last_notified, :bls_expiry, :sfa_expiry, :fr_expiry, :position)
     end
 
     def correct_user

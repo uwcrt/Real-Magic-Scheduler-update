@@ -84,7 +84,7 @@ class User < ActiveRecord::Base
   end
 
   def days_until_cert_expiration
-    ([[sfa_expiry || Date.today, amfr_expiry || Date.today].max, hcp_expiry || Date.today].min - Date.today).to_i
+    ([[sfa_expiry || Date.today, fr_expiry || Date.today].max, bls_expiry || Date.today].min - Date.today).to_i
   end
 
   def as_json
