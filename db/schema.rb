@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_09_182657) do
+ActiveRecord::Schema.define(version: 2020_05_28_023842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,9 +56,9 @@ ActiveRecord::Schema.define(version: 2019_02_09_182657) do
     t.boolean "wants_notifications", default: false
     t.datetime "last_notified", default: "1970-01-01 00:00:00"
     t.date "sfa_expiry", default: "0001-01-01"
-    t.date "hcp_expiry", default: "0001-01-01"
+    t.date "bls_expiry", default: "0001-01-01"
     t.integer "position", default: 0
-    t.date "amfr_expiry", default: "0001-01-01"
+    t.date "fr_expiry", default: "0001-01-01"
     t.index ["username"], name: "index_users_on_username"
   end
 

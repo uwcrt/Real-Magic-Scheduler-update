@@ -46,8 +46,8 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @title = @user.name
-    @past_shifts = @user.past_shifts
-    @current_shifts = @user.current_shifts
+    @past_shifts = @user.past_shifts.sort_by{|s| s.start}
+    @current_shifts = @user.current_shifts.sort_by{|s| s.start}
     @shift_types = ShiftType.all
 
     if @user.disabled
@@ -127,7 +127,7 @@ class UsersController < ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :username, :wants_notifications, :last_notified, :hcp_expiry, :sfa_expiry, :amfr_expiry, :position)
+      params.require(:user).permit(:first_name, :last_name, :username, :wants_notifications, :last_notified, :bls_expiry, :sfa_expiry, :fr_expiry, :position)
     end
 
     def correct_user

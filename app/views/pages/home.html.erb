@@ -2,5 +2,5 @@
   <h1>RMS - Online Shift Scheduling</h1>
   <p>Welcome to RMS, the online scheduling system for University of Waterloo CRT.</p>
   <p>Click sign in, in the navigation bar to start signing up for shifts.</p>
-  <p>If you do not have an account, please contact the scheduler: <a href="mailto:scheduler@crt.feds.ca">scheduler@crt.feds.ca</a></p>
+  <p>If you do not have an account, please contact the scheduler: <a href=<%="mailto:#{ENV['SCHEDULER_EMAIL']}"%>><%=ENV['SCHEDULER_EMAIL']%></a></p>
 </div>

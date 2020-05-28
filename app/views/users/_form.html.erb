@@ -10,10 +10,10 @@
     <%= f.select :position, User::POSITION_OPTIONS %>
     <%= f.label :sfa_expiry %>
     <%= f.date_select :sfa_expiry, :start_year => Time.now.year - 5, :end_year => Time.now.year + 5, :include_blank => true %>
-    <%= f.label :hcp_expiry %>
-    <%= f.date_select :hcp_expiry ,:start_year => Time.now.year - 5, :end_year => Time.now.year + 5, :include_blank => true %>
-    <%= f.label :amfr_expiry %>
-    <%= f.date_select :amfr_expiry ,:start_year => Time.now.year - 5, :end_year => Time.now.year + 5, :include_blank => true %>
+    <%= f.label :bls_expiry %>
+    <%= f.date_select :bls_expiry ,:start_year => Time.now.year - 5, :end_year => Time.now.year + 5, :include_blank => true %>
+    <%= f.label :fr_expiry %>
+    <%= f.date_select :fr_expiry ,:start_year => Time.now.year - 5, :end_year => Time.now.year + 5, :include_blank => true %>
     <br />
     <%= f.submit button_text %>
   </div>

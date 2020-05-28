@@ -82,7 +82,7 @@ class Shift < ActiveRecord::Base
       shift.start = start + split_length * n
       shift.finish = [shift.start + split_length, finish].min
       shift.save
-      shift = self.clone
+      shift = self.dup
     end
   end
 

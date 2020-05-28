@@ -19,22 +19,10 @@ These instructions will get you a copy of the project up and running on your loc
 Install ruby 2.6.0
 
 ```
-rvm install "ruby-2.6.0" 
+brew install ruby
 ```
 
-When doing this I got an error. This fixed it for me
-
-```
-brew install gcc49  
-```
-
-Then install the necessary gems
-
-```
-bundle install
-```
-
-Finally install PostgreSQL. 
+Finally install PostgreSQL.
 
 On Mac:
 
@@ -50,16 +38,28 @@ Next clone this repository
 git clone https://github.com/uwcrt/Real-Magic-Scheduler-update.git
 ```
 
+Then install the necessary gems
+
+```
+bundle install
+```
+
 Start PostgreSQL:
 
 ```
 brew services start postgresql
 ```
 
+Create a postgres user
+
+```
+/usr/local/opt/postgres/bin/createuser -s postgres
+```
+
 And create your database
 
 ```
-rake db:create:all  
+rake db:create:all
 rake db:migrate
 ```
 
@@ -95,6 +95,8 @@ There should not be any mandatory environment variables. The app should run fine
 * SENDGRID_USERNAME - The sendgrid username used to send emails, no default. Email will not send without this
 * SENDGRID_PASSWORD - The sendgrid password used to send emails, no default. Email will not send without this
 * WEB_CONCURRENCY - The number of unicorns to run concurrently. Defaults to 3
+* SCHEDULER_EMAIL - The Director of Scheduling's email address
+* SHIFT_SIGN_OUT - The link to the shift sign out form (link is not displayed if unset)
 
 ## Feature Tracking
 

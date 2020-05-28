@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   validates_inclusion_of :position, :in => POSITION_OPTIONS.map {|p| p[1]}
 
   filterrific(
-    default_filter_params: { },
+    default_filter_params: { sorted_by: 'first_name' },
     available_filters: [
       :search_query,
       :sorted_by
@@ -80,13 +80,11 @@ class User < ActiveRecord::Base
 
   def self.notifiable_of_shift(shift)
     users = User.where(:wants_notifications => true).where('last_notified <= ?', Time.now - 3.hours)
-    users.to_a.select! {|user| user.can_primary?(shift) || user.can_secondary?(shift) || user.can_rookie?(shift)}
-
-    return users
+    return users.to_a.select {|user| user.can_primary?(shift) || user.can_secondary?(shift) || user.can_rookie?(shift)}
   end
 
   def days_until_cert_expiration
-    ([sfa_expiry || Date.today, [hcp_expiry || Date.today, amfr_expiry || Date.today].max || Date.today].min - Date.today).to_i
+    ([[sfa_expiry || Date.today, fr_expiry || Date.today].max, bls_expiry || Date.today].min - Date.today).to_i
   end
 
   def as_json
