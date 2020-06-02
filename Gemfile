@@ -13,7 +13,7 @@ group :test do
   gem 'database_cleaner'
 end
 
-gem 'devise', '~> 4.5.0'
+gem 'devise', '~> 4.7.1'
 gem 'devise_cas_authenticatable', '~> 1.10.3'
 gem 'jquery-rails', '~> 4.3.3'
 gem 'rails', '~> 5.2.2'
